@@ -11,11 +11,137 @@ let charts = {
 };
 
 /**
+ * Lấy dữ liệu dựa trên cơ sở được chọn
+ * @param {number} year - Năm cần lấy dữ liệu
+ * @returns {object} - Dữ liệu đã được filter theo cơ sở
+ */
+function getFilteredData(year = 2024) {
+  // Kiểm tra xem FacilityManager có tồn tại không
+  if (typeof FacilityManager !== 'undefined') {
+    return FacilityManager.getCurrentData(year);
+  }
+  // Fallback về dữ liệu gốc nếu không có FacilityManager
+  return businessDataByMonth[year];
+}
+
+/**
+ * Lấy tên cơ sở hiện tại được chọn
+ * @returns {string} - Tên cơ sở
+ */
+function getCurrentFacilityName() {
+  if (typeof FacilityManager !== 'undefined') {
+    const selection = FacilityManager.getSelected();
+    return selection.name;
+  }
+  return 'Tất cả cơ sở';
+}
+
+/**
+ * Cập nhật tiêu đề trang với tên cơ sở
+ */
+function updatePageTitle() {
+  const facilityName = getCurrentFacilityName();
+  const titleElement = document.querySelector('.content-header h1');
+
+  if (titleElement && facilityName !== 'Tất cả cơ sở') {
+    const currentTitle = titleElement.textContent;
+    const facilityBadge = `<small class="badge badge-info ml-2">${facilityName}</small>`;
+
+    // Chỉ thêm badge nếu chưa có
+    if (!titleElement.querySelector('.badge')) {
+      titleElement.innerHTML = currentTitle + ' ' + facilityBadge;
+    }
+  }
+}
+
+/**
+ * Cập nhật các KPI boxes với dữ liệu đã lọc
+ */
+function updateKPIBoxes() {
+  const filteredData = getFilteredData(2024);
+
+  // Tính toán KPI từ dữ liệu đã lọc
+  const currentMonth = 11; // December (0-based)
+  const previousMonth = 10; // November
+
+  // Doanh thu
+  const currentRevenue = filteredData.revenue[currentMonth];
+  const previousRevenue = filteredData.revenue[previousMonth];
+  const revenueChange = calculatePercentageChange(currentRevenue, previousRevenue);
+
+  // Lợi nhuận
+  const currentProfit = filteredData.profit[currentMonth];
+  const previousProfit = filteredData.profit[previousMonth];
+  const profitChange = calculatePercentageChange(currentProfit, previousProfit);
+
+  // Khách hàng
+  const currentCustomers = filteredData.customers[currentMonth];
+  const previousCustomers = filteredData.customers[previousMonth];
+  const customersChange = calculatePercentageChange(currentCustomers, previousCustomers);
+
+  // Đơn hàng
+  const currentOrders = filteredData.orders[currentMonth];
+  const previousOrders = filteredData.orders[previousMonth];
+  const ordersChange = calculatePercentageChange(currentOrders, previousOrders);
+
+  // Helper function để format giá trị
+  const formatValue = (value) => {
+    if (value >= 1000) {
+      return (value / 1000).toFixed(2) + ' tỷ';
+    }
+    return value + ' triệu';
+  };
+
+  // Cập nhật DOM nếu các elements tồn tại
+  const infoBoxes = document.querySelectorAll('.info-box-number');
+
+  if (infoBoxes.length >= 4) {
+    // Doanh thu
+    infoBoxes[0].innerHTML = `
+      ${formatValue(currentRevenue)}
+      <small class="${revenueChange >= 0 ? 'trend-up' : 'trend-down'}">
+        <i class="bi bi-arrow-${revenueChange >= 0 ? 'up' : 'down'}"></i> ${Math.abs(revenueChange).toFixed(1)}%
+      </small>
+    `;
+
+    // Lợi nhuận
+    infoBoxes[1].innerHTML = `
+      ${formatValue(currentProfit)}
+      <small class="${profitChange >= 0 ? 'trend-up' : 'trend-down'}">
+        <i class="bi bi-arrow-${profitChange >= 0 ? 'up' : 'down'}"></i> ${Math.abs(profitChange).toFixed(1)}%
+      </small>
+    `;
+
+    // Khách hàng
+    infoBoxes[2].innerHTML = `
+      ${formatNumber(currentCustomers)}
+      <small class="${customersChange >= 0 ? 'trend-up' : 'trend-down'}">
+        <i class="bi bi-arrow-${customersChange >= 0 ? 'up' : 'down'}"></i> ${Math.abs(customersChange).toFixed(1)}%
+      </small>
+    `;
+
+    // Đơn hàng
+    infoBoxes[3].innerHTML = `
+      ${formatNumber(currentOrders)}
+      <small class="${ordersChange >= 0 ? 'trend-up' : 'trend-down'}">
+        <i class="bi bi-arrow-${ordersChange >= 0 ? 'up' : 'down'}"></i> ${Math.abs(ordersChange).toFixed(1)}%
+      </small>
+    `;
+  }
+}
+
+/**
  * Hàm khởi tạo dashboard
  * Được gọi khi DOM đã load xong
  */
 function initDashboard() {
   console.log('🚀 Khởi tạo Dashboard CEO...');
+
+  // Cập nhật tiêu đề với cơ sở hiện tại
+  updatePageTitle();
+
+  // Cập nhật KPI boxes với dữ liệu đã lọc
+  updateKPIBoxes();
 
   // Khởi tạo biểu đồ doanh thu
   initRevenueChartOnPage();
@@ -38,7 +164,13 @@ function initDashboard() {
 function initRevenueChartOnPage() {
   const revenueElement = document.querySelector('#revenue-chart');
   if (revenueElement) {
-    charts.revenue = initRevenueChart('#revenue-chart', revenueData);
+    // Sử dụng dữ liệu đã được filter theo cơ sở
+    const filteredData = getFilteredData(2024);
+    const chartData = {
+      months: monthLabels,
+      values: filteredData.revenue
+    };
+    charts.revenue = initRevenueChart('#revenue-chart', chartData);
     console.log('✓ Biểu đồ doanh thu đã load');
   }
 }

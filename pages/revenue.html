@@ -145,6 +145,13 @@
         <section class="content">
           <div class="container-fluid">
 
+            <!-- Facility Selector -->
+            <div class="row mb-3">
+              <div class="col-12">
+                <div id="facilitySelector"></div>
+              </div>
+            </div>
+
             <!-- Tổng quan doanh thu -->
             <div class="row">
               <div class="col-lg-3 col-6">
@@ -300,17 +307,25 @@
 
     <!-- Load Data -->
     <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/facility-selector.js"></script>
+    <script src="../assets/js/charts.js"></script>
+    <script src="../assets/js/main.js"></script>
     <script src="../assets/js/chatbot.js"></script>
 
     <script>
+      // Lấy dữ liệu đã được filter theo cơ sở
+      const filteredData2024 = getFilteredData ? getFilteredData(2024) : businessDataByMonth[2024];
+      const filteredData2023 = getFilteredData ? getFilteredData(2023) : businessDataByMonth[2023];
+      const filteredData2022 = getFilteredData ? getFilteredData(2022) : businessDataByMonth[2022];
+
       // Biểu đồ xu hướng doanh thu
       const revenueTrendChart = new ApexCharts(document.querySelector('#revenue-trend-chart'), {
         series: [{
           name: '2024',
-          data: businessDataByMonth[2024].revenue
+          data: filteredData2024.revenue
         }, {
           name: '2023',
-          data: businessDataByMonth[2023].revenue
+          data: filteredData2023.revenue
         }],
         chart: { height: 350, type: 'area', toolbar: { show: true } },
         colors: ['#007bff', '#6c757d'],
@@ -338,13 +353,13 @@
       const yearComparisonChart = new ApexCharts(document.querySelector('#year-comparison-chart'), {
         series: [{
           name: '2024',
-          data: businessDataByMonth[2024].revenue
+          data: filteredData2024.revenue
         }, {
           name: '2023',
-          data: businessDataByMonth[2023].revenue
+          data: filteredData2023.revenue
         }, {
           name: '2022',
-          data: businessDataByMonth[2022].revenue
+          data: filteredData2022.revenue
         }],
         chart: { type: 'bar', height: 300, toolbar: { show: false } },
         colors: ['#007bff', '#6c757d', '#dee2e6'],

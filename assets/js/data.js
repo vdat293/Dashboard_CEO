@@ -419,3 +419,177 @@ const salesChannels = {
   percentages: [45, 30, 15, 10],
   values: [16173, 10782, 5391, 3594] // Tổng năm 2024
 };
+
+// ============================================
+// DỮ LIỆU CƠ SỞ (FACILITIES)
+// ============================================
+
+// Danh sách cơ sở theo khu vực
+const facilitiesByRegion = {
+  'Miền Bắc': [
+    { id: 'HN', name: 'Hà Nội', code: 'HN' },
+    { id: 'HP', name: 'Hải Phòng', code: 'HP' },
+    { id: 'HD', name: 'Hải Dương', code: 'HD' },
+    { id: 'QN', name: 'Quảng Ninh', code: 'QN' }
+  ],
+  'Miền Nam': [
+    { id: 'HCM', name: 'TP. Hồ Chí Minh', code: 'HCM' },
+    { id: 'BD', name: 'Bình Dương', code: 'BD' },
+    { id: 'DN', name: 'Đồng Nai', code: 'DN' },
+    { id: 'CT', name: 'Cần Thơ', code: 'CT' }
+  ],
+  'Miền Trung': [
+    { id: 'DA', name: 'Đà Nẵng', code: 'DA' },
+    { id: 'HUE', name: 'Huế', code: 'HUE' },
+    { id: 'QNG', name: 'Quảng Ngãi', code: 'QNG' },
+    { id: 'NT', name: 'Nha Trang', code: 'NT' }
+  ],
+  'Quốc tế': [
+    { id: 'SG', name: 'Singapore', code: 'SG' },
+    { id: 'TH', name: 'Thailand', code: 'TH' },
+    { id: 'MY', name: 'Malaysia', code: 'MY' }
+  ]
+};
+
+// Tỷ lệ phân bổ doanh thu cho từng cơ sở (% của tổng khu vực)
+const facilityRevenueShare = {
+  // Miền Bắc (35% tổng)
+  'HN': 0.45,    // 45% của Miền Bắc
+  'HP': 0.25,    // 25%
+  'HD': 0.18,    // 18%
+  'QN': 0.12,    // 12%
+
+  // Miền Nam (30% tổng)
+  'HCM': 0.55,   // 55% của Miền Nam
+  'BD': 0.20,    // 20%
+  'DN': 0.15,    // 15%
+  'CT': 0.10,    // 10%
+
+  // Miền Trung (22% tổng)
+  'DA': 0.40,    // 40% của Miền Trung
+  'HUE': 0.25,   // 25%
+  'QNG': 0.20,   // 20%
+  'NT': 0.15,    // 15%
+
+  // Quốc tế (13% tổng)
+  'SG': 0.50,    // 50% của Quốc tế
+  'TH': 0.30,    // 30%
+  'MY': 0.20     // 20%
+};
+
+// Hàm tính toán dữ liệu cho từng cơ sở dựa trên dữ liệu tổng
+function getFacilityData(facilityCode, year = 2024) {
+  // Tìm khu vực của cơ sở
+  let region = null;
+  let regionShare = 0;
+
+  for (const [regionName, facilities] of Object.entries(facilitiesByRegion)) {
+    if (facilities.some(f => f.code === facilityCode)) {
+      region = regionName;
+      const regionIndex = revenueByRegion.labels.indexOf(regionName);
+      regionShare = revenueByRegion.percentages[regionIndex] / 100;
+      break;
+    }
+  }
+
+  if (!region) return null;
+
+  const facilityShare = facilityRevenueShare[facilityCode];
+  const totalMultiplier = regionShare * facilityShare;
+
+  // Tính toán dữ liệu tháng dựa trên tỷ lệ
+  const yearData = businessDataByMonth[year];
+  const facilityData = {
+    revenue: yearData.revenue.map(v => Math.round(v * totalMultiplier)),
+    expenses: yearData.expenses.map(v => Math.round(v * totalMultiplier)),
+    profit: yearData.profit.map(v => Math.round(v * totalMultiplier)),
+    orders: yearData.orders.map(v => Math.round(v * totalMultiplier)),
+    customers: yearData.customers.map(v => Math.round(v * totalMultiplier))
+  };
+
+  // Thêm biến động ngẫu nhiên nhỏ để tạo sự khác biệt giữa các cơ sở (±5%)
+  const addVariation = (arr) => arr.map(v => {
+    const variation = 0.95 + Math.random() * 0.10; // 95% - 105%
+    return Math.round(v * variation);
+  });
+
+  return {
+    revenue: addVariation(facilityData.revenue),
+    expenses: addVariation(facilityData.expenses),
+    profit: addVariation(facilityData.profit),
+    orders: addVariation(facilityData.orders),
+    customers: addVariation(facilityData.customers)
+  };
+}
+
+// Hàm tính toán dữ liệu cho khu vực
+function getRegionData(regionName, year = 2024) {
+  const regionIndex = revenueByRegion.labels.indexOf(regionName);
+  if (regionIndex === -1) return null;
+
+  const regionShare = revenueByRegion.percentages[regionIndex] / 100;
+  const yearData = businessDataByMonth[year];
+
+  return {
+    revenue: yearData.revenue.map(v => Math.round(v * regionShare)),
+    expenses: yearData.expenses.map(v => Math.round(v * regionShare)),
+    profit: yearData.profit.map(v => Math.round(v * regionShare)),
+    orders: yearData.orders.map(v => Math.round(v * regionShare)),
+    customers: yearData.customers.map(v => Math.round(v * regionShare))
+  };
+}
+
+// Hàm lấy tất cả cơ sở
+function getAllFacilities() {
+  const allFacilities = [];
+  for (const [region, facilities] of Object.entries(facilitiesByRegion)) {
+    facilities.forEach(facility => {
+      allFacilities.push({
+        ...facility,
+        region: region
+      });
+    });
+  }
+  return allFacilities;
+}
+
+// Lưu trữ cơ sở được chọn trong sessionStorage
+const FacilityManager = {
+  STORAGE_KEY: 'selected_facility',
+
+  getSelected: function() {
+    const stored = sessionStorage.getItem(this.STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    return { type: 'all', code: null, name: 'Tất cả cơ sở' };
+  },
+
+  setSelected: function(type, code, name, region = null) {
+    const selection = { type, code, name, region };
+    sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(selection));
+    return selection;
+  },
+
+  clear: function() {
+    sessionStorage.removeItem(this.STORAGE_KEY);
+  },
+
+  // Lấy dữ liệu dựa trên lựa chọn hiện tại
+  getCurrentData: function(year = 2024) {
+    const selection = this.getSelected();
+
+    if (selection.type === 'all') {
+      // Trả về dữ liệu tổng
+      return businessDataByMonth[year];
+    } else if (selection.type === 'region') {
+      // Trả về dữ liệu khu vực
+      return getRegionData(selection.name, year);
+    } else if (selection.type === 'facility') {
+      // Trả về dữ liệu cơ sở
+      return getFacilityData(selection.code, year);
+    }
+
+    return businessDataByMonth[year];
+  }
+};
