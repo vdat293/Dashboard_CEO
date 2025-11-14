@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="vi">
+  <!--begin::Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Dashboard CEO | Tổng Quan Kinh Doanh</title>
+
+    <!--begin::Accessibility Meta Tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+    <!--end::Accessibility Meta Tags-->
+
+    <!--begin::Fonts-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+      integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
+      crossorigin="anonymous"
+    />
+    <!--end::Fonts-->
+
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
+
+    <!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(Bootstrap Icons)-->
+
+    <!--begin::AdminLTE CSS from CDN-->
+    <link 
+      rel="stylesheet" 
+      href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
+    />
+    <!--end::AdminLTE CSS-->
+
+    <!-- ApexCharts -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+      integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
+      crossorigin="anonymous"
+    />
+
+    <style>
+      /* Custom styles cho dashboard */
+      .info-box {
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        border-radius: .25rem;
+        background: #fff;
+        display: flex;
+        margin-bottom: 1rem;
+        min-height: 80px;
+        padding: .5rem;
+        position: relative;
+      }
+      
+      .info-box .info-box-icon {
+        border-radius: .25rem;
+        align-items: center;
+        display: flex;
+        font-size: 1.875rem;
+        justify-content: center;
+        text-align: center;
+        width: 70px;
+      }
+      
+      .info-box .info-box-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1.8;
+        flex: 1;
+        padding: 0 10px;
+      }
+      
+      .info-box .info-box-text {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      .info-box .info-box-number {
+        display: block;
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+      
+      .bg-gradient-primary {
+        background: linear-gradient(180deg, #007bff 10%, #0056b3 100%);
+        color: #fff;
+      }
+      
+      .bg-gradient-success {
+        background: linear-gradient(180deg, #28a745 10%, #1e7e34 100%);
+        color: #fff;
+      }
+      
+      .bg-gradient-info {
+        background: linear-gradient(180deg, #17a2b8 10%, #117a8b 100%);
+        color: #fff;
+      }
+      
+      .bg-gradient-warning {
+        background: linear-gradient(180deg, #ffc107 10%, #d39e00 100%);
+        color: #fff;
+      }
+      
+      .small-box {
+        border-radius: .25rem;
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        display: block;
+        margin-bottom: 20px;
+        position: relative;
+      }
+      
+      .small-box>.inner {
+        padding: 10px;
+      }
+      
+      .small-box h3 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 10px;
+        padding: 0;
+        white-space: nowrap;
+      }
+      
+      .card {
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        margin-bottom: 1rem;
+      }
+      
+      .trend-up {
+        color: #28a745;
+        font-size: 0.875rem;
+      }
+      
+      .trend-down {
+        color: #dc3545;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <!--end::Head-->
+
+  <!--begin::Body-->
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+      <!--begin::Header-->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+              <i class="bi bi-list"></i>
+            </a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Trang chủ</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Liên hệ</a>
+          </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <!-- Notifications -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="bi bi-bell-fill"></i>
+              <span class="badge badge-warning navbar-badge">5</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <span class="dropdown-item dropdown-header">5 Thông báo</span>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="bi bi-envelope mr-2"></i> 3 tin nhắn mới
+                <span class="float-right text-muted text-sm">3 phút</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="bi bi-file-earmark mr-2"></i> 2 báo cáo mới
+                <span class="float-right text-muted text-sm">2 giờ</span>
+              </a>
+            </div>
+          </li>
+          
+          <!-- User Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="bi bi-person-circle"></i>
+              <span class="d-none d-md-inline ml-1">CEO Nguyễn Văn A</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a href="#" class="dropdown-item">
+                <i class="bi bi-person mr-2"></i> Hồ sơ
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="bi bi-gear mr-2"></i> Cài đặt
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="bi bi-box-arrow-right mr-2"></i> Đăng xuất
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!--end::Header-->
+
+      <!--begin::Sidebar-->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+          <i class="bi bi-graph-up-arrow brand-image" style="font-size: 2rem; margin-left: 0.5rem;"></i>
+          <span class="brand-text font-weight-light">CEO Dashboard</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <i class="bi bi-person-circle" style="font-size: 2.1rem; color: #fff;"></i>
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">Nguyễn Văn A</a>
+              <small class="text-muted">Giám đốc điều hành</small>
+            </div>
+          </div>
+
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+              <li class="nav-item">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon bi bi-speedometer2"></i>
+                  <p>Tổng quan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-graph-up"></i>
+                  <p>Doanh thu</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-people"></i>
+                  <p>Khách hàng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam"></i>
+                  <p>Sản phẩm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-clipboard-data"></i>
+                  <p>Báo cáo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-gear"></i>
+                  <p>Cài đặt</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+      <!--end::Sidebar-->
+
+      <!--begin::Content Wrapper-->
+      <div class="content-wrapper">
+        <!-- Content Header -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Dashboard CEO</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                  <li class="breadcrumb-item active">Tổng quan</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            
+            <!-- Info boxes - Chỉ số KPI -->
+            <div class="row">
+              <!-- Doanh thu -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-primary elevation-1">
+                    <i class="bi bi-currency-dollar"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh thu tháng</span>
+                    <span class="info-box-number">
+                      2.5 tỷ
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> 12%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lợi nhuận -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-success elevation-1">
+                    <i class="bi bi-graph-up"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Lợi nhuận</span>
+                    <span class="info-box-number">
+                      850 triệu
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> 8%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Khách hàng -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-info elevation-1">
+                    <i class="bi bi-people"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Khách hàng mới</span>
+                    <span class="info-box-number">
+                      1,234
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> 15%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Đơn hàng -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-warning elevation-1">
+                    <i class="bi bi-cart"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Đơn hàng</span>
+                    <span class="info-box-number">
+                      3,567
+                      <small class="trend-down">
+                        <i class="bi bi-arrow-down"></i> 3%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row">
+              <!-- Biểu đồ doanh thu -->
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                      <h3 class="card-title">Doanh thu theo tháng</h3>
+                      <a href="#" class="btn btn-sm btn-primary">Xem báo cáo</a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div id="revenue-chart" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Biểu đồ tròn -->
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">Thị phần sản phẩm</h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="product-chart" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table và Activity Row -->
+            <div class="row">
+              <!-- Bảng sản phẩm bán chạy -->
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">Top 5 sản phẩm bán chạy</h3>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-valign-middle">
+                      <thead>
+                        <tr>
+                          <th>Sản phẩm</th>
+                          <th>Giá</th>
+                          <th>Đã bán</th>
+                          <th>Doanh thu</th>
+                          <th>Xu hướng</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <i class="bi bi-laptop text-primary mr-2"></i>
+                            Laptop Dell XPS 15
+                          </td>
+                          <td>35,000,000đ</td>
+                          <td>
+                            <span class="badge badge-success">245 cái</span>
+                          </td>
+                          <td>857 triệu</td>
+                          <td>
+                            <div id="sparkline-1"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <i class="bi bi-phone text-info mr-2"></i>
+                            iPhone 15 Pro Max
+                          </td>
+                          <td>32,000,000đ</td>
+                          <td>
+                            <span class="badge badge-success">198 cái</span>
+                          </td>
+                          <td>633 triệu</td>
+                          <td>
+                            <div id="sparkline-2"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <i class="bi bi-headphones text-warning mr-2"></i>
+                            AirPods Pro 2
+                          </td>
+                          <td>6,500,000đ</td>
+                          <td>
+                            <span class="badge badge-success">423 cái</span>
+                          </td>
+                          <td>275 triệu</td>
+                          <td>
+                            <div id="sparkline-3"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <i class="bi bi-smartwatch text-danger mr-2"></i>
+                            Apple Watch Ultra 2
+                          </td>
+                          <td>22,000,000đ</td>
+                          <td>
+                            <span class="badge badge-warning">87 cái</span>
+                          </td>
+                          <td>191 triệu</td>
+                          <td>
+                            <div id="sparkline-4"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <i class="bi bi-tablet text-success mr-2"></i>
+                            iPad Pro M2
+                          </td>
+                          <td>28,000,000đ</td>
+                          <td>
+                            <span class="badge badge-success">156 cái</span>
+                          </td>
+                          <td>437 triệu</td>
+                          <td>
+                            <div id="sparkline-5"></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hoạt động gần đây -->
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">Hoạt động gần đây</h3>
+                  </div>
+                  <div class="card-body p-0">
+                    <ul class="products-list product-list-in-card pl-2 pr-2">
+                      <li class="item">
+                        <div class="product-img">
+                          <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                        </div>
+                        <div class="product-info">
+                          <a href="#" class="product-title">Đơn hàng #DH2024-1234 đã hoàn thành</a>
+                          <span class="product-description">
+                            Khách hàng: Trần Văn B
+                            <br>
+                            <small class="text-muted">5 phút trước</small>
+                          </span>
+                        </div>
+                      </li>
+                      <li class="item">
+                        <div class="product-img">
+                          <i class="bi bi-person-plus-fill text-info" style="font-size: 2rem;"></i>
+                        </div>
+                        <div class="product-info">
+                          <a href="#" class="product-title">3 khách hàng mới đăng ký</a>
+                          <span class="product-description">
+                            Từ chiến dịch marketing Q4
+                            <br>
+                            <small class="text-muted">15 phút trước</small>
+                          </span>
+                        </div>
+                      </li>
+                      <li class="item">
+                        <div class="product-img">
+                          <i class="bi bi-cash-coin text-success" style="font-size: 2rem;"></i>
+                        </div>
+                        <div class="product-info">
+                          <a href="#" class="product-title">Thanh toán 125 triệu đã được xác nhận</a>
+                          <span class="product-description">
+                            Hợp đồng #HD2024-089
+                            <br>
+                            <small class="text-muted">30 phút trước</small>
+                          </span>
+                        </div>
+                      </li>
+                      <li class="item">
+                        <div class="product-img">
+                          <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 2rem;"></i>
+                        </div>
+                        <div class="product-info">
+                          <a href="#" class="product-title">Tồn kho sản phẩm A cần bổ sung</a>
+                          <span class="product-description">
+                            Chỉ còn 15 sản phẩm
+                            <br>
+                            <small class="text-muted">1 giờ trước</small>
+                          </span>
+                        </div>
+                      </li>
+                      <li class="item">
+                        <div class="product-img">
+                          <i class="bi bi-file-earmark-text text-primary" style="font-size: 2rem;"></i>
+                        </div>
+                        <div class="product-info">
+                          <a href="#" class="product-title">Báo cáo tài chính đã sẵn sàng</a>
+                          <span class="product-description">
+                            Quý 4 năm 2024
+                            <br>
+                            <small class="text-muted">2 giờ trước</small>
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-footer text-center">
+                    <a href="#" class="uppercase">Xem tất cả hoạt động</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        <!--end::Main content-->
+      </div>
+      <!--end::Content Wrapper-->
+
+      <!--begin::Footer-->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2024 <a href="#">Công ty của bạn</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 1.0.0
+        </div>
+      </footer>
+      <!--end::Footer-->
+    </div>
+    <!-- ./wrapper -->
+
+    <!--begin::Scripts-->
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+    <!-- ApexCharts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+      integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Dashboard Charts -->
+    <script>
+      // Biểu đồ doanh thu
+      const revenueChartOptions = {
+        series: [
+          {
+            name: 'Doanh thu',
+            data: [1800, 2100, 1950, 2350, 2200, 2450, 2500, 2800, 2650, 2900, 2750, 3100]
+          }
+        ],
+        chart: {
+          height: 300,
+          type: 'area',
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 3
+        },
+        colors: ['#007bff'],
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.3,
+          }
+        },
+        xaxis: {
+          categories: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 
+                       'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12']
+        },
+        yaxis: {
+          labels: {
+            formatter: function(value) {
+              return value.toFixed(0) + ' triệu';
+            }
+          }
+        },
+        tooltip: {
+          y: {
+            formatter: function(value) {
+              return value.toFixed(0) + ' triệu VNĐ';
+            }
+          }
+        }
+      };
+
+      const revenueChart = new ApexCharts(
+        document.querySelector('#revenue-chart'),
+        revenueChartOptions
+      );
+      revenueChart.render();
+
+      // Biểu đồ tròn thị phần sản phẩm
+      const productChartOptions = {
+        series: [857, 633, 437, 275, 191],
+        chart: {
+          type: 'donut',
+          height: 300
+        },
+        labels: ['Laptop', 'Điện thoại', 'Tablet', 'Tai nghe', 'Đồng hồ'],
+        colors: ['#007bff', '#17a2b8', '#28a745', '#ffc107', '#dc3545'],
+        legend: {
+          position: 'bottom'
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function(val) {
+            return val.toFixed(1) + '%';
+          }
+        },
+        tooltip: {
+          y: {
+            formatter: function(value) {
+              return value + ' triệu VNĐ';
+            }
+          }
+        }
+      };
+
+      const productChart = new ApexCharts(
+        document.querySelector('#product-chart'),
+        productChartOptions
+      );
+      productChart.render();
+
+      // Sparkline charts cho bảng
+      function createSparkline(selector, data, color) {
+        const options = {
+          series: [{ data: data }],
+          chart: {
+            type: 'line',
+            width: 150,
+            height: 30,
+            sparkline: {
+              enabled: true
+            }
+          },
+          colors: [color],
+          stroke: {
+            width: 2
+          },
+          tooltip: {
+            fixed: {
+              enabled: false
+            },
+            x: {
+              show: false
+            },
+            y: {
+              title: {
+                formatter: function() {
+                  return '';
+                }
+              }
+            }
+          }
+        };
+
+        const chart = new ApexCharts(document.querySelector(selector), options);
+        chart.render();
+      }
+
+      // Dữ liệu sparkline cho từng sản phẩm
+      createSparkline('#sparkline-1', [200, 210, 220, 230, 235, 240, 245], '#28a745');
+      createSparkline('#sparkline-2', [150, 165, 170, 180, 185, 190, 198], '#17a2b8');
+      createSparkline('#sparkline-3', [350, 370, 380, 390, 400, 410, 423], '#ffc107');
+      createSparkline('#sparkline-4', [100, 95, 90, 88, 87, 86, 87], '#dc3545');
+      createSparkline('#sparkline-5', [120, 130, 135, 140, 145, 150, 156], '#28a745');
+    </script>
+    <!--end::Scripts-->
+  </body>
+</html>
