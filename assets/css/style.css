@@ -1,0 +1,278 @@
+/**
+ * CUSTOM STYLES CHO DASHBOARD CEO
+ * File này chứa các style tùy chỉnh cho dashboard
+ */
+
+/* ==============================================
+   INFO BOX - Hộp hiển thị thông tin KPI
+   ============================================== */
+.info-box {
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-sm);
+  background: var(--bg-white);
+  display: flex;
+  margin-bottom: var(--spacing-md);
+  min-height: 80px;
+  padding: var(--spacing-sm);
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.info-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.info-box .info-box-icon {
+  border-radius: var(--radius-sm);
+  align-items: center;
+  display: flex;
+  font-size: 1.875rem;
+  justify-content: center;
+  text-align: center;
+  width: 70px;
+}
+
+.info-box .info-box-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.8;
+  flex: 1;
+  padding: 0 10px;
+}
+
+.info-box .info-box-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+
+.info-box .info-box-number {
+  display: block;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+/* ==============================================
+   GRADIENT BACKGROUNDS
+   ============================================== */
+.bg-gradient-primary {
+  background: linear-gradient(180deg, var(--primary-color) 10%, var(--primary-dark) 100%);
+  color: var(--text-white);
+}
+
+.bg-gradient-success {
+  background: linear-gradient(180deg, var(--success-color) 10%, var(--success-dark) 100%);
+  color: var(--text-white);
+}
+
+.bg-gradient-info {
+  background: linear-gradient(180deg, var(--info-color) 10%, var(--info-dark) 100%);
+  color: var(--text-white);
+}
+
+.bg-gradient-warning {
+  background: linear-gradient(180deg, var(--warning-color) 10%, var(--warning-dark) 100%);
+  color: var(--text-white);
+}
+
+/* ==============================================
+   SMALL BOX - Hộp thống kê nhỏ
+   ============================================== */
+.small-box {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  display: block;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.small-box > .inner {
+  padding: 10px;
+}
+
+.small-box h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* ==============================================
+   CARD - Thẻ hiển thị nội dung
+   ============================================== */
+.card {
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+  padding: 0.75rem 1.25rem;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* ==============================================
+   TREND INDICATORS - Chỉ số xu hướng
+   ============================================== */
+.trend-up {
+  color: var(--success-color);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.trend-down {
+  color: var(--danger-color);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+/* ==============================================
+   TABLE STYLES - Bảng dữ liệu
+   ============================================== */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0,0,0,.02);
+}
+
+.table-valign-middle tbody td {
+  vertical-align: middle;
+}
+
+/* ==============================================
+   ACTIVITY LIST - Danh sách hoạt động
+   ============================================== */
+.products-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.products-list .item {
+  overflow: hidden;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.products-list .item:last-child {
+  border-bottom: none;
+}
+
+.products-list .product-img {
+  float: left;
+  margin-right: 10px;
+}
+
+.products-list .product-info {
+  margin-left: 50px;
+}
+
+.products-list .product-title {
+  font-weight: 600;
+  display: block;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.products-list .product-title:hover {
+  color: var(--primary-color);
+}
+
+.products-list .product-description {
+  color: var(--text-secondary);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--font-size-sm);
+}
+
+/* ==============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================== */
+@media (max-width: 768px) {
+  .info-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-box .info-box-icon {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .small-box h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ==============================================
+   ANIMATIONS
+   ============================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card,
+.info-box {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ==============================================
+   UTILITY CLASSES
+   ============================================== */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.elevation-1 {
+  box-shadow: var(--shadow-sm);
+}
+
+.elevation-2 {
+  box-shadow: var(--shadow-md);
+}
+
+.elevation-3 {
+  box-shadow: var(--shadow-lg);
+}

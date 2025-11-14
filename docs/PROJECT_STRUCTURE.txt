@@ -1,0 +1,263 @@
+================================================================================
+              📊 CẤU TRÚC DỰ ÁN DASHBOARD CEO
+================================================================================
+
+Dashboard_CEO/
+│
+├── 📄 index.html                    # Trang chính của dashboard
+│   └─ Mô tả: File HTML chính, hiển thị toàn bộ giao diện dashboard
+│   └─ Chức năng: Tổng quan KPI, biểu đồ, bảng, hoạt động
+│
+├── 📄 README.md                     # Hướng dẫn sử dụng dự án
+│   └─ Mô tả: File markdown chứa tất cả hướng dẫn cơ bản
+│   └─ Nội dung: Cài đặt, sử dụng, tùy chỉnh, FAQ
+│
+├── 📄 .gitignore                    # File cấu hình Git
+│   └─ Mô tả: Liệt kê các file/folder không push lên Git
+│
+├── 📁 assets/                       # Thư mục tài nguyên
+│   │
+│   ├── 📁 css/                      # Thư mục chứa file CSS
+│   │   ├── 📄 variables.css         # Biến CSS (màu, spacing, font)
+│   │   │   └─ Chức năng: Định nghĩa các biến toàn cục
+│   │   │   └─ Ví dụ: --primary-color, --spacing-md
+│   │   │
+│   │   └── 📄 style.css             # Custom styles chính
+│   │       └─ Chức năng: Styles cho info-box, card, table, etc.
+│   │       └─ Bao gồm: Responsive, animations, utilities
+│   │
+│   ├── 📁 js/                       # Thư mục chứa file JavaScript
+│   │   ├── 📄 data.js               # Dữ liệu mẫu
+│   │   │   └─ Chức năng: Lưu trữ tất cả dữ liệu dashboard
+│   │   │   └─ Nội dung: KPI, revenue, products, activities
+│   │   │
+│   │   ├── 📄 charts.js             # Hàm tạo biểu đồ
+│   │   │   └─ Chức năng: Khởi tạo và render charts
+│   │   │   └─ Bao gồm: Revenue chart, Product chart, Sparklines
+│   │   │
+│   │   └── 📄 main.js               # File JavaScript chính
+│   │       └─ Chức năng: Khởi tạo dashboard, event handlers
+│   │       └─ Bao gồm: initDashboard(), utilities, helpers
+│   │
+│   └── 📁 images/                   # Thư mục chứa hình ảnh
+│       └─ Chức năng: Logo, avatar, product images (nếu cần)
+│       └─ Định dạng: .png, .jpg, .svg
+│
+├── 📁 pages/                        # Thư mục chứa các trang khác
+│   ├── 📄 revenue.html              # Trang chi tiết doanh thu (tùy chọn)
+│   ├── 📄 customers.html            # Trang quản lý khách hàng (tùy chọn)
+│   ├── 📄 products.html             # Trang quản lý sản phẩm (tùy chọn)
+│   └── 📄 reports.html              # Trang báo cáo (tùy chọn)
+│
+└── 📁 docs/                         # Thư mục tài liệu
+    ├── 📄 STRUCTURE_GUIDE.md        # Hướng dẫn chi tiết về cấu trúc
+    │   └─ Nội dung: Kiến trúc, best practices, troubleshooting
+    │
+    └── 📄 PROJECT_STRUCTURE.txt     # File này - Cấu trúc dự án dạng text
+        └─ Nội dung: Sơ đồ cây thư mục với giải thích
+
+================================================================================
+                          THÔNG TIN CHI TIẾT
+================================================================================
+
+📄 CÁC FILE CHÍNH
+────────────────────────────────────────────────────────────────────────────
+
+1. index.html (Trang chính)
+   ├─ Header: Navbar với menu, notifications, user menu
+   ├─ Sidebar: Navigation menu bên trái
+   ├─ Content:
+   │  ├─ 4 KPI boxes (Doanh thu, Lợi nhuận, Khách hàng, Đơn hàng)
+   │  ├─ Biểu đồ doanh thu (Area chart)
+   │  ├─ Biểu đồ sản phẩm (Donut chart)
+   │  ├─ Bảng top sản phẩm với sparklines
+   │  └─ Danh sách hoạt động gần đây
+   └─ Footer: Copyright và version info
+
+2. assets/css/variables.css (Biến CSS)
+   ├─ Colors: primary, success, info, warning, danger
+   ├─ Backgrounds: light, white, dark
+   ├─ Shadows: sm, md, lg
+   ├─ Border radius: sm, md, lg
+   ├─ Spacing: xs, sm, md, lg, xl
+   └─ Font sizes: sm, base, lg, xl, 2xl, 3xl
+
+3. assets/css/style.css (Custom Styles)
+   ├─ Info Box: Hộp hiển thị KPI
+   ├─ Gradient Backgrounds: Primary, success, info, warning
+   ├─ Small Box: Hộp thống kê nhỏ
+   ├─ Card: Thẻ hiển thị nội dung
+   ├─ Trend Indicators: Mũi tên lên/xuống
+   ├─ Table Styles: Bảng dữ liệu
+   ├─ Activity List: Danh sách hoạt động
+   ├─ Responsive: Media queries cho mobile
+   ├─ Animations: fadeIn, etc.
+   └─ Utility Classes: text-center, elevation, etc.
+
+4. assets/js/data.js (Dữ liệu)
+   ├─ revenueData: Doanh thu theo tháng (12 tháng)
+   ├─ productMarketShare: Thị phần 5 sản phẩm
+   ├─ sparklineData: Xu hướng bán hàng 7 ngày cho mỗi sản phẩm
+   ├─ kpiData: 4 chỉ số KPI chính
+   ├─ topProducts: Top 5 sản phẩm bán chạy
+   └─ recentActivities: 5 hoạt động gần đây
+
+5. assets/js/charts.js (Biểu đồ)
+   ├─ initRevenueChart(): Biểu đồ doanh thu (Area chart)
+   ├─ initProductChart(): Biểu đồ sản phẩm (Donut chart)
+   ├─ createSparkline(): Tạo sparkline nhỏ
+   ├─ initAllSparklines(): Khởi tạo tất cả sparklines
+   ├─ updateChartData(): Helper update dữ liệu chart
+   └─ destroyAllCharts(): Helper dọn dẹp charts
+
+6. assets/js/main.js (Logic chính)
+   ├─ initDashboard(): Hàm khởi tạo chính
+   ├─ initRevenueChartOnPage(): Khởi tạo biểu đồ doanh thu
+   ├─ initProductChartOnPage(): Khởi tạo biểu đồ sản phẩm
+   ├─ initSparklinesOnPage(): Khởi tạo sparklines
+   ├─ setupEventListeners(): Thiết lập events
+   ├─ handleRefresh(): Xử lý refresh
+   ├─ formatCurrency(): Format tiền VNĐ
+   ├─ formatNumber(): Format số với dấu phẩy
+   ├─ calculatePercentageChange(): Tính % thay đổi
+   ├─ showNotification(): Hiển thị thông báo
+   └─ cleanup(): Dọn dẹp resources
+
+================================================================================
+                          LUỒNG HOẠT ĐỘNG
+================================================================================
+
+STEP 1: Browser load index.html
+   │
+   ├─→ Load CSS files
+   │   ├─ Bootstrap CSS (CDN)
+   │   ├─ AdminLTE CSS (CDN)
+   │   ├─ ApexCharts CSS (CDN)
+   │   ├─ variables.css (Local)
+   │   └─ style.css (Local)
+   │
+   ├─→ Render HTML
+   │   ├─ Header
+   │   ├─ Sidebar
+   │   ├─ Content (empty charts)
+   │   └─ Footer
+   │
+   └─→ Load JavaScript files
+       ├─ jQuery (CDN)
+       ├─ Bootstrap JS (CDN)
+       ├─ AdminLTE JS (CDN)
+       ├─ ApexCharts JS (CDN)
+       ├─ data.js (Local) ──→ Khai báo dữ liệu
+       ├─ charts.js (Local) ──→ Khai báo hàm charts
+       └─ main.js (Local) ──→ Khởi tạo dashboard
+
+STEP 2: DOMContentLoaded event
+   │
+   └─→ main.js: initDashboard()
+       ├─ initRevenueChartOnPage()
+       │  └─ charts.js: initRevenueChart('#revenue-chart', revenueData)
+       │     └─ Render biểu đồ doanh thu
+       │
+       ├─ initProductChartOnPage()
+       │  └─ charts.js: initProductChart('#product-chart', productMarketShare)
+       │     └─ Render biểu đồ sản phẩm
+       │
+       ├─ initSparklinesOnPage()
+       │  └─ charts.js: initAllSparklines(sparklineData)
+       │     └─ Render 5 sparkline charts
+       │
+       └─ setupEventListeners()
+          └─ Thiết lập các event handlers
+
+STEP 3: Dashboard hiển thị hoàn chỉnh
+   └─ User có thể tương tác với dashboard
+
+================================================================================
+                     CÔNG NGHỆ & THƯ VIỆN SỬ DỤNG
+================================================================================
+
+Frontend Framework:
+├─ HTML5              : Cấu trúc trang web
+├─ CSS3               : Styling và animations
+└─ JavaScript ES6     : Logic và tương tác
+
+CSS Frameworks:
+├─ Bootstrap 4.6.2    : Responsive grid, components
+└─ AdminLTE 3.2       : Admin dashboard template
+
+JavaScript Libraries:
+├─ jQuery 3.6.0       : DOM manipulation, events
+├─ Bootstrap JS       : Bootstrap components (modal, dropdown)
+└─ ApexCharts 3.37.1  : Biểu đồ tương tác
+
+Icon Set:
+└─ Bootstrap Icons    : Icon font
+
+Fonts:
+└─ Source Sans 3      : Google Fonts
+
+================================================================================
+                      RESPONSIVE BREAKPOINTS
+================================================================================
+
+Desktop (Large):      ≥ 1200px
+Desktop (Medium):     ≥ 992px
+Tablet:               ≥ 768px
+Mobile (Large):       ≥ 576px
+Mobile (Small):       < 576px
+
+Các breakpoints này được định nghĩa bởi Bootstrap 4
+
+================================================================================
+                        BROWSER SUPPORT
+================================================================================
+
+✅ Chrome (latest)
+✅ Firefox (latest)
+✅ Safari (latest)
+✅ Edge (latest)
+⚠️  IE 11 (limited support, cần polyfills)
+
+================================================================================
+                       CÁC FILE CÓ THỂ TẠO THÊM
+================================================================================
+
+Trong tương lai, bạn có thể thêm:
+
+📁 assets/
+   ├─ 📁 fonts/              # Custom fonts
+   ├─ 📁 icons/              # Custom icon files
+   └─ 📁 plugins/            # Third-party plugins
+
+📁 api/                      # Mock API hoặc API endpoints
+   ├─ 📄 revenue.json        # Mock data cho revenue
+   ├─ 📄 products.json       # Mock data cho products
+   └─ 📄 customers.json      # Mock data cho customers
+
+📁 components/               # Reusable components
+   ├─ 📄 header.html         # Header component
+   ├─ 📄 sidebar.html        # Sidebar component
+   └─ 📄 footer.html         # Footer component
+
+📁 config/                   # Configuration files
+   ├─ 📄 config.js           # App configuration
+   └─ 📄 constants.js        # Constants và enums
+
+📁 utils/                    # Utility functions
+   ├─ 📄 formatters.js       # Format functions
+   ├─ 📄 validators.js       # Validation functions
+   └─ 📄 helpers.js          # Helper functions
+
+📄 .editorconfig             # Editor configuration
+📄 .prettierrc               # Code formatter config
+📄 .eslintrc.js              # JavaScript linter config
+📄 package.json              # NPM dependencies (nếu dùng npm)
+
+================================================================================
+
+Version: 1.0.0
+Last Updated: 2024
+Created for: Beginners in web development
+License: Free to use for learning purposes
+
+================================================================================

@@ -1,0 +1,68 @@
+# ========================================
+# GITIGNORE CHO DASHBOARD CEO
+# ========================================
+
+# OS Files
+# ========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+# ========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+.classpath
+
+# Logs
+# ========================================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies (nếu sau này dùng npm)
+# ========================================
+node_modules/
+bower_components/
+
+# Build files (nếu có)
+# ========================================
+dist/
+build/
+*.min.js
+*.min.css
+
+# Temporary files
+# ========================================
+*.tmp
+*.temp
+.cache/
+
+# Environment files
+# ========================================
+.env
+.env.local
+.env.*.local
+
+# Backup files
+# ========================================
+*.bak
+*.backup
+*~
+
+# Các file cá nhân
+# ========================================
+TODO.md
+NOTES.md
