@@ -4,13 +4,50 @@ Dashboard CEO là một ứng dụng web hiển thị các chỉ số kinh doanh
 
 ## 🎯 Tính năng
 
+### Trang chính (index.html)
 - ✅ Hiển thị các chỉ số KPI quan trọng (Doanh thu, Lợi nhuận, Khách hàng, Đơn hàng)
 - 📈 Biểu đồ doanh thu theo tháng
 - 🥧 Biểu đồ tròn thị phần sản phẩm
 - 📋 Bảng top sản phẩm bán chạy với sparkline charts
 - 🔔 Danh sách hoạt động gần đây
+
+### Trang Doanh Thu (pages/revenue.html)
+- 💰 Thống kê tổng quan: doanh thu tháng, năm, trung bình, tăng trưởng
+- 📊 Biểu đồ xu hướng doanh thu so sánh 2 năm
+- 🗺️ Biểu đồ doanh thu theo khu vực (Miền Bắc, Nam, Trung, Quốc tế)
+- 📅 Biểu đồ so sánh doanh thu 3 năm
+- 📋 Bảng chi tiết doanh thu, chi phí, lợi nhuận theo tháng
+
+### Trang Khách Hàng (pages/customers.html)
+- 👥 Thống kê: Tổng khách hàng, mới, VIP, mất khách hàng
+- 📈 Biểu đồ xu hướng khách hàng mới
+- 🎯 Biểu đồ phân loại khách hàng (VIP, Thân thiết, Thường xuyên, Bình thường)
+- 🌟 Bảng top 10 khách hàng VIP với phân hạng: Diamond, Platinum, Gold, Silver
+- 📄 Pagination cho danh sách khách hàng
+
+### Trang Sản Phẩm (pages/products.html)
+- 📦 Thống kê: Tổng sản phẩm, còn hàng, sắp hết, hết hàng
+- 📊 Biểu đồ doanh số theo danh mục
+- 📉 Biểu đồ tỷ lệ tồn kho
+- 📋 Bảng sản phẩm bán chạy với xu hướng tăng/giảm
+- ⚠️ Cảnh báo tồn kho thấp và sản phẩm hết hàng
+- 🔍 Tìm kiếm sản phẩm
+
+### Trang Báo Cáo (pages/reports.html)
+- 📅 Chọn khoảng thời gian: Ngày, Tuần, Tháng, Năm
+- 📊 KPI tổng quan với progress bars
+- 📈 Biểu đồ xu hướng kinh doanh 12 tháng (Multi-type: Column + Line)
+- 🏆 Top 5 sản phẩm đóng góp doanh thu
+- 📡 Hiệu suất theo kênh bán hàng (Website, Cửa hàng, App, Đối tác)
+- 💡 Nhận xét điểm mạnh, điểm yếu và đề xuất
+- 📥 Xuất báo cáo PDF/Excel
+
+### Tính năng chung
 - 📱 Responsive design - tương thích với mobile, tablet, desktop
 - 🎨 Giao diện đẹp, chuyên nghiệp sử dụng AdminLTE
+- 🧭 Navigation sidebar với active state
+- 🍞 Breadcrumb navigation trên mọi trang
+- 🎯 Consistent UI/UX trên tất cả trang
 
 ## 📁 Cấu trúc dự án
 
@@ -31,12 +68,15 @@ Dashboard_CEO/
 │   │
 │   └── images/           # Thư mục chứa hình ảnh (nếu có)
 │
-├── pages/                # Thư mục chứa các trang khác (tùy chọn)
+├── pages/                # Thư mục chứa các trang khác
 │   ├── revenue.html      # Trang chi tiết doanh thu
 │   ├── customers.html    # Trang quản lý khách hàng
-│   └── products.html     # Trang quản lý sản phẩm
+│   ├── products.html     # Trang quản lý sản phẩm
+│   └── reports.html      # Trang báo cáo tổng hợp
 │
-└── docs/                 # Thư mục tài liệu (tùy chọn)
+└── docs/                 # Thư mục tài liệu
+    ├── STRUCTURE_GUIDE.md      # Hướng dẫn chi tiết về kiến trúc
+    └── PROJECT_STRUCTURE.txt   # Sơ đồ cấu trúc dự án
 ```
 
 ## 🚀 Cách sử dụng
