@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kim - Trợ lý ảo | Dashboard CEO</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <!-- AdminLTE -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+
+    <!--begin::Header-->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="bi bi-list"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="../index.html" class="nav-link">Tổng quan</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Notifications -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="bi bi-bell"></i>
+            <span class="badge badge-warning navbar-badge">15</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-item dropdown-header">15 Thông báo</span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-envelope mr-2"></i> 4 tin nhắn mới
+              <span class="float-right text-muted text-sm">3 phút</span>
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-people mr-2"></i> 8 yêu cầu kết bạn
+              <span class="float-right text-muted text-sm">12 giờ</span>
+            </a>
+          </div>
+        </li>
+        <!-- User -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="bi bi-person-circle"></i>
+            <span>CEO Nguyễn Văn A</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-person mr-2"></i> Hồ sơ
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-gear mr-2"></i> Cài đặt
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-box-arrow-right mr-2"></i> Đăng xuất
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!--end::Header-->
+
+    <!--begin::Sidebar-->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../index.html" class="brand-link">
+        <i class="bi bi-speedometer2 brand-image" style="font-size: 2rem; margin-left: 0.8rem;"></i>
+        <span class="brand-text font-weight-light">Dashboard CEO</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- User Panel -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <i class="bi bi-person-circle" style="font-size: 2rem; color: #fff;"></i>
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">CEO Nguyễn Văn A</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+            <li class="nav-item">
+              <a href="../index.html" class="nav-link">
+                <i class="nav-icon bi bi-house-door"></i>
+                <p>Tổng quan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="revenue.html" class="nav-link">
+                <i class="nav-icon bi bi-graph-up"></i>
+                <p>Doanh thu</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="customers.html" class="nav-link">
+                <i class="nav-icon bi bi-people"></i>
+                <p>Khách hàng</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="products.html" class="nav-link">
+                <i class="nav-icon bi bi-box-seam"></i>
+                <p>Sản phẩm</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="reports.html" class="nav-link">
+                <i class="nav-icon bi bi-file-text"></i>
+                <p>Báo cáo</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="kim-assistant.html" class="nav-link active">
+                <i class="nav-icon bi bi-robot"></i>
+                <p>Kim - Trợ lý ảo</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon bi bi-gear"></i>
+                <p>Cài đặt</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!--end::Sidebar-->
+
+    <!--begin::Content Wrapper-->
+    <div class="content-wrapper">
+      <!-- Content Header -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><i class="bi bi-robot"></i> Kim - Trợ lý ảo thông minh</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Kim - Trợ lý ảo</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="kim-chat-container">
+
+          <!-- Messages Area -->
+          <div class="kim-messages" id="kim-messages">
+            <!-- Welcome Message -->
+            <div class="kim-welcome" id="kim-welcome">
+              <div class="kim-welcome-icon">
+                <i class="bi bi-robot"></i>
+              </div>
+              <h2 class="kim-welcome-title">Xin chào, tôi là Kim!</h2>
+              <p class="kim-welcome-subtitle">Trợ lý ảo thông minh của bạn. Hãy chọn một câu hỏi bên dưới để bắt đầu.</p>
+            </div>
+          </div>
+
+          <!-- Predefined Questions -->
+          <div class="kim-questions-grid" id="kim-questions">
+            <div class="kim-question-card" data-question="revenue">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #007bff, #0056b3); color: white;">
+                <i class="bi bi-currency-dollar"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">Doanh thu tháng này</div>
+                <div class="kim-question-desc">Tổng doanh thu và so sánh các cơ sở</div>
+              </div>
+            </div>
+
+            <div class="kim-question-card" data-question="top-product">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #28a745, #1e7e34); color: white;">
+                <i class="bi bi-trophy"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">Sản phẩm bán đắt nhất</div>
+                <div class="kim-question-desc">Top sản phẩm theo doanh số</div>
+              </div>
+            </div>
+
+            <div class="kim-question-card" data-question="best-location">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #17a2b8, #117a8b); color: white;">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">Cơ sở hiệu quả nhất</div>
+                <div class="kim-question-desc">Xếp hạng các cơ sở theo hiệu quả</div>
+              </div>
+            </div>
+
+            <div class="kim-question-card" data-question="customers">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #ffc107, #d39e00); color: white;">
+                <i class="bi bi-people"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">Khách hàng mới</div>
+                <div class="kim-question-desc">Thống kê khách hàng trong tháng</div>
+              </div>
+            </div>
+
+            <div class="kim-question-card" data-question="profit">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #6f42c1, #5a32a3); color: white;">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">Lợi nhuận</div>
+                <div class="kim-question-desc">Phân tích lợi nhuận theo cơ sở</div>
+              </div>
+            </div>
+
+            <div class="kim-question-card" data-question="comparison">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #fd7e14, #dc6502); color: white;">
+                <i class="bi bi-bar-chart"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">So sánh cơ sở</div>
+                <div class="kim-question-desc">So sánh hiệu quả giữa các cơ sở</div>
+              </div>
+            </div>
+
+            <div class="kim-question-card" data-question="growth">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #20c997, #19a974); color: white;">
+                <i class="bi bi-arrow-up-circle"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">Tăng trưởng</div>
+                <div class="kim-question-desc">Xu hướng tăng trưởng theo tháng</div>
+              </div>
+            </div>
+
+            <div class="kim-question-card" data-question="employees">
+              <div class="kim-question-icon" style="background: linear-gradient(135deg, #e83e8c, #c51162); color: white;">
+                <i class="bi bi-person-badge"></i>
+              </div>
+              <div class="kim-question-text">
+                <div class="kim-question-title">Nhân viên</div>
+                <div class="kim-question-desc">Thống kê nhân sự các cơ sở</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+    <!--end::Content Wrapper-->
+
+    <!--begin::Footer-->
+    <footer class="main-footer">
+      <strong>Copyright &copy; 2024 <a href="#">Công ty của bạn</a>.</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0
+      </div>
+    </footer>
+    <!--end::Footer-->
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+  <!-- Load Data -->
+  <script src="../assets/js/data.js"></script>
+
+  <!-- Kim AI Assistant Script -->
+  <script>
+    // Kim AI Assistant Logic
+    const kimMessages = document.getElementById('kim-messages');
+    const kimWelcome = document.getElementById('kim-welcome');
+    const questionCards = document.querySelectorAll('.kim-question-card');
+
+    // Format number
+    function formatNumber(num) {
+      return new Intl.NumberFormat('vi-VN').format(num);
+    }
+
+    // Format currency
+    function formatCurrency(num) {
+      if (num >= 1000) {
+        return (num / 1000).toFixed(2) + ' tỷ';
+      }
+      return num + ' triệu';
+    }
+
+    // Get current time
+    function getCurrentTime() {
+      const now = new Date();
+      return now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Add message to chat
+    function addMessage(text, type = 'assistant') {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `kim-message ${type}`;
+
+      if (type === 'user') {
+        messageDiv.innerHTML = `
+          <div class="kim-message-content">
+            <div class="kim-message-bubble">${text}</div>
+            <div class="kim-message-time">${getCurrentTime()}</div>
+          </div>
+          <div class="kim-avatar">
+            <i class="bi bi-person-circle"></i>
+          </div>
+        `;
+      } else {
+        messageDiv.innerHTML = `
+          <div class="kim-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+          <div class="kim-message-content">
+            <div class="kim-message-bubble">${text}</div>
+            <div class="kim-message-time">${getCurrentTime()}</div>
+          </div>
+        `;
+      }
+
+      kimMessages.appendChild(messageDiv);
+      kimMessages.scrollTop = kimMessages.scrollHeight;
+    }
+
+    // Show typing indicator
+    function showTyping() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'kim-message assistant';
+      typingDiv.id = 'typing-indicator';
+      typingDiv.innerHTML = `
+        <div class="kim-avatar">
+          <i class="bi bi-robot"></i>
+        </div>
+        <div class="kim-message-content">
+          <div class="kim-message-bubble">
+            <div class="kim-typing-indicator">
+              <div class="kim-typing-dot"></div>
+              <div class="kim-typing-dot"></div>
+              <div class="kim-typing-dot"></div>
+            </div>
+          </div>
+        </div>
+      `;
+      kimMessages.appendChild(typingDiv);
+      kimMessages.scrollTop = kimMessages.scrollHeight;
+    }
+
+    function removeTyping() {
+      const typing = document.getElementById('typing-indicator');
+      if (typing) typing.remove();
+    }
+
+    // Handle question selection
+    function handleQuestion(questionType) {
+      // Hide welcome message
+      if (kimWelcome) {
+        kimWelcome.style.display = 'none';
+      }
+
+      let questionText = '';
+      let response = '';
+
+      switch(questionType) {
+        case 'revenue':
+          questionText = 'Doanh thu tháng này là bao nhiêu?';
+          const currentMonth = 10; // Tháng 11
+          let totalRevenue = 0;
+          let revenueByLocation = [];
+
+          locations.forEach(loc => {
+            const rev = locationData[loc.id].revenue[currentMonth];
+            totalRevenue += rev;
+            revenueByLocation.push({ name: loc.name, revenue: rev, color: loc.color });
+          });
+
+          revenueByLocation.sort((a, b) => b.revenue - a.revenue);
+
+          response = `<strong>Doanh thu tháng 11/2024:</strong><br><br>`;
+          response += `💰 <strong>Tổng doanh thu:</strong> ${formatCurrency(totalRevenue)}<br><br>`;
+          response += `<strong>Theo từng cơ sở:</strong><br>`;
+          revenueByLocation.forEach((loc, index) => {
+            const emoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '📍';
+            response += `${emoji} <strong>${loc.name}:</strong> ${formatCurrency(loc.revenue)}<br>`;
+          });
+          break;
+
+        case 'top-product':
+          questionText = 'Sản phẩm bán đắt nhất là gì?';
+          const allProducts = [];
+
+          locations.forEach(loc => {
+            productsByLocation[loc.id].topProducts.forEach(product => {
+              const existing = allProducts.find(p => p.name === product.name);
+              if (existing) {
+                existing.sold += product.sold;
+                existing.revenue += product.revenue;
+              } else {
+                allProducts.push({ ...product, locationCount: 1 });
+              }
+            });
+          });
+
+          allProducts.sort((a, b) => b.revenue - a.revenue);
+
+          response = `<strong>🏆 Top 5 sản phẩm bán chạy nhất:</strong><br><br>`;
+          allProducts.slice(0, 5).forEach((product, index) => {
+            const emoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+            response += `${emoji} <strong>${product.name}</strong><br>`;
+            response += `💵 Giá: ${formatNumber(product.price)} VNĐ<br>`;
+            response += `📦 Đã bán: ${formatNumber(product.sold)} sản phẩm<br>`;
+            response += `💰 Doanh thu: ${formatCurrency(Math.round(product.revenue / 1000000))} triệu<br><br>`;
+          });
+          break;
+
+        case 'best-location':
+          questionText = 'Cơ sở nào hiệu quả nhất?';
+          const locationRanking = locations.map(loc => {
+            const data = locationData[loc.id];
+            const totalRev = data.revenue.reduce((a, b) => a + b, 0);
+            const totalProfit = data.profit.reduce((a, b) => a + b, 0);
+            const profitMargin = ((totalProfit / totalRev) * 100).toFixed(1);
+
+            return {
+              name: loc.name,
+              revenue: totalRev,
+              profit: totalProfit,
+              margin: parseFloat(profitMargin),
+              employees: data.employees
+            };
+          });
+
+          locationRanking.sort((a, b) => b.revenue - a.revenue);
+
+          response = `<strong>📊 Xếp hạng cơ sở theo doanh thu năm 2024:</strong><br><br>`;
+          locationRanking.forEach((loc, index) => {
+            const emoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+            response += `${emoji} <strong>${loc.name}</strong><br>`;
+            response += `💰 Doanh thu: ${formatCurrency(loc.revenue)}<br>`;
+            response += `📈 Lợi nhuận: ${formatCurrency(loc.profit)} (${loc.margin}%)<br>`;
+            response += `👥 Nhân viên: ${loc.employees} người<br><br>`;
+          });
+          break;
+
+        case 'customers':
+          questionText = 'Có bao nhiêu khách hàng mới trong tháng?';
+          const month = 10;
+          let totalCustomers = 0;
+          let customersByLoc = [];
+
+          locations.forEach(loc => {
+            const cust = locationData[loc.id].customers[month];
+            totalCustomers += cust;
+            customersByLoc.push({ name: loc.name, customers: cust });
+          });
+
+          customersByLoc.sort((a, b) => b.customers - a.customers);
+
+          response = `<strong>👥 Khách hàng tháng 11/2024:</strong><br><br>`;
+          response += `🎯 <strong>Tổng:</strong> ${formatNumber(totalCustomers)} khách hàng<br><br>`;
+          response += `<strong>Theo từng cơ sở:</strong><br>`;
+          customersByLoc.forEach(loc => {
+            response += `📍 <strong>${loc.name}:</strong> ${formatNumber(loc.customers)} khách<br>`;
+          });
+          break;
+
+        case 'profit':
+          questionText = 'Lợi nhuận của các cơ sở như thế nào?';
+          const profitData = locations.map(loc => {
+            const data = locationData[loc.id];
+            const totalRev = data.revenue.reduce((a, b) => a + b, 0);
+            const totalProf = data.profit.reduce((a, b) => a + b, 0);
+            const margin = ((totalProf / totalRev) * 100).toFixed(1);
+
+            return {
+              name: loc.name,
+              profit: totalProf,
+              revenue: totalRev,
+              margin: parseFloat(margin)
+            };
+          });
+
+          profitData.sort((a, b) => b.profit - a.profit);
+
+          response = `<strong>💹 Phân tích lợi nhuận năm 2024:</strong><br><br>`;
+          profitData.forEach((loc, index) => {
+            const emoji = index === 0 ? '🌟' : '⭐';
+            const status = loc.margin >= 32 ? '✅ Tốt' : loc.margin >= 28 ? '⚠️ Trung bình' : '❌ Cần cải thiện';
+            response += `${emoji} <strong>${loc.name}</strong><br>`;
+            response += `💰 Lợi nhuận: ${formatCurrency(loc.profit)}<br>`;
+            response += `📊 Tỷ suất: ${loc.margin}% ${status}<br><br>`;
+          });
+          break;
+
+        case 'comparison':
+          questionText = 'So sánh hiệu quả giữa các cơ sở';
+          response = `<strong>📊 So sánh tổng quan 7 cơ sở:</strong><br><br>`;
+
+          const comparison = locations.map(loc => {
+            const data = locationData[loc.id];
+            return {
+              name: loc.name,
+              revenue: data.revenue.reduce((a, b) => a + b, 0),
+              orders: data.orders.reduce((a, b) => a + b, 0),
+              employees: data.employees
+            };
+          });
+
+          comparison.sort((a, b) => b.revenue - a.revenue);
+
+          comparison.forEach((loc, index) => {
+            const avgPerEmployee = (loc.revenue / loc.employees).toFixed(1);
+            response += `${index + 1}. <strong>${loc.name}</strong><br>`;
+            response += `💰 DT: ${formatCurrency(loc.revenue)} | 📦 ${formatNumber(loc.orders)} đơn<br>`;
+            response += `👤 ${loc.employees} NV | ⚡ ${avgPerEmployee} triệu/người<br><br>`;
+          });
+          break;
+
+        case 'growth':
+          questionText = 'Xu hướng tăng trưởng như thế nào?';
+          const growth2022 = businessDataByMonth[2022].revenue.reduce((a, b) => a + b, 0);
+          const growth2023 = businessDataByMonth[2023].revenue.reduce((a, b) => a + b, 0);
+          const growth2024 = businessDataByMonth[2024].revenue.reduce((a, b) => a + b, 0);
+
+          const growth2223 = (((growth2023 - growth2022) / growth2022) * 100).toFixed(1);
+          const growth2324 = (((growth2024 - growth2023) / growth2023) * 100).toFixed(1);
+
+          response = `<strong>📈 Phân tích tăng trưởng:</strong><br><br>`;
+          response += `<strong>Doanh thu theo năm:</strong><br>`;
+          response += `2022: ${formatCurrency(growth2022)}<br>`;
+          response += `2023: ${formatCurrency(growth2023)} (+${growth2223}%)<br>`;
+          response += `2024: ${formatCurrency(growth2024)} (+${growth2324}%)<br><br>`;
+          response += `<strong>Nhận xét:</strong><br>`;
+
+          if (parseFloat(growth2324) > parseFloat(growth2223)) {
+            response += `✅ Tốc độ tăng trưởng đang tăng tốc!<br>`;
+            response += `🚀 Dự báo 2025 rất khả quan.`;
+          } else {
+            response += `⚠️ Tốc độ tăng trưởng đang chậm lại.<br>`;
+            response += `💡 Cần có chiến lược mới để đẩy mạnh.`;
+          }
+          break;
+
+        case 'employees':
+          questionText = 'Thống kê nhân sự các cơ sở';
+          let totalEmp = 0;
+          const empData = [];
+
+          locations.forEach(loc => {
+            const emp = locationData[loc.id].employees;
+            const rev = locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+            const avgRev = (rev / emp).toFixed(1);
+
+            totalEmp += emp;
+            empData.push({ name: loc.name, employees: emp, avgRevenue: parseFloat(avgRev) });
+          });
+
+          empData.sort((a, b) => b.avgRevenue - a.avgRevenue);
+
+          response = `<strong>👥 Thống kê nhân sự 2024:</strong><br><br>`;
+          response += `<strong>Tổng số nhân viên:</strong> ${totalEmp} người<br><br>`;
+          response += `<strong>Hiệu quả trung bình/nhân viên:</strong><br>`;
+          empData.forEach((loc, index) => {
+            const emoji = index < 3 ? '⭐' : '👤';
+            response += `${emoji} <strong>${loc.name}:</strong> ${loc.employees} NV<br>`;
+            response += `💰 TB: ${loc.avgRevenue} triệu/người<br><br>`;
+          });
+          break;
+      }
+
+      // Add user question
+      addMessage(questionText, 'user');
+
+      // Show typing
+      showTyping();
+
+      // Simulate AI thinking time
+      setTimeout(() => {
+        removeTyping();
+        addMessage(response, 'assistant');
+      }, 1000 + Math.random() * 1000);
+    }
+
+    // Attach event listeners to question cards
+    questionCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const questionType = card.getAttribute('data-question');
+        handleQuestion(questionType);
+      });
+    });
+  </script>
+</body>
+</html>

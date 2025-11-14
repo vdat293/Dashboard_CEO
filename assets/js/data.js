@@ -1,38 +1,124 @@
 /**
- * DỮ LIỆU MẪU CHO DASHBOARD CEO
- * File này chứa tất cả dữ liệu mẫu để hiển thị trên dashboard
- * Trong thực tế, dữ liệu này sẽ được lấy từ API backend
- *
- * CẬP NHẬT: Dữ liệu đầy đủ 3 năm (2022-2024) với khả năng so sánh và phân tích
+ * DỮ LIỆU MẪU CHO DASHBOARD CEO - MULTI-LOCATION
+ * File này chứa dữ liệu cho 7 cơ sở kinh doanh
+ * Cập nhật: Hỗ trợ so sánh giữa các cơ sở
  */
 
 // ============================================
-// DỮ LIỆU CHI TIẾT THEO THÁNG VÀ NĂM
+// DANH SÁCH CÁC CƠ SỞ / CHI NHÁNH
 // ============================================
 
-// Dữ liệu chi tiết kinh doanh theo tháng (đơn vị: triệu VNĐ)
-// Logic: Cao đầu năm (Tết), thấp giữa năm, cao cuối năm (mùa mua sắm)
+const locations = [
+  { id: 'HN', name: 'Hà Nội', region: 'Miền Bắc', isHQ: true, color: '#007bff' },
+  { id: 'HCM', name: 'Hồ Chí Minh', region: 'Miền Nam', isHQ: false, color: '#28a745' },
+  { id: 'DN', name: 'Đà Nẵng', region: 'Miền Trung', isHQ: false, color: '#17a2b8' },
+  { id: 'HP', name: 'Hải Phòng', region: 'Miền Bắc', isHQ: false, color: '#ffc107' },
+  { id: 'CT', name: 'Cần Thơ', region: 'Miền Nam', isHQ: false, color: '#6f42c1' },
+  { id: 'NT', name: 'Nha Trang', region: 'Miền Trung', isHQ: false, color: '#fd7e14' },
+  { id: 'VT', name: 'Vũng Tàu', region: 'Miền Nam', isHQ: false, color: '#20c997' }
+];
+
+// ============================================
+// DỮ LIỆU THEO CƠ SỞ VÀ THÁNG (2024)
+// ============================================
+
+const locationData = {
+  // Hà Nội - Trụ sở chính (lớn nhất)
+  HN: {
+    revenue:    [3250, 3480, 2890, 2650, 2420, 2380, 2950, 3180, 2780, 2850, 3420, 3680], // 35,940 triệu/năm
+    expenses:   [2145, 2262, 1879, 1723, 1573, 1547, 1917, 2067, 1807, 1853, 2224, 2392],
+    profit:     [1105, 1218, 1011, 927, 847, 833, 1033, 1113, 973, 997, 1196, 1288],
+    orders:     [4250, 4580, 3820, 3520, 3210, 3150, 3890, 4200, 3680, 3780, 4520, 4892],
+    customers:  [1285, 1378, 1156, 1065, 968, 952, 1175, 1268, 1110, 1142, 1365, 1456],
+    employees: 85
+  },
+
+  // Hồ Chí Minh - Cơ sở lớn thứ 2
+  HCM: {
+    revenue:    [2980, 3190, 2650, 2430, 2220, 2180, 2710, 2920, 2550, 2610, 3140, 3380], // 32,960 triệu/năm
+    expenses:   [1967, 2105, 1749, 1604, 1465, 1439, 1789, 1927, 1683, 1723, 2072, 2230],
+    profit:     [1013, 1085, 901, 826, 755, 741, 921, 993, 867, 887, 1068, 1150],
+    orders:     [3890, 4180, 3490, 3220, 2940, 2890, 3560, 3850, 3370, 3460, 4150, 4480],
+    customers:  [1175, 1262, 1055, 973, 887, 873, 1075, 1162, 1018, 1045, 1253, 1352],
+    employees: 72
+  },
+
+  // Đà Nẵng - Miền Trung
+  DN: {
+    revenue:    [1820, 1950, 1620, 1485, 1355, 1330, 1650, 1780, 1555, 1595, 1915, 2060], // 20,115 triệu/năm
+    expenses:   [1237, 1326, 1100, 1009, 921, 904, 1122, 1210, 1057, 1084, 1302, 1400],
+    profit:     [583, 624, 520, 476, 434, 426, 528, 570, 498, 511, 613, 660],
+    orders:     [2380, 2555, 2130, 1960, 1790, 1755, 2175, 2345, 2050, 2105, 2525, 2720],
+    customers:  [718, 771, 643, 592, 540, 530, 656, 708, 619, 635, 762, 821],
+    employees: 45
+  },
+
+  // Hải Phòng - Miền Bắc
+  HP: {
+    revenue:    [1620, 1740, 1445, 1325, 1210, 1190, 1475, 1590, 1390, 1425, 1710, 1840], // 17,960 triệu/năm
+    expenses:   [1133, 1218, 1012, 928, 847, 833, 1033, 1113, 973, 998, 1197, 1288],
+    profit:     [487, 522, 433, 397, 363, 357, 442, 477, 417, 427, 513, 552],
+    orders:     [2120, 2280, 1900, 1750, 1600, 1570, 1945, 2100, 1835, 1885, 2260, 2435],
+    customers:  [640, 688, 574, 528, 483, 474, 587, 634, 554, 569, 682, 735],
+    employees: 38
+  },
+
+  // Cần Thơ - Đồng bằng sông Cửu Long
+  CT: {
+    revenue:    [1450, 1555, 1290, 1185, 1080, 1060, 1315, 1420, 1240, 1270, 1525, 1640], // 16,030 triệu/năm
+    expenses:   [1015, 1089, 903, 830, 756, 742, 921, 994, 868, 889, 1068, 1148],
+    profit:     [435, 466, 387, 355, 324, 318, 394, 426, 372, 381, 457, 492],
+    orders:     [1900, 2040, 1700, 1565, 1430, 1405, 1735, 1875, 1640, 1680, 2015, 2170],
+    customers:  [574, 616, 513, 473, 432, 424, 524, 566, 495, 507, 608, 655],
+    employees: 35
+  },
+
+  // Nha Trang - Du lịch
+  NT: {
+    revenue:    [1280, 1375, 1140, 1045, 955, 940, 1165, 1260, 1100, 1130, 1355, 1460], // 14,205 triệu/năm
+    expenses:   [896, 963, 798, 732, 669, 658, 816, 882, 770, 791, 949, 1022],
+    profit:     [384, 412, 342, 313, 286, 282, 349, 378, 330, 339, 406, 438],
+    orders:     [1680, 1805, 1505, 1385, 1265, 1245, 1540, 1665, 1455, 1495, 1790, 1930],
+    customers:  [507, 545, 454, 418, 382, 376, 465, 502, 439, 451, 540, 582],
+    employees: 32
+  },
+
+  // Vũng Tàu - Ven biển
+  VT: {
+    revenue:    [1150, 1235, 1025, 940, 855, 840, 1045, 1130, 985, 1010, 1215, 1310], // 12,740 triệu/năm
+    expenses:   [805, 865, 718, 658, 599, 588, 732, 791, 690, 707, 851, 917],
+    profit:     [345, 370, 307, 282, 256, 252, 313, 339, 295, 303, 364, 393],
+    orders:     [1510, 1625, 1355, 1245, 1135, 1115, 1380, 1490, 1305, 1340, 1605, 1730],
+    customers:  [456, 490, 409, 376, 343, 337, 416, 450, 394, 405, 485, 522],
+    employees: 28
+  }
+};
+
+// ============================================
+// DỮ LIỆU LỊCH SỬ 3 NĂM (TỔNG TẤT CẢ CƠ SỞ)
+// ============================================
+
 const businessDataByMonth = {
   2024: {
-    revenue:    [3250, 3480, 2890, 2650, 2420, 2380, 2950, 3180, 2780, 2850, 3420, 3680], // Tổng: 35,940
-    expenses:   [2145, 2262, 1879, 1723, 1573, 1547, 1917, 2067, 1807, 1853, 2224, 2392], // ~65% của revenue
-    profit:     [1105, 1218,  1011, 927,   847,  833,  1033, 1113,  973,  997,  1196, 1288], // ~35% margin
-    orders:     [4250, 4580, 3820, 3520, 3210, 3150, 3890, 4200, 3680, 3780, 4520, 4892],
-    customers:  [1285, 1378, 1156, 1065,  968,  952, 1175, 1268, 1110, 1142, 1365, 1456]
+    revenue:    [13550, 14525, 12060, 11060, 10095, 9920, 12310, 13280, 11600, 11890, 14280, 15370], // 149,950 triệu
+    expenses:   [9198, 9828, 8159, 7484, 6830, 6711, 8330, 8984, 7848, 8045, 9663, 10397],
+    profit:     [4352, 4697, 3901, 3576, 3265, 3209, 3980, 4296, 3752, 3845, 4617, 4973],
+    orders:     [17730, 19065, 15900, 14645, 13370, 13130, 16275, 17525, 15335, 15745, 18865, 20357],
+    customers:  [5355, 5750, 4804, 4425, 4035, 3966, 4913, 5290, 4629, 4754, 5695, 6123]
   },
   2023: {
-    revenue:    [2825, 3024, 2513, 2304, 2104, 2069, 2565, 2765, 2417, 2478, 2974, 3200], // Tổng: 31,238
-    expenses:   [1908, 2026, 1686, 1544, 1410, 1387, 1719, 1853, 1619, 1661, 1993, 2144], // ~67% của revenue
-    profit:     [ 917,  998,  827,  760,  694,  682,  846,  912,  798,  817,  981, 1056], // ~33% margin
-    orders:     [3915, 4220, 3521, 3245, 2960, 2904, 3585, 3870, 3391, 3482, 4166, 4515],
-    customers:  [1165, 1250, 1050,  975,  880,  865, 1070, 1150, 1008, 1036, 1240, 1322]
+    revenue:    [11775, 12623, 10479, 9613, 8778, 8624, 10699, 11537, 10082, 10340, 12413, 13357], // 130,320 triệu
+    expenses:   [7948, 8520, 7073, 6488, 5925, 5821, 7222, 7788, 6805, 6979, 8379, 9011],
+    profit:     [3827, 4103, 3406, 3125, 2853, 2803, 3477, 3749, 3277, 3361, 4034, 4346],
+    orders:     [15410, 16542, 13755, 12642, 11545, 11344, 14067, 15168, 13258, 13604, 16315, 17578],
+    customers:  [4655, 4994, 4153, 3818, 3487, 3426, 4248, 4580, 4004, 4109, 4925, 5305]
   },
   2022: {
-    revenue:    [2520, 2700, 2244, 2057, 1878, 1847, 2290, 2468, 2158, 2212, 2655, 2857], // Tổng: 27,886
-    expenses:   [1765, 1890, 1571, 1440, 1315, 1293, 1603, 1728, 1511, 1548, 1859, 2000], // ~70% của revenue
-    profit:     [ 755,  810,  673,  617,  563,  554,  687,  740,  647,  664,  796,  857], // ~30% margin
-    orders:     [3680, 3970, 3310, 3052, 2785, 2731, 3372, 3640, 3189, 3275, 3918, 4246],
-    customers:  [1105, 1185, 995,   925,  835,  820, 1015, 1090,  956,  983, 1176, 1254]
+    revenue:    [10220, 10959, 9099, 8350, 7624, 7489, 9291, 10021, 8757, 8984, 10782, 11604], // 113,180 triệu
+    expenses:   [7154, 7671, 6369, 5845, 5337, 5242, 6504, 7015, 6130, 6289, 7548, 8122],
+    profit:     [3066, 3288, 2730, 2505, 2287, 2247, 2787, 3006, 2627, 2695, 3234, 3482],
+    orders:     [14180, 15220, 12650, 11620, 10610, 10420, 12925, 13940, 12185, 12505, 15000, 16155],
+    customers:  [4280, 4594, 3818, 3508, 3203, 3147, 3903, 4210, 3680, 3776, 4530, 4877]
   }
 };
 
@@ -44,378 +130,144 @@ const monthLabels = [
 
 const monthLabelsShort = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
 
-// Dữ liệu doanh thu (backward compatibility)
+// ============================================
+// DỮ LIỆU SẢN PHẨM THEO CƠ SỞ
+// ============================================
+
+const productsByLocation = {
+  HN: {
+    categories: ['Điện tử', 'Thời trang', 'Gia dụng', 'Thực phẩm', 'Mỹ phẩm', 'Sách vở'],
+    sales: [857, 633, 437, 275, 191, 158], // triệu VNĐ
+    topProducts: [
+      { name: 'iPhone 15 Pro Max', category: 'Điện tử', price: 32990000, sold: 145, revenue: 4783550000 },
+      { name: 'Samsung Galaxy S24', category: 'Điện tử', price: 24990000, sold: 122, revenue: 3048780000 },
+      { name: 'MacBook Air M3', category: 'Điện tử', price: 28990000, sold: 98, revenue: 2841020000 },
+      { name: 'AirPods Pro 2', category: 'Điện tử', price: 6490000, sold: 234, revenue: 1518660000 },
+      { name: 'iPad Pro 11"', category: 'Điện tử', price: 23990000, sold: 87, revenue: 2087130000 }
+    ]
+  },
+  HCM: {
+    categories: ['Điện tử', 'Thời trang', 'Gia dụng', 'Thực phẩm', 'Mỹ phẩm', 'Sách vở'],
+    sales: [786, 580, 401, 252, 175, 145],
+    topProducts: [
+      { name: 'iPhone 15 Pro Max', category: 'Điện tử', price: 32990000, sold: 132, revenue: 4354680000 },
+      { name: 'Samsung Galaxy S24', category: 'Điện tử', price: 24990000, sold: 115, revenue: 2873850000 },
+      { name: 'Sony WH-1000XM5', category: 'Điện tử', price: 8990000, sold: 189, revenue: 1699110000 },
+      { name: 'Apple Watch Ultra 2', category: 'Điện tử', price: 21990000, sold: 76, revenue: 1671240000 },
+      { name: 'MacBook Air M3', category: 'Điện tử', price: 28990000, sold: 82, revenue: 2373180000 }
+    ]
+  },
+  DN: {
+    categories: ['Điện tử', 'Thời trang', 'Gia dụng', 'Thực phẩm', 'Mỹ phẩm', 'Sách vở'],
+    sales: [480, 354, 245, 154, 107, 88],
+    topProducts: [
+      { name: 'iPhone 14', category: 'Điện tử', price: 19990000, sold: 98, revenue: 1959020000 },
+      { name: 'Samsung Galaxy A54', category: 'Điện tử', price: 10490000, sold: 156, revenue: 1636440000 },
+      { name: 'AirPods Pro 2', category: 'Điện tử', price: 6490000, sold: 187, revenue: 1213630000 },
+      { name: 'iPad Air', category: 'Điện tử', price: 15990000, sold: 65, revenue: 1039350000 },
+      { name: 'Apple Watch SE', category: 'Điện tử', price: 7490000, sold: 123, revenue: 921270000 }
+    ]
+  },
+  HP: {
+    categories: ['Điện tử', 'Thời trang', 'Gia dụng', 'Thực phẩm', 'Mỹ phẩm', 'Sách vở'],
+    sales: [428, 316, 218, 137, 95, 79],
+    topProducts: [
+      { name: 'Samsung Galaxy A54', category: 'Điện tử', price: 10490000, sold: 145, revenue: 1521050000 },
+      { name: 'iPhone 14', category: 'Điện tử', price: 19990000, sold: 76, revenue: 1519240000 },
+      { name: 'Xiaomi Redmi Note 13', category: 'Điện tử', price: 5990000, sold: 234, revenue: 1401660000 },
+      { name: 'AirPods 3', category: 'Điện tử', price: 4990000, sold: 167, revenue: 833330000 },
+      { name: 'iPad 10', category: 'Điện tử', price: 10990000, sold: 58, revenue: 637420000 }
+    ]
+  },
+  CT: {
+    categories: ['Điện tử', 'Thời trang', 'Gia dụng', 'Thực phẩm', 'Mỹ phẩm', 'Sách vở'],
+    sales: [382, 282, 195, 123, 85, 71],
+    topProducts: [
+      { name: 'Samsung Galaxy A34', category: 'Điện tử', price: 7990000, sold: 178, revenue: 1422220000 },
+      { name: 'iPhone 13', category: 'Điện tử', price: 15990000, sold: 67, revenue: 1071330000 },
+      { name: 'Xiaomi Redmi Note 13', category: 'Điện tử', price: 5990000, sold: 201, revenue: 1203990000 },
+      { name: 'Oppo Reno 10', category: 'Điện tử', price: 9490000, sold: 123, revenue: 1167270000 },
+      { name: 'Samsung Galaxy Buds2', category: 'Điện tử', price: 2990000, sold: 198, revenue: 592020000 }
+    ]
+  },
+  NT: {
+    categories: ['Điện tử', 'Thời trang', 'Gia dụng', 'Thực phẩm', 'Mỹ phẩm', 'Sách vở'],
+    sales: [338, 250, 173, 109, 76, 63],
+    topProducts: [
+      { name: 'iPhone 13', category: 'Điện tử', price: 15990000, sold: 72, revenue: 1151280000 },
+      { name: 'Samsung Galaxy A34', category: 'Điện tử', price: 7990000, sold: 156, revenue: 1246440000 },
+      { name: 'Xiaomi Redmi Note 12', category: 'Điện tử', price: 4990000, sold: 189, revenue: 943110000 },
+      { name: 'JBL Flip 6', category: 'Điện tử', price: 3490000, sold: 145, revenue: 506050000 },
+      { name: 'Oppo A78', category: 'Điện tử', price: 6490000, sold: 112, revenue: 726880000 }
+    ]
+  },
+  VT: {
+    categories: ['Điện tử', 'Thời trang', 'Gia dụng', 'Thực phẩm', 'Mỹ phẩm', 'Sách vở'],
+    sales: [303, 224, 155, 98, 68, 56],
+    topProducts: [
+      { name: 'Samsung Galaxy A34', category: 'Điện tử', price: 7990000, sold: 142, revenue: 1134580000 },
+      { name: 'Xiaomi Redmi Note 12', category: 'Điện tử', price: 4990000, sold: 176, revenue: 878240000 },
+      { name: 'iPhone 13', category: 'Điện tử', price: 15990000, sold: 54, revenue: 863460000 },
+      { name: 'Oppo A78', category: 'Điện tử', price: 6490000, sold: 134, revenue: 869660000 },
+      { name: 'Samsung Galaxy Buds FE', category: 'Điện tử', price: 1990000, sold: 167, revenue: 332330000 }
+    ]
+  }
+};
+
+// ============================================
+// TÍNH TOÁN TỰ ĐỘNG
+// ============================================
+
+// Tính tổng doanh thu từng cơ sở
+function getTotalRevenueByLocation() {
+  const result = {};
+  locations.forEach(loc => {
+    result[loc.id] = locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+  });
+  return result;
+}
+
+// Lấy top N cơ sở theo doanh thu
+function getTopLocationsByRevenue(n = 5) {
+  const totals = getTotalRevenueByLocation();
+  return locations
+    .map(loc => ({ ...loc, totalRevenue: totals[loc.id] }))
+    .sort((a, b) => b.totalRevenue - a.totalRevenue)
+    .slice(0, n);
+}
+
+// Tính tổng toàn hệ thống
+function getSystemTotals() {
+  const currentMonth = 10; // Tháng 11 (index 10)
+  let totalRevenue = 0, totalProfit = 0, totalCustomers = 0, totalOrders = 0, totalEmployees = 0;
+
+  locations.forEach(loc => {
+    const data = locationData[loc.id];
+    totalRevenue += data.revenue[currentMonth];
+    totalProfit += data.profit[currentMonth];
+    totalCustomers += data.customers[currentMonth];
+    totalOrders += data.orders[currentMonth];
+    totalEmployees += data.employees;
+  });
+
+  return { totalRevenue, totalProfit, totalCustomers, totalOrders, totalEmployees };
+}
+
+// ============================================
+// BACKWARD COMPATIBILITY
+// ============================================
+
+// Dữ liệu doanh thu (dùng tổng của tất cả cơ sở)
 const revenueData = {
   months: monthLabels,
   values: businessDataByMonth[2024].revenue
 };
 
-// ============================================
-// TỔNG KẾT NĂM
-// ============================================
-
-const yearlySummary = {
-  2024: {
-    revenue: 35940,
-    expenses: 23389,
-    profit: 12551,
-    orders: 47492,
-    customers: 15445,
-    avgOrderValue: 757, // 35940000 / 47492
-    profitMargin: 34.9  // (12551 / 35940) * 100
-  },
-  2023: {
-    revenue: 31238,
-    expenses: 20952,
-    profit: 10286,
-    orders: 43764,
-    customers: 14011,
-    avgOrderValue: 714,
-    profitMargin: 32.9
-  },
-  2022: {
-    revenue: 27886,
-    expenses: 19523,
-    profit: 8363,
-    orders: 41168,
-    customers: 13319,
-    avgOrderValue: 677,
-    profitMargin: 30.0
-  }
+// Dữ liệu sản phẩm (dùng của Hà Nội làm mặc định)
+const productData = {
+  categories: productsByLocation.HN.categories,
+  values: productsByLocation.HN.sales
 };
 
-// Tăng trưởng Year-over-Year
-const yoyGrowth = {
-  2024: {
-    revenue: 15.0,    // (35940 - 31238) / 31238 * 100
-    profit: 22.0,
-    orders: 8.5,
-    customers: 10.2
-  },
-  2023: {
-    revenue: 12.0,    // (31238 - 27886) / 27886 * 100
-    profit: 23.0,
-    orders: 6.3,
-    customers: 5.2
-  }
-};
-
-// ============================================
-// DỮ LIỆU SẢN PHẨM
-// ============================================
-
-// Thị phần sản phẩm tháng 12/2024 (đơn vị: triệu VNĐ)
-const productMarketShare = {
-  labels: ['Laptop', 'Điện thoại', 'Tablet', 'Tai nghe', 'Đồng hồ'],
-  values: [1288, 1104, 736, 368, 184], // 35%, 30%, 20%, 10%, 5% của 3680
-  colors: ['#007bff', '#17a2b8', '#28a745', '#ffc107', '#dc3545']
-};
-
-// Dữ liệu sparkline cho từng sản phẩm (xu hướng bán 7 ngày gần đây)
-const sparklineData = {
-  product1: [285, 295, 308, 320, 315, 328, 342], // Laptop - tăng mạnh
-  product2: [198, 205, 212, 208, 215, 223, 235], // iPhone - tăng ổn định
-  product3: [156, 162, 168, 174, 181, 187, 195], // iPad - tăng đều
-  product4: [95, 92, 88, 85, 82, 79, 76],        // Watch - giảm
-  product5: [68, 72, 75, 78, 82, 85, 89]         // AirPods - tăng nhẹ
-};
-
-// Top sản phẩm bán chạy tháng 12/2024
-const topProducts = [
-  {
-    name: 'Laptop Dell XPS 15',
-    icon: 'bi-laptop',
-    iconColor: 'text-primary',
-    price: '34,990,000đ',
-    sold: 342,
-    revenue: '1,196 triệu',
-    badge: 'success',
-    sparklineId: 'sparkline-1'
-  },
-  {
-    name: 'iPhone 15 Pro Max',
-    icon: 'bi-phone',
-    iconColor: 'text-info',
-    price: '31,990,000đ',
-    sold: 235,
-    revenue: '752 triệu',
-    badge: 'success',
-    sparklineId: 'sparkline-2'
-  },
-  {
-    name: 'iPad Pro M2 11"',
-    icon: 'bi-tablet',
-    iconColor: 'text-success',
-    price: '24,990,000đ',
-    sold: 195,
-    revenue: '487 triệu',
-    badge: 'success',
-    sparklineId: 'sparkline-3'
-  },
-  {
-    name: 'AirPods Pro 2',
-    icon: 'bi-headphones',
-    iconColor: 'text-warning',
-    price: '6,490,000đ',
-    sold: 89,
-    revenue: '58 triệu',
-    badge: 'success',
-    sparklineId: 'sparkline-5'
-  },
-  {
-    name: 'Apple Watch Ultra 2',
-    icon: 'bi-smartwatch',
-    iconColor: 'text-danger',
-    price: '21,990,000đ',
-    sold: 76,
-    revenue: '167 triệu',
-    badge: 'warning',
-    sparklineId: 'sparkline-4'
-  }
-];
-
-// ============================================
-// KPI THÁNG HIỆN TẠI (THÁNG 12/2024)
-// ============================================
-
-const currentMonth = 11; // Index của tháng 12 (0-based)
-const previousMonth = 10; // Tháng 11
-
-const kpiData = {
-  revenue: {
-    value: '3.68 tỷ',
-    trend: 'up',
-    percentage: ((businessDataByMonth[2024].revenue[currentMonth] - businessDataByMonth[2024].revenue[previousMonth]) / businessDataByMonth[2024].revenue[previousMonth] * 100).toFixed(1)
-  },
-  profit: {
-    value: '1.29 tỷ',
-    trend: 'up',
-    percentage: ((businessDataByMonth[2024].profit[currentMonth] - businessDataByMonth[2024].profit[previousMonth]) / businessDataByMonth[2024].profit[previousMonth] * 100).toFixed(1)
-  },
-  customers: {
-    value: '1,456',
-    trend: 'up',
-    percentage: ((businessDataByMonth[2024].customers[currentMonth] - businessDataByMonth[2024].customers[previousMonth]) / businessDataByMonth[2024].customers[previousMonth] * 100).toFixed(1)
-  },
-  orders: {
-    value: '4,892',
-    trend: 'up',
-    percentage: ((businessDataByMonth[2024].orders[currentMonth] - businessDataByMonth[2024].orders[previousMonth]) / businessDataByMonth[2024].orders[previousMonth] * 100).toFixed(1)
-  }
-};
-
-// ============================================
-// DỮ LIỆU KHÁCH HÀNG
-// ============================================
-
-const customerData = {
-  total: 15678,           // Tổng khách hàng tích lũy đến T12/2024
-  newThisMonth: 1456,     // Khách mới tháng 12
-  vip: 342,               // Khách VIP
-  lost: 89,               // Khách bỏ đi tháng này
-  retentionRate: 92.5     // Tỷ lệ giữ chân khách hàng
-};
-
-// Phân loại khách hàng
-const customerSegments = {
-  vip: 342,           // Chi tiêu > 300 triệu
-  loyal: 1289,        // Chi tiêu 100-300 triệu, mua thường xuyên
-  regular: 3856,      // Chi tiêu 50-100 triệu
-  normal: 10191       // Chi tiêu < 50 triệu
-};
-
-// Top 10 khách hàng VIP
-const topCustomers = [
-  {
-    id: 'KH00156',
-    name: 'Nguyễn Văn Minh',
-    email: 'minh.nguyen@techcorp.vn',
-    phone: '0901234567',
-    totalSpent: 485000000,
-    orders: 142,
-    tier: 'Diamond',
-    tierColor: 'warning',
-    status: 'active',
-    joinDate: '2022-03-15',
-    lastPurchase: '2024-12-10'
-  },
-  {
-    id: 'KH00089',
-    name: 'Trần Thị Hương',
-    email: 'huong.tran@bizgroup.com',
-    phone: '0912345678',
-    totalSpent: 428000000,
-    orders: 118,
-    tier: 'Diamond',
-    tierColor: 'warning',
-    status: 'active',
-    joinDate: '2022-01-20',
-    lastPurchase: '2024-12-08'
-  },
-  {
-    id: 'KH00234',
-    name: 'Lê Hoàng Nam',
-    email: 'nam.le.hoang@gmail.com',
-    phone: '0923456789',
-    totalSpent: 375000000,
-    orders: 96,
-    tier: 'Platinum',
-    tierColor: 'info',
-    status: 'active',
-    joinDate: '2022-06-10',
-    lastPurchase: '2024-12-05'
-  },
-  {
-    id: 'KH00512',
-    name: 'Phạm Minh Châu',
-    email: 'chau.pham@outlook.com',
-    phone: '0934567890',
-    totalSpent: 328000000,
-    orders: 84,
-    tier: 'Platinum',
-    tierColor: 'info',
-    status: 'active',
-    joinDate: '2022-08-22',
-    lastPurchase: '2024-12-12'
-  },
-  {
-    id: 'KH00678',
-    name: 'Võ Thành Đạt',
-    email: 'dat.vo@techsolutions.vn',
-    phone: '0945678901',
-    totalSpent: 295000000,
-    orders: 72,
-    tier: 'Platinum',
-    tierColor: 'info',
-    status: 'inactive_30',
-    joinDate: '2022-09-15',
-    lastPurchase: '2024-11-05'
-  },
-  {
-    id: 'KH00891',
-    name: 'Đặng Thị Mai',
-    email: 'mai.dang@gmail.com',
-    phone: '0956789012',
-    totalSpent: 268000000,
-    orders: 65,
-    tier: 'Gold',
-    tierColor: 'primary',
-    status: 'active',
-    joinDate: '2023-01-10',
-    lastPurchase: '2024-12-11'
-  },
-  {
-    id: 'KH01023',
-    name: 'Bùi Quang Huy',
-    email: 'huy.bui@startup.io',
-    phone: '0967890123',
-    totalSpent: 242000000,
-    orders: 58,
-    tier: 'Gold',
-    tierColor: 'primary',
-    status: 'active',
-    joinDate: '2023-03-05',
-    lastPurchase: '2024-12-09'
-  },
-  {
-    id: 'KH01156',
-    name: 'Hoàng Thu Thảo',
-    email: 'thao.hoang@company.vn',
-    phone: '0978901234',
-    totalSpent: 215000000,
-    orders: 51,
-    tier: 'Gold',
-    tierColor: 'primary',
-    status: 'active',
-    joinDate: '2023-04-18',
-    lastPurchase: '2024-12-07'
-  },
-  {
-    id: 'KH01289',
-    name: 'Dương Văn Long',
-    email: 'long.duong@enterprise.com',
-    phone: '0989012345',
-    totalSpent: 188000000,
-    orders: 45,
-    tier: 'Silver',
-    tierColor: 'secondary',
-    status: 'active',
-    joinDate: '2023-06-20',
-    lastPurchase: '2024-12-06'
-  },
-  {
-    id: 'KH01445',
-    name: 'Trương Thị Lan',
-    email: 'lan.truong@yahoo.com',
-    phone: '0990123456',
-    totalSpent: 165000000,
-    orders: 39,
-    tier: 'Silver',
-    tierColor: 'secondary',
-    status: 'active',
-    joinDate: '2023-07-12',
-    lastPurchase: '2024-12-04'
-  }
-];
-
-// ============================================
-// HOẠT ĐỘNG GẦN ĐÂY
-// ============================================
-
-const recentActivities = [
-  {
-    icon: 'bi-check-circle-fill',
-    iconColor: 'text-success',
-    title: 'Đơn hàng #DH2024-5892 đã hoàn thành',
-    description: 'Khách hàng: Nguyễn Văn Minh - 3 Laptop Dell XPS',
-    time: '5 phút trước'
-  },
-  {
-    icon: 'bi-person-plus-fill',
-    iconColor: 'text-info',
-    title: '8 khách hàng mới đăng ký',
-    description: 'Từ chiến dịch Flash Sale cuối năm',
-    time: '15 phút trước'
-  },
-  {
-    icon: 'bi-cash-coin',
-    iconColor: 'text-success',
-    title: 'Thanh toán 248 triệu đã được xác nhận',
-    description: 'Hợp đồng doanh nghiệp #HD2024-156',
-    time: '30 phút trước'
-  },
-  {
-    icon: 'bi-exclamation-triangle-fill',
-    iconColor: 'text-warning',
-    title: 'Tồn kho iPhone 15 Pro Max cần bổ sung',
-    description: 'Chỉ còn 12 máy - Dự kiến bán hết trong 2 ngày',
-    time: '1 giờ trước'
-  },
-  {
-    icon: 'bi-file-earmark-text',
-    iconColor: 'text-primary',
-    title: 'Báo cáo tài chính Q4/2024 đã sẵn sàng',
-    description: 'Doanh thu tăng 15% so với Q4/2023',
-    time: '2 giờ trước'
-  }
-];
-
-// ============================================
-// DỮ LIỆU PHU THEO KHU VỰC
-// ============================================
-
-const revenueByRegion = {
-  labels: ['Miền Bắc', 'Miền Nam', 'Miền Trung', 'Quốc tế'],
-  percentages: [35, 30, 22, 13],
-  values: [12579, 10782, 7907, 4672] // Tổng năm 2024
-};
-
-// ============================================
-// DỮ LIỆU THEO KÊNH BÁN HÀNG
-// ============================================
-
-const salesChannels = {
-  labels: ['Website', 'Cửa hàng', 'Mobile App', 'Đối tác'],
-  percentages: [45, 30, 15, 10],
-  values: [16173, 10782, 5391, 3594] // Tổng năm 2024
-};
+// Top sản phẩm (dùng của Hà Nội làm mặc định)
+const topProducts = productsByLocation.HN.topProducts;

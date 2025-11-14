@@ -218,3 +218,146 @@ function destroyAllCharts(charts) {
     }
   });
 }
+
+/**
+ * Khởi tạo biểu đồ so sánh doanh thu giữa các cơ sở
+ * @param {string} selector - CSS selector của element chứa biểu đồ
+ * @param {Array} locations - Mảng thông tin các cơ sở
+ * @param {Object} locationData - Dữ liệu chi tiết từng cơ sở
+ */
+function initLocationComparisonChart(selector, locations, locationData) {
+  // Chuẩn bị series data cho từng cơ sở
+  const series = locations.map(loc => ({
+    name: loc.name,
+    data: locationData[loc.id].revenue
+  }));
+
+  const options = {
+    series: series,
+    chart: {
+      height: 350,
+      type: 'line',
+      toolbar: {
+        show: true
+      },
+      zoom: {
+        enabled: true
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 2
+    },
+    colors: locations.map(loc => loc.color),
+    xaxis: {
+      categories: monthLabelsShort
+    },
+    yaxis: {
+      labels: {
+        formatter: function(value) {
+          if (value >= 1000) {
+            return (value / 1000).toFixed(1) + ' tỷ';
+          }
+          return value.toFixed(0) + ' triệu';
+        }
+      }
+    },
+    tooltip: {
+      y: {
+        formatter: function(value) {
+          return value.toFixed(0) + ' triệu VNĐ';
+        }
+      }
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'center'
+    },
+    grid: {
+      borderColor: '#f1f1f1',
+    }
+  };
+
+  const chart = new ApexCharts(document.querySelector(selector), options);
+  chart.render();
+
+  return chart;
+}
+
+/**
+ * Khởi tạo biểu đồ cột so sánh doanh thu các cơ sở
+ * @param {string} selector - CSS selector của element chứa biểu đồ
+ * @param {Array} locations - Mảng thông tin các cơ sở
+ * @param {Object} locationData - Dữ liệu chi tiết từng cơ sở
+ */
+function initLocationBarChart(selector, locations, locationData) {
+  // Tính tổng doanh thu từng cơ sở
+  const totals = locations.map(loc => {
+    return locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+  });
+
+  const options = {
+    series: [{
+      name: 'Doanh thu năm 2024',
+      data: totals
+    }],
+    chart: {
+      type: 'bar',
+      height: 300,
+      toolbar: {
+        show: false
+      }
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '55%',
+        borderRadius: 4,
+        dataLabels: {
+          position: 'top',
+        },
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function(val) {
+        return (val / 1000).toFixed(1) + ' tỷ';
+      },
+      offsetY: -20,
+      style: {
+        fontSize: '12px',
+        colors: ["#304758"]
+      }
+    },
+    xaxis: {
+      categories: locations.map(loc => loc.name),
+      position: 'bottom',
+    },
+    yaxis: {
+      labels: {
+        formatter: function(value) {
+          return (value / 1000).toFixed(1) + ' tỷ';
+        }
+      }
+    },
+    colors: locations.map(loc => loc.color),
+    fill: {
+      opacity: 1
+    },
+    tooltip: {
+      y: {
+        formatter: function(val) {
+          return (val / 1000).toFixed(2) + ' tỷ VNĐ';
+        }
+      }
+    }
+  };
+
+  const chart = new ApexCharts(document.querySelector(selector), options);
+  chart.render();
+
+  return chart;
+}

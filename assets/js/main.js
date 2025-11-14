@@ -38,8 +38,22 @@ function initDashboard() {
 function initRevenueChartOnPage() {
   const revenueElement = document.querySelector('#revenue-chart');
   if (revenueElement) {
-    charts.revenue = initRevenueChart('#revenue-chart', revenueData);
-    console.log('✓ Biểu đồ doanh thu đã load');
+    // Use location comparison chart if locations data exists
+    if (typeof locations !== 'undefined' && typeof locationData !== 'undefined') {
+      charts.revenue = initLocationComparisonChart('#revenue-chart', locations, locationData);
+      console.log('✓ Biểu đồ so sánh cơ sở đã load');
+    } else {
+      // Fallback to old chart
+      charts.revenue = initRevenueChart('#revenue-chart', revenueData);
+      console.log('✓ Biểu đồ doanh thu đã load');
+    }
+  }
+
+  // Initialize location bar chart if element exists
+  const locationBarElement = document.querySelector('#location-bar-chart');
+  if (locationBarElement && typeof locations !== 'undefined' && typeof locationData !== 'undefined') {
+    charts.locationBar = initLocationBarChart('#location-bar-chart', locations, locationData);
+    console.log('✓ Biểu đồ cột cơ sở đã load');
   }
 }
 
