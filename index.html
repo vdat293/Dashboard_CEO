@@ -72,37 +72,10 @@
               <i class="bi bi-list"></i>
             </a>
           </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Trang chủ</a>
-          </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Liên hệ</a>
-          </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-          <!-- Notifications -->
-          <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="bi bi-bell-fill"></i>
-              <span class="badge badge-warning navbar-badge">5</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <span class="dropdown-item dropdown-header">5 Thông báo</span>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="bi bi-envelope mr-2"></i> 3 tin nhắn mới
-                <span class="float-right text-muted text-sm">3 phút</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="bi bi-file-earmark mr-2"></i> 2 báo cáo mới
-                <span class="float-right text-muted text-sm">2 giờ</span>
-              </a>
-            </div>
-          </li>
-          
           <!-- User Menu -->
           <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -427,83 +400,100 @@
                 </div>
               </div>
 
-              <!-- Hoạt động gần đây -->
+              <!-- Performance các cơ sở -->
               <div class="col-lg-4">
                 <div class="card">
                   <div class="card-header border-0">
-                    <h3 class="card-title">Hoạt động gần đây</h3>
+                    <h3 class="card-title">
+                      <i class="bi bi-bar-chart-fill mr-2"></i>
+                      Performance các cơ sở
+                    </h3>
                   </div>
                   <div class="card-body p-0">
-                    <ul class="products-list product-list-in-card pl-2 pr-2">
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">Đơn hàng #DH2024-1234 đã hoàn thành</a>
-                          <span class="product-description">
-                            Khách hàng: Trần Văn B
-                            <br>
-                            <small class="text-muted">5 phút trước</small>
-                          </span>
-                        </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-person-plus-fill text-info" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">3 khách hàng mới đăng ký</a>
-                          <span class="product-description">
-                            Từ chiến dịch marketing Q4
-                            <br>
-                            <small class="text-muted">15 phút trước</small>
-                          </span>
-                        </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-cash-coin text-success" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">Thanh toán 125 triệu đã được xác nhận</a>
-                          <span class="product-description">
-                            Hợp đồng #HD2024-089
-                            <br>
-                            <small class="text-muted">30 phút trước</small>
-                          </span>
-                        </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">Tồn kho sản phẩm A cần bổ sung</a>
-                          <span class="product-description">
-                            Chỉ còn 15 sản phẩm
-                            <br>
-                            <small class="text-muted">1 giờ trước</small>
-                          </span>
-                        </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-file-earmark-text text-primary" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">Báo cáo tài chính đã sẵn sàng</a>
-                          <span class="product-description">
-                            Quý 4 năm 2024
-                            <br>
-                            <small class="text-muted">2 giờ trước</small>
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
+                    <table class="table table-sm" id="location-performance-table">
+                      <thead>
+                        <tr>
+                          <th>Cơ sở</th>
+                          <th class="text-right">Doanh thu</th>
+                          <th class="text-right">Tăng trưởng</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="location-row" data-location="HN" style="cursor: pointer;">
+                          <td>
+                            <span class="badge" style="background-color: #007bff; width: 10px; height: 10px; display: inline-block; border-radius: 50%;"></span>
+                            <strong class="ml-2">Hà Nội</strong>
+                          </td>
+                          <td class="text-right">3.68 tỷ</td>
+                          <td class="text-right">
+                            <span class="badge badge-success">+7.6%</span>
+                          </td>
+                        </tr>
+                        <tr class="location-row" data-location="HCM" style="cursor: pointer;">
+                          <td>
+                            <span class="badge" style="background-color: #28a745; width: 10px; height: 10px; display: inline-block; border-radius: 50%;"></span>
+                            <strong class="ml-2">TP.HCM</strong>
+                          </td>
+                          <td class="text-right">3.38 tỷ</td>
+                          <td class="text-right">
+                            <span class="badge badge-success">+7.6%</span>
+                          </td>
+                        </tr>
+                        <tr class="location-row" data-location="DN" style="cursor: pointer;">
+                          <td>
+                            <span class="badge" style="background-color: #17a2b8; width: 10px; height: 10px; display: inline-block; border-radius: 50%;"></span>
+                            <strong class="ml-2">Đà Nẵng</strong>
+                          </td>
+                          <td class="text-right">2.06 tỷ</td>
+                          <td class="text-right">
+                            <span class="badge badge-success">+7.6%</span>
+                          </td>
+                        </tr>
+                        <tr class="location-row" data-location="HP" style="cursor: pointer;">
+                          <td>
+                            <span class="badge" style="background-color: #ffc107; width: 10px; height: 10px; display: inline-block; border-radius: 50%;"></span>
+                            <strong class="ml-2">Hải Phòng</strong>
+                          </td>
+                          <td class="text-right">1.84 tỷ</td>
+                          <td class="text-right">
+                            <span class="badge badge-success">+7.6%</span>
+                          </td>
+                        </tr>
+                        <tr class="location-row" data-location="CT" style="cursor: pointer;">
+                          <td>
+                            <span class="badge" style="background-color: #6f42c1; width: 10px; height: 10px; display: inline-block; border-radius: 50%;"></span>
+                            <strong class="ml-2">Cần Thơ</strong>
+                          </td>
+                          <td class="text-right">1.64 tỷ</td>
+                          <td class="text-right">
+                            <span class="badge badge-success">+7.5%</span>
+                          </td>
+                        </tr>
+                        <tr class="location-row" data-location="NT" style="cursor: pointer;">
+                          <td>
+                            <span class="badge" style="background-color: #fd7e14; width: 10px; height: 10px; display: inline-block; border-radius: 50%;"></span>
+                            <strong class="ml-2">Nha Trang</strong>
+                          </td>
+                          <td class="text-right">1.46 tỷ</td>
+                          <td class="text-right">
+                            <span class="badge badge-success">+7.7%</span>
+                          </td>
+                        </tr>
+                        <tr class="location-row" data-location="VT" style="cursor: pointer;">
+                          <td>
+                            <span class="badge" style="background-color: #20c997; width: 10px; height: 10px; display: inline-block; border-radius: 50%;"></span>
+                            <strong class="ml-2">Vũng Tàu</strong>
+                          </td>
+                          <td class="text-right">1.31 tỷ</td>
+                          <td class="text-right">
+                            <span class="badge badge-success">+7.9%</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <div class="card-footer text-center">
-                    <a href="#" class="uppercase">Xem tất cả hoạt động</a>
+                    <small class="text-muted">Click vào cơ sở để xem chi tiết doanh thu</small>
                   </div>
                 </div>
               </div>
@@ -526,6 +516,69 @@
       <!--end::Footer-->
     </div>
     <!-- ./wrapper -->
+
+    <!-- Modal hiển thị chi tiết doanh thu cơ sở -->
+    <div class="modal fade" id="locationDetailModal" tabindex="-1" role="dialog" aria-labelledby="locationDetailModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="locationDetailModalLabel">
+              <i class="bi bi-building mr-2"></i>
+              <span id="modal-location-name">Chi tiết cơ sở</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="info-box bg-gradient-primary">
+                  <span class="info-box-icon">
+                    <i class="bi bi-currency-dollar"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh thu tháng</span>
+                    <span class="info-box-number" id="modal-revenue">0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="info-box bg-gradient-success">
+                  <span class="info-box-icon">
+                    <i class="bi bi-graph-up"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Lợi nhuận tháng</span>
+                    <span class="info-box-number" id="modal-profit">0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="info-box bg-gradient-info">
+                  <span class="info-box-icon">
+                    <i class="bi bi-cart"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Đơn hàng</span>
+                    <span class="info-box-number" id="modal-orders">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <h6 class="mb-3">Doanh thu theo tháng (2024)</h6>
+                <div id="modal-revenue-chart" style="height: 300px;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--begin::Scripts-->
     

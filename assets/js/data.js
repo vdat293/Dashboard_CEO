@@ -271,3 +271,27 @@ const productData = {
 
 // Top sản phẩm (dùng của Hà Nội làm mặc định)
 const topProducts = productsByLocation.HN.topProducts;
+
+// ============================================
+// DỮ LIỆU CHO BIỂU ĐỒ THỊ PHẦN SẢN PHẨM
+// ============================================
+
+// Dữ liệu thị phần sản phẩm (tổng hợp tất cả cơ sở)
+const productMarketShare = {
+  labels: ['Laptop', 'Smartphone', 'Tablet', 'Tai nghe', 'Smartwatch'],
+  values: [1196, 752, 487, 58, 167], // triệu VNĐ
+  colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107', '#dc3545']
+};
+
+// ============================================
+// DỮ LIỆU CHO SPARKLINE CHARTS (XU HƯỚNG SẢN PHẨM)
+// ============================================
+
+// Dữ liệu xu hướng bán hàng 12 tháng cho top 5 sản phẩm
+const sparklineData = {
+  product1: [28, 31, 35, 32, 38, 42, 45, 48, 52, 55, 58, 62], // Laptop Dell XPS 15 - tăng đều
+  product2: [22, 25, 18, 20, 23, 21, 19, 22, 24, 20, 18, 21], // iPhone 15 Pro Max - dao động
+  product3: [15, 18, 20, 17, 16, 19, 21, 18, 17, 16, 18, 19], // iPad Pro M2 - ổn định
+  product4: [12, 10, 9, 8, 7, 6, 7, 8, 7, 8, 9, 8],          // AirPods Pro 2 - giảm nhẹ
+  product5: [10, 11, 9, 8, 7, 6, 7, 6, 5, 6, 7, 8]           // Apple Watch Ultra 2 - giảm
+};
