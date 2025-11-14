@@ -90,6 +90,22 @@ function setupEventListeners() {
   refreshButtons.forEach(btn => {
     btn.addEventListener('click', handleRefresh);
   });
+
+  // Click vào các dòng trong bảng performance cơ sở
+  setupLocationClickHandlers();
+}
+
+/**
+ * Thiết lập event handlers cho click vào cơ sở
+ */
+function setupLocationClickHandlers() {
+  const locationRows = document.querySelectorAll('.location-row');
+  locationRows.forEach(row => {
+    row.addEventListener('click', function() {
+      const locationId = this.getAttribute('data-location');
+      showLocationDetail(locationId);
+    });
+  });
 }
 
 /**
@@ -155,10 +171,128 @@ function showNotification(message, type = 'info') {
 }
 
 /**
+ * Hiển thị chi tiết cơ sở trong modal
+ * @param {string} locationId - ID của cơ sở (HN, HCM, DN, etc.)
+ */
+function showLocationDetail(locationId) {
+  if (typeof locationData === 'undefined' || typeof locations === 'undefined') {
+    console.error('Dữ liệu cơ sở không tồn tại');
+    return;
+  }
+
+  // Tìm thông tin cơ sở
+  const location = locations.find(loc => loc.id === locationId);
+  const data = locationData[locationId];
+
+  if (!location || !data) {
+    console.error('Không tìm thấy dữ liệu cho cơ sở:', locationId);
+    return;
+  }
+
+  // Lấy dữ liệu tháng hiện tại (tháng 11 - index 10)
+  const currentMonth = 10;
+  const currentRevenue = data.revenue[currentMonth];
+  const currentProfit = data.profit[currentMonth];
+  const currentOrders = data.orders[currentMonth];
+
+  // Cập nhật tên cơ sở trong modal
+  document.getElementById('modal-location-name').textContent = `Chi tiết cơ sở ${location.name}`;
+
+  // Cập nhật các số liệu
+  document.getElementById('modal-revenue').textContent = formatRevenueValue(currentRevenue);
+  document.getElementById('modal-profit').textContent = formatRevenueValue(currentProfit);
+  document.getElementById('modal-orders').textContent = formatNumber(currentOrders);
+
+  // Hiển thị biểu đồ doanh thu theo tháng
+  showLocationRevenueChart(location, data);
+
+  // Hiển thị modal
+  $('#locationDetailModal').modal('show');
+}
+
+/**
+ * Hiển thị biểu đồ doanh thu theo tháng của cơ sở
+ * @param {Object} location - Thông tin cơ sở
+ * @param {Object} data - Dữ liệu cơ sở
+ */
+function showLocationRevenueChart(location, data) {
+  // Xóa biểu đồ cũ nếu có
+  if (charts.modalRevenue) {
+    charts.modalRevenue.destroy();
+  }
+
+  const options = {
+    series: [{
+      name: 'Doanh thu',
+      data: data.revenue
+    }, {
+      name: 'Lợi nhuận',
+      data: data.profit
+    }],
+    chart: {
+      height: 300,
+      type: 'line',
+      toolbar: {
+        show: false
+      }
+    },
+    colors: [location.color, '#28a745'],
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 3
+    },
+    xaxis: {
+      categories: monthLabelsShort
+    },
+    yaxis: {
+      labels: {
+        formatter: function(value) {
+          if (value >= 1000) {
+            return (value / 1000).toFixed(1) + ' tỷ';
+          }
+          return value.toFixed(0) + ' triệu';
+        }
+      }
+    },
+    tooltip: {
+      y: {
+        formatter: function(value) {
+          return value.toFixed(0) + ' triệu VNĐ';
+        }
+      }
+    },
+    legend: {
+      position: 'top'
+    },
+    grid: {
+      borderColor: '#f1f1f1'
+    }
+  };
+
+  charts.modalRevenue = new ApexCharts(document.querySelector('#modal-revenue-chart'), options);
+  charts.modalRevenue.render();
+}
+
+/**
+ * Format giá trị doanh thu
+ * @param {number} value - Giá trị doanh thu (triệu)
+ * @returns {string} - Chuỗi đã format
+ */
+function formatRevenueValue(value) {
+  if (value >= 1000) {
+    return (value / 1000).toFixed(2) + ' tỷ';
+  }
+  return value.toFixed(0) + ' triệu';
+}
+
+/**
  * Cleanup function - dọn dẹp khi rời khỏi trang
  */
 function cleanup() {
-  const allCharts = [charts.revenue, charts.product, ...charts.sparklines];
+  const allCharts = [charts.revenue, charts.product, charts.modalRevenue, ...charts.sparklines];
   destroyAllCharts(allCharts);
   console.log('🧹 Đã dọn dẹp resources');
 }
