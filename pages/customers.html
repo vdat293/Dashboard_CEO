@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Quản Lý Khách Hàng | Dashboard CEO</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
+
+    <!-- OverlayScrollbars -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
+
+    <!-- ApexCharts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/variables.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+      <!-- Header -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+              <i class="bi bi-list"></i>
+            </a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="../index.html" class="nav-link">Trang chủ</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="bi bi-bell-fill"></i>
+              <span class="badge badge-warning navbar-badge">5</span>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="bi bi-person-circle"></i>
+              <span class="d-none d-md-inline ml-1">CEO Nguyễn Văn A</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+          <i class="bi bi-graph-up-arrow brand-image" style="font-size: 2rem; margin-left: 0.5rem;"></i>
+          <span class="brand-text font-weight-light">CEO Dashboard</span>
+        </a>
+
+        <div class="sidebar">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <i class="bi bi-person-circle" style="font-size: 2.1rem; color: #fff;"></i>
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">Nguyễn Văn A</a>
+              <small class="text-muted">Giám đốc điều hành</small>
+            </div>
+          </div>
+
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+              <li class="nav-item">
+                <a href="../index.html" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer2"></i>
+                  <p>Tổng quan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="revenue.html" class="nav-link">
+                  <i class="nav-icon bi bi-graph-up"></i>
+                  <p>Doanh thu</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="customers.html" class="nav-link active">
+                  <i class="nav-icon bi bi-people"></i>
+                  <p>Khách hàng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="products.html" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam"></i>
+                  <p>Sản phẩm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="reports.html" class="nav-link">
+                  <i class="nav-icon bi bi-clipboard-data"></i>
+                  <p>Báo cáo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-gear"></i>
+                  <p>Cài đặt</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Quản Lý Khách Hàng</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
+                  <li class="breadcrumb-item active">Khách hàng</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+
+            <!-- Thống kê khách hàng -->
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-info">
+                    <i class="bi bi-people"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Tổng khách hàng</span>
+                    <span class="info-box-number">
+                      12,458
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> 15%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-success">
+                    <i class="bi bi-person-plus"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Khách hàng mới</span>
+                    <span class="info-box-number">
+                      1,234
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> 22%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-warning">
+                    <i class="bi bi-star"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Khách hàng VIP</span>
+                    <span class="info-box-number">256</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-danger">
+                    <i class="bi bi-person-x"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Mất khách hàng</span>
+                    <span class="info-box-number">
+                      45
+                      <small class="trend-down">
+                        <i class="bi bi-arrow-down"></i> 5%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Biểu đồ -->
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-graph-up mr-1"></i>
+                      Xu hướng khách hàng mới
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="customer-trend-chart" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-pie-chart mr-1"></i>
+                      Phân loại khách hàng
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="customer-segment-chart" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Danh sách khách hàng VIP -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Top 10 Khách Hàng VIP</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-sm btn-primary">
+                        <i class="bi bi-plus-circle"></i> Thêm khách hàng
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Tên khách hàng</th>
+                          <th>Email</th>
+                          <th>Điện thoại</th>
+                          <th>Tổng chi tiêu</th>
+                          <th>Đơn hàng</th>
+                          <th>Hạng</th>
+                          <th>Trạng thái</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>#KH001</td>
+                          <td><strong>Trần Văn A</strong></td>
+                          <td>tranvana@email.com</td>
+                          <td>0901234567</td>
+                          <td><span class="text-success"><strong>450 triệu</strong></span></td>
+                          <td>127</td>
+                          <td><span class="badge badge-warning"><i class="bi bi-star-fill"></i> Diamond</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH002</td>
+                          <td><strong>Nguyễn Thị B</strong></td>
+                          <td>nguyenthib@email.com</td>
+                          <td>0912345678</td>
+                          <td><span class="text-success"><strong>380 triệu</strong></span></td>
+                          <td>95</td>
+                          <td><span class="badge badge-warning"><i class="bi bi-star-fill"></i> Diamond</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH003</td>
+                          <td><strong>Lê Văn C</strong></td>
+                          <td>levanc@email.com</td>
+                          <td>0923456789</td>
+                          <td><span class="text-success"><strong>320 triệu</strong></span></td>
+                          <td>78</td>
+                          <td><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH004</td>
+                          <td><strong>Phạm Thị D</strong></td>
+                          <td>phamthid@email.com</td>
+                          <td>0934567890</td>
+                          <td><span class="text-success"><strong>285 triệu</strong></span></td>
+                          <td>64</td>
+                          <td><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH005</td>
+                          <td><strong>Hoàng Văn E</strong></td>
+                          <td>hoangvane@email.com</td>
+                          <td>0945678901</td>
+                          <td><span class="text-success"><strong>250 triệu</strong></span></td>
+                          <td>52</td>
+                          <td><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
+                          <td><span class="badge badge-warning">Chưa hoạt động 30 ngày</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH006</td>
+                          <td><strong>Đặng Thị F</strong></td>
+                          <td>dangthif@email.com</td>
+                          <td>0956789012</td>
+                          <td><span class="text-success"><strong>230 triệu</strong></span></td>
+                          <td>48</td>
+                          <td><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH007</td>
+                          <td><strong>Võ Văn G</strong></td>
+                          <td>vovang@email.com</td>
+                          <td>0967890123</td>
+                          <td><span class="text-success"><strong>215 triệu</strong></span></td>
+                          <td>43</td>
+                          <td><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH008</td>
+                          <td><strong>Bùi Thị H</strong></td>
+                          <td>buithih@email.com</td>
+                          <td>0978901234</td>
+                          <td><span class="text-success"><strong>198 triệu</strong></span></td>
+                          <td>39</td>
+                          <td><span class="badge badge-secondary"><i class="bi bi-star"></i> Silver</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH009</td>
+                          <td><strong>Dương Văn I</strong></td>
+                          <td>duongvani@email.com</td>
+                          <td>0989012345</td>
+                          <td><span class="text-success"><strong>182 triệu</strong></span></td>
+                          <td>35</td>
+                          <td><span class="badge badge-secondary"><i class="bi bi-star"></i> Silver</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                        <tr>
+                          <td>#KH010</td>
+                          <td><strong>Trương Thị K</strong></td>
+                          <td>truongthik@email.com</td>
+                          <td>0990123456</td>
+                          <td><span class="text-success"><strong>175 triệu</strong></span></td>
+                          <td>32</td>
+                          <td><span class="badge badge-secondary"><i class="bi bi-star"></i> Silver</span></td>
+                          <td><span class="badge badge-success">Hoạt động</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                      <li class="page-item"><a class="page-link" href="#">«</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">»</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2024 <a href="#">Công ty của bạn</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 1.0.0
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+
+    <script>
+      // Biểu đồ xu hướng khách hàng
+      const customerTrendChart = new ApexCharts(document.querySelector('#customer-trend-chart'), {
+        series: [{
+          name: 'Khách hàng mới',
+          data: [850, 920, 1050, 980, 1100, 1150, 1200, 1280, 1180, 1250, 1200, 1234]
+        }],
+        chart: { height: 300, type: 'area', toolbar: { show: false } },
+        colors: ['#17a2b8'],
+        dataLabels: { enabled: false },
+        stroke: { curve: 'smooth', width: 2 },
+        fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.5, opacityTo: 0.1 } },
+        xaxis: { categories: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'] },
+        tooltip: { y: { formatter: val => val + ' khách hàng' } }
+      });
+      customerTrendChart.render();
+
+      // Biểu đồ phân loại khách hàng
+      const customerSegmentChart = new ApexCharts(document.querySelector('#customer-segment-chart'), {
+        series: [256, 458, 892, 10852],
+        chart: { type: 'donut', height: 300 },
+        labels: ['VIP', 'Thân thiết', 'Thường xuyên', 'Bình thường'],
+        colors: ['#ffc107', '#007bff', '#28a745', '#6c757d'],
+        legend: { position: 'bottom' },
+        plotOptions: {
+          pie: {
+            donut: {
+              labels: {
+                show: true,
+                total: {
+                  show: true,
+                  label: 'Tổng',
+                  formatter: () => '12,458'
+                }
+              }
+            }
+          }
+        }
+      });
+      customerSegmentChart.render();
+    </script>
+  </body>
+</html>

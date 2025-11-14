@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Báo Cáo Tổng Hợp | Dashboard CEO</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
+
+    <!-- ApexCharts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/variables.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+      <!-- Header -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+              <i class="bi bi-list"></i>
+            </a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="../index.html" class="nav-link">Trang chủ</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="bi bi-bell-fill"></i>
+              <span class="badge badge-warning navbar-badge">5</span>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="bi bi-person-circle"></i>
+              <span class="d-none d-md-inline ml-1">CEO Nguyễn Văn A</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+          <i class="bi bi-graph-up-arrow brand-image" style="font-size: 2rem; margin-left: 0.5rem;"></i>
+          <span class="brand-text font-weight-light">CEO Dashboard</span>
+        </a>
+
+        <div class="sidebar">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <i class="bi bi-person-circle" style="font-size: 2.1rem; color: #fff;"></i>
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">Nguyễn Văn A</a>
+              <small class="text-muted">Giám đốc điều hành</small>
+            </div>
+          </div>
+
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+              <li class="nav-item">
+                <a href="../index.html" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer2"></i>
+                  <p>Tổng quan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="revenue.html" class="nav-link">
+                  <i class="nav-icon bi bi-graph-up"></i>
+                  <p>Doanh thu</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="customers.html" class="nav-link">
+                  <i class="nav-icon bi bi-people"></i>
+                  <p>Khách hàng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="products.html" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam"></i>
+                  <p>Sản phẩm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="reports.html" class="nav-link active">
+                  <i class="nav-icon bi bi-clipboard-data"></i>
+                  <p>Báo cáo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-gear"></i>
+                  <p>Cài đặt</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Báo Cáo Tổng Hợp</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
+                  <li class="breadcrumb-item active">Báo cáo</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+
+            <!-- Chọn khoảng thời gian -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Chọn khoảng thời gian báo cáo</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <button type="button" class="btn btn-block btn-outline-primary">
+                          <i class="bi bi-calendar-day"></i> Hôm nay
+                        </button>
+                      </div>
+                      <div class="col-md-3">
+                        <button type="button" class="btn btn-block btn-outline-primary">
+                          <i class="bi bi-calendar-week"></i> Tuần này
+                        </button>
+                      </div>
+                      <div class="col-md-3">
+                        <button type="button" class="btn btn-block btn-primary">
+                          <i class="bi bi-calendar-month"></i> Tháng này
+                        </button>
+                      </div>
+                      <div class="col-md-3">
+                        <button type="button" class="btn btn-block btn-outline-primary">
+                          <i class="bi bi-calendar-range"></i> Năm nay
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- KPI tổng quan -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Tổng quan tháng 12/2024</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-sm btn-success">
+                        <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
+                      </button>
+                      <button type="button" class="btn btn-sm btn-primary">
+                        <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="info-box bg-gradient-primary">
+                          <span class="info-box-icon"><i class="bi bi-currency-dollar"></i></span>
+                          <div class="info-box-content">
+                            <span class="info-box-text">Tổng doanh thu</span>
+                            <span class="info-box-number">2.5 tỷ</span>
+                            <div class="progress">
+                              <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                            <span class="progress-description">
+                              85% mục tiêu (2.94 tỷ)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <div class="info-box bg-gradient-success">
+                          <span class="info-box-icon"><i class="bi bi-graph-up"></i></span>
+                          <div class="info-box-content">
+                            <span class="info-box-text">Lợi nhuận</span>
+                            <span class="info-box-number">850 triệu</span>
+                            <div class="progress">
+                              <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                            <span class="progress-description">
+                              34% biên lợi nhuận
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <div class="info-box bg-gradient-warning">
+                          <span class="info-box-icon"><i class="bi bi-cart"></i></span>
+                          <div class="info-box-content">
+                            <span class="info-box-text">Đơn hàng</span>
+                            <span class="info-box-number">3,567</span>
+                            <div class="progress">
+                              <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                            <span class="progress-description">
+                              Giá trị TB: 700,000đ
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <div class="info-box bg-gradient-info">
+                          <span class="info-box-icon"><i class="bi bi-people"></i></span>
+                          <div class="info-box-content">
+                            <span class="info-box-text">Khách hàng mới</span>
+                            <span class="info-box-number">1,234</span>
+                            <div class="progress">
+                              <div class="progress-bar" style="width: 95%"></div>
+                            </div>
+                            <span class="progress-description">
+                              +15% so với tháng trước
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Báo cáo theo từng mảng -->
+            <div class="row">
+              <!-- Báo cáo doanh thu -->
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header border-transparent">
+                    <h3 class="card-title">Báo cáo Doanh thu</h3>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table m-0">
+                        <thead>
+                          <tr>
+                            <th>Chỉ tiêu</th>
+                            <th>Giá trị</th>
+                            <th>% Hoàn thành</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Doanh thu tháng</td>
+                            <td>2.5 tỷ</td>
+                            <td><span class="badge badge-success">85%</span></td>
+                          </tr>
+                          <tr>
+                            <td>Doanh thu năm</td>
+                            <td>28.5 tỷ</td>
+                            <td><span class="badge badge-success">90%</span></td>
+                          </tr>
+                          <tr>
+                            <td>Tăng trưởng MoM</td>
+                            <td>+12%</td>
+                            <td><span class="badge badge-success">Tốt</span></td>
+                          </tr>
+                          <tr>
+                            <td>Tăng trưởng YoY</td>
+                            <td>+15%</td>
+                            <td><span class="badge badge-success">Tốt</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Báo cáo khách hàng -->
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header border-transparent">
+                    <h3 class="card-title">Báo cáo Khách hàng</h3>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table m-0">
+                        <thead>
+                          <tr>
+                            <th>Chỉ tiêu</th>
+                            <th>Giá trị</th>
+                            <th>% Thay đổi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Tổng khách hàng</td>
+                            <td>12,458</td>
+                            <td><span class="badge badge-success">+15%</span></td>
+                          </tr>
+                          <tr>
+                            <td>Khách hàng mới</td>
+                            <td>1,234</td>
+                            <td><span class="badge badge-success">+22%</span></td>
+                          </tr>
+                          <tr>
+                            <td>Khách hàng quay lại</td>
+                            <td>8,956</td>
+                            <td><span class="badge badge-success">+8%</span></td>
+                          </tr>
+                          <tr>
+                            <td>Tỷ lệ giữ chân</td>
+                            <td>92.5%</td>
+                            <td><span class="badge badge-success">+2%</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Biểu đồ tổng hợp -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-graph-up mr-1"></i>
+                      Xu hướng kinh doanh 12 tháng
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="business-trend-chart" style="height: 400px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Báo cáo sản phẩm và hoạt động -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Top 5 sản phẩm đóng góp doanh thu</h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="top-products-chart" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Hiệu suất theo kênh bán hàng</h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="channel-performance-chart" style="height: 300px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nhận xét và đề xuất -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-lightbulb mr-1"></i>
+                      Nhận xét và Đề xuất
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h5>Điểm mạnh:</h5>
+                        <ul>
+                          <li><i class="bi bi-check-circle text-success"></i> Doanh thu tăng trưởng ổn định 12% so với tháng trước</li>
+                          <li><i class="bi bi-check-circle text-success"></i> Tỷ lệ khách hàng quay lại cao (92.5%)</li>
+                          <li><i class="bi bi-check-circle text-success"></i> Biên lợi nhuận cải thiện lên 34%</li>
+                          <li><i class="bi bi-check-circle text-success"></i> Sản phẩm mới được thị trường đón nhận tốt</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6">
+                        <h5>Điểm cần cải thiện:</h5>
+                        <ul>
+                          <li><i class="bi bi-exclamation-triangle text-warning"></i> Tình trạng hết hàng ở một số sản phẩm chủ lực</li>
+                          <li><i class="bi bi-exclamation-triangle text-warning"></i> Chi phí marketing tăng cao hơn dự kiến</li>
+                          <li><i class="bi bi-exclamation-triangle text-warning"></i> Thời gian giao hàng trung bình tăng nhẹ</li>
+                        </ul>
+                        <h5 class="mt-3">Đề xuất:</h5>
+                        <ul>
+                          <li><i class="bi bi-arrow-right text-primary"></i> Tăng cường quản lý tồn kho, đặc biệt sản phẩm bán chạy</li>
+                          <li><i class="bi bi-arrow-right text-primary"></i> Tối ưu hóa chi phí marketing, tập trung vào kênh hiệu quả</li>
+                          <li><i class="bi bi-arrow-right text-primary"></i> Cải thiện quy trình logistics để giảm thời gian giao hàng</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2024 <a href="#">Công ty của bạn</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 1.0.0
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+
+    <script>
+      // Biểu đồ xu hướng kinh doanh
+      const businessTrendChart = new ApexCharts(document.querySelector('#business-trend-chart'), {
+        series: [{
+          name: 'Doanh thu (tỷ)',
+          type: 'column',
+          data: [1.8, 2.1, 1.95, 2.35, 2.2, 2.45, 2.5, 2.8, 2.28, 2.65, 2.3, 2.5]
+        }, {
+          name: 'Lợi nhuận (tỷ)',
+          type: 'line',
+          data: [0.6, 0.7, 0.65, 0.8, 0.73, 0.82, 0.85, 0.95, 0.77, 0.9, 0.78, 0.85]
+        }, {
+          name: 'Khách hàng mới',
+          type: 'line',
+          data: [850, 920, 1050, 980, 1100, 1150, 1200, 1280, 1180, 1250, 1200, 1234]
+        }],
+        chart: { height: 400, type: 'line', toolbar: { show: true } },
+        stroke: { width: [0, 2, 2], curve: 'smooth' },
+        plotOptions: { bar: { columnWidth: '50%' } },
+        colors: ['#007bff', '#28a745', '#ffc107'],
+        fill: { opacity: [0.85, 1, 1] },
+        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+        markers: { size: 0 },
+        yaxis: [
+          { title: { text: 'Doanh thu & Lợi nhuận (tỷ)' } },
+          { opposite: true, title: { text: 'Khách hàng mới' } }
+        ]
+      });
+      businessTrendChart.render();
+
+      // Biểu đồ top sản phẩm
+      const topProductsChart = new ApexCharts(document.querySelector('#top-products-chart'), {
+        series: [{
+          name: 'Doanh thu',
+          data: [857, 633, 437, 275, 191]
+        }],
+        chart: { type: 'bar', height: 300 },
+        plotOptions: { bar: { borderRadius: 4, horizontal: true } },
+        colors: ['#007bff'],
+        dataLabels: { enabled: false },
+        xaxis: {
+          categories: ['Laptop Dell XPS', 'iPhone 15 Pro', 'iPad Pro M2', 'AirPods Pro', 'Apple Watch'],
+          labels: { formatter: val => val + ' triệu' }
+        }
+      });
+      topProductsChart.render();
+
+      // Biểu đồ kênh bán hàng
+      const channelChart = new ApexCharts(document.querySelector('#channel-performance-chart'), {
+        series: [45, 30, 15, 10],
+        chart: { type: 'donut', height: 300 },
+        labels: ['Website', 'Cửa hàng', 'Mobile App', 'Đối tác'],
+        colors: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+        legend: { position: 'bottom' },
+        plotOptions: {
+          pie: {
+            donut: {
+              labels: {
+                show: true,
+                total: {
+                  show: true,
+                  label: 'Tổng',
+                  formatter: () => '100%'
+                }
+              }
+            }
+          }
+        }
+      });
+      channelChart.render();
+    </script>
+  </body>
+</html>
