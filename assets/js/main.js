@@ -52,40 +52,37 @@ function setupLocationSelector() {
 
 /**
  * Render chế độ tổng quan (không chọn cơ sở)
- * - Biểu đồ: So sánh doanh thu 7 cơ sở
- * - Thị phần: Thị phần các cơ sở
+ * - Biểu đồ chính: So sánh doanh thu 7 cơ sở (full width)
  * - Bảng: Top 5 cơ sở doanh thu tốt nhất
- * - Panel phải: Performance các cơ sở
+ * - Panel phải: Biểu đồ cột tổng doanh thu năm
  */
 function renderOverviewMode() {
   console.log('🔄 Chuyển sang chế độ Tổng quan');
 
   // Cập nhật tiêu đề
   document.getElementById('main-chart-title').innerHTML = '<i class="bi bi-graph-up-arrow mr-2"></i>So sánh doanh thu 7 cơ sở';
-  document.getElementById('market-share-title').textContent = 'Thị phần cơ sở';
   document.getElementById('top-table-title').textContent = 'Top 5 cơ sở doanh thu tốt nhất';
-  document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>Performance các cơ sở';
+  document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>Tổng doanh thu năm 2024';
 
   // Destroy các chart cũ nếu có
   destroyCharts();
 
-  // Render biểu đồ so sánh doanh thu các cơ sở
+  // Render biểu đồ so sánh doanh thu các cơ sở (full width)
   charts.revenue = initLocationComparisonChart('#revenue-chart', locations, locationData);
 
-  // Render biểu đồ thị phần các cơ sở
-  charts.product = initLocationMarketShareChart('#product-chart', locations, locationData);
+  // Render biểu đồ cột tổng doanh thu năm các cơ sở
+  charts.product = initLocationBarChart('#location-bar-chart', locations, locationData);
 
   // Render bảng Top 5 cơ sở
   renderTopLocationsTable();
 
-  // Render Performance các cơ sở
-  renderLocationPerformancePanel();
+  // Cập nhật footer
+  document.getElementById('right-panel-footer').innerHTML = '<small class="text-muted">Click vào cột để xem chi tiết cơ sở</small>';
 }
 
 /**
  * Render chế độ chi tiết cơ sở (khi chọn một cơ sở)
- * - Biểu đồ: So sánh sản phẩm bán chạy
- * - Thị phần: Thị phần sản phẩm
+ * - Biểu đồ chính: So sánh sản phẩm bán chạy (full width)
  * - Bảng: Top 5 sản phẩm bán chạy
  * - Panel phải: Thông báo cơ sở
  */
@@ -100,26 +97,18 @@ function renderLocationDetailMode(locationId) {
 
   // Cập nhật tiêu đề
   document.getElementById('main-chart-title').innerHTML = `<i class="bi bi-graph-up-arrow mr-2"></i>So sánh sản phẩm bán chạy - ${location.name}`;
-  document.getElementById('market-share-title').textContent = 'Thị phần sản phẩm';
   document.getElementById('top-table-title').textContent = 'Top 5 sản phẩm bán chạy';
   document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bell mr-2" id="right-panel-icon"></i>Thông báo';
 
   // Destroy các chart cũ nếu có
   destroyCharts();
 
-  // Render biểu đồ so sánh sản phẩm
+  // Render biểu đồ so sánh sản phẩm (full width)
   charts.revenue = initLocationProductComparisonChart('#revenue-chart', locationId, productsByLocation);
 
-  // Render biểu đồ thị phần sản phẩm của cơ sở
-  const locationProducts = productsByLocation[locationId];
-  if (locationProducts) {
-    const productData = {
-      labels: locationProducts.categories,
-      values: locationProducts.sales,
-      colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107', '#dc3545', '#6f42c1']
-    };
-    charts.product = initProductChart('#product-chart', productData);
-  }
+  // Clear và ẩn bar chart container, render thông báo
+  const rightPanelContainer = document.getElementById('right-panel-container');
+  rightPanelContainer.innerHTML = ''; // Clear bar chart
 
   // Render bảng Top 5 sản phẩm
   renderTopProductsTable(locationId);

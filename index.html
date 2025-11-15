@@ -281,8 +281,8 @@
 
             <!-- Charts Row -->
             <div class="row">
-              <!-- Biểu đồ doanh thu / So sánh sản phẩm -->
-              <div class="col-lg-8">
+              <!-- Biểu đồ doanh thu / So sánh sản phẩm - Full width -->
+              <div class="col-12">
                 <div class="card">
                   <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
@@ -294,19 +294,7 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <div id="revenue-chart" style="height: 350px;"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Biểu đồ tròn thị phần -->
-              <div class="col-lg-4">
-                <div class="card">
-                  <div class="card-header border-0">
-                    <h3 class="card-title" id="market-share-title">Thị phần cơ sở</h3>
-                  </div>
-                  <div class="card-body">
-                    <div id="product-chart" style="height: 300px;"></div>
+                    <div id="revenue-chart" style="height: 400px;"></div>
                   </div>
                 </div>
               </div>
@@ -326,20 +314,21 @@
                 </div>
               </div>
 
-              <!-- Performance các cơ sở / Thông báo -->
+              <!-- Biểu đồ cột / Thông báo -->
               <div class="col-lg-4">
                 <div class="card">
                   <div class="card-header border-0">
                     <h3 class="card-title" id="right-panel-title">
                       <i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>
-                      Performance các cơ sở
+                      Tổng doanh thu năm 2024
                     </h3>
                   </div>
-                  <div class="card-body p-0" id="right-panel-container">
+                  <div class="card-body" id="right-panel-container">
                     <!-- Nội dung sẽ được thay đổi bởi JavaScript -->
+                    <div id="location-bar-chart" style="height: 350px;"></div>
                   </div>
                   <div class="card-footer text-center" id="right-panel-footer">
-                    <small class="text-muted">Click vào cơ sở để xem chi tiết doanh thu</small>
+                    <small class="text-muted">Click vào cột để xem chi tiết cơ sở</small>
                   </div>
                 </div>
               </div>
