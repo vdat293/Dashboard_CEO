@@ -205,11 +205,11 @@
                   <div class="card-header">
                     <h3 class="card-title">
                       <i class="bi bi-graph-up mr-1"></i>
-                      Doanh số bán theo danh mục
+                      Xu hướng mua hàng của khách hàng
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="category-sales-chart" style="height: 300px;"></div>
+                    <div id="customer-trend-chart" style="height: 300px;"></div>
                   </div>
                 </div>
               </div>
@@ -218,12 +218,12 @@
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">
-                      <i class="bi bi-pie-chart mr-1"></i>
-                      Tỷ lệ tồn kho
+                      <i class="bi bi-bar-chart mr-1"></i>
+                      Doanh số theo danh mục
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="inventory-chart" style="height: 300px;"></div>
+                    <div id="category-sales-chart" style="height: 300px;"></div>
                   </div>
                 </div>
               </div>
@@ -389,38 +389,16 @@
                   <div class="card-header">
                     <h3 class="card-title">
                       <i class="bi bi-exclamation-triangle mr-1"></i>
-                      Cảnh báo tồn kho thấp
+                      Cảnh báo quan trọng
                     </h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-sm btn-warning" onclick="viewAllAlerts('warning')">
+                        <i class="bi bi-eye"></i> Xem đầy đủ
+                      </button>
+                    </div>
                   </div>
-                  <div class="card-body p-0">
-                    <ul class="products-list product-list-in-card pl-2 pr-2">
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-smartwatch text-warning" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">Apple Watch Ultra 2</a>
-                          <span class="product-description">
-                            Tồn kho: <strong class="text-danger">8 sản phẩm</strong>
-                            <br>
-                            <small>Cần nhập thêm ít nhất 50 sản phẩm</small>
-                          </span>
-                        </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-keyboard text-warning" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">Magic Keyboard</a>
-                          <span class="product-description">
-                            Tồn kho: <strong class="text-danger">5 sản phẩm</strong>
-                            <br>
-                            <small>Cần nhập thêm ít nhất 30 sản phẩm</small>
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
+                  <div class="card-body p-0" id="warning-alerts-container" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Sẽ được populate bằng JavaScript -->
                   </div>
                 </div>
               </div>
@@ -430,38 +408,16 @@
                   <div class="card-header">
                     <h3 class="card-title">
                       <i class="bi bi-x-circle mr-1"></i>
-                      Sản phẩm hết hàng
+                      Cảnh báo khẩn cấp
                     </h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-sm btn-danger" onclick="viewAllAlerts('danger')">
+                        <i class="bi bi-eye"></i> Xem đầy đủ
+                      </button>
+                    </div>
                   </div>
-                  <div class="card-body p-0">
-                    <ul class="products-list product-list-in-card pl-2 pr-2">
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-laptop text-danger" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">MacBook Pro 16"</a>
-                          <span class="product-description">
-                            <strong class="text-danger">Hết hàng</strong>
-                            <br>
-                            <small>Dự kiến nhập hàng: 15/01/2025</small>
-                          </span>
-                        </div>
-                      </li>
-                      <li class="item">
-                        <div class="product-img">
-                          <i class="bi bi-mouse text-danger" style="font-size: 2rem;"></i>
-                        </div>
-                        <div class="product-info">
-                          <a href="#" class="product-title">Magic Mouse</a>
-                          <span class="product-description">
-                            <strong class="text-danger">Hết hàng</strong>
-                            <br>
-                            <small>Dự kiến nhập hàng: 10/01/2025</small>
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
+                  <div class="card-body p-0" id="danger-alerts-container" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Sẽ được populate bằng JavaScript -->
                   </div>
                 </div>
               </div>
@@ -487,47 +443,199 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
 
+    <!-- Data -->
+    <script src="../assets/js/data.js"></script>
+
     <script>
-      // Biểu đồ doanh số theo danh mục
+      // ============================================
+      // CHART 1: XU HƯỚNG MUA HÀNG CỦA KHÁCH (12 THÁNG)
+      // ============================================
+      // Dữ liệu xu hướng bán hàng theo danh mục qua 12 tháng
+      const customerTrendData = {
+        months: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+        categories: {
+          'Điện tử': [450, 480, 520, 490, 550, 600, 640, 680, 720, 760, 800, 857],
+          'Thời trang': [320, 350, 380, 360, 400, 440, 470, 500, 530, 560, 600, 633],
+          'Gia dụng': [220, 240, 260, 250, 280, 310, 330, 350, 370, 390, 415, 437],
+          'Mỹ phẩm': [95, 105, 115, 110, 125, 140, 150, 160, 170, 180, 185, 191]
+        }
+      };
+
+      const customerTrendChart = new ApexCharts(document.querySelector('#customer-trend-chart'), {
+        series: [
+          { name: 'Điện tử', data: customerTrendData.categories['Điện tử'] },
+          { name: 'Thời trang', data: customerTrendData.categories['Thời trang'] },
+          { name: 'Gia dụng', data: customerTrendData.categories['Gia dụng'] },
+          { name: 'Mỹ phẩm', data: customerTrendData.categories['Mỹ phẩm'] }
+        ],
+        chart: {
+          type: 'area',
+          height: 300,
+          toolbar: { show: false },
+          animations: { enabled: true }
+        },
+        colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107'],
+        dataLabels: { enabled: false },
+        stroke: { curve: 'smooth', width: 2 },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.4,
+            opacityTo: 0.1,
+          }
+        },
+        xaxis: {
+          categories: customerTrendData.months,
+          title: { text: 'Tháng' }
+        },
+        yaxis: {
+          title: { text: 'Doanh số (triệu VNĐ)' },
+          labels: { formatter: val => val.toFixed(0) }
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'right'
+        },
+        tooltip: {
+          y: { formatter: val => val.toFixed(0) + ' triệu VNĐ' }
+        }
+      });
+      customerTrendChart.render();
+
+      // ============================================
+      // CHART 2: DOANH SỐ THEO DANH MỤC (COLUMN CHART)
+      // ============================================
       const categorySalesChart = new ApexCharts(document.querySelector('#category-sales-chart'), {
         series: [{
-          name: 'Doanh số (triệu)',
-          data: [857, 633, 437, 275, 191, 158]
+          name: 'Doanh số',
+          data: productsByLocation.HN.sales
         }],
-        chart: { type: 'bar', height: 300, toolbar: { show: false } },
+        chart: {
+          type: 'bar',
+          height: 300,
+          toolbar: { show: false }
+        },
         colors: ['#007bff'],
-        plotOptions: { bar: { horizontal: true, borderRadius: 4 } },
-        dataLabels: { enabled: false },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            columnWidth: '60%',
+            distributed: false
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: val => val + 'tr',
+          style: { fontSize: '11px' }
+        },
         xaxis: {
-          categories: ['Laptop', 'Điện thoại', 'Tablet', 'Âm thanh', 'Wearable', 'Phụ kiện'],
-          labels: { formatter: val => val + ' triệu' }
+          categories: productsByLocation.HN.categories,
+          labels: {
+            rotate: -45,
+            style: { fontSize: '11px' }
+          }
+        },
+        yaxis: {
+          title: { text: 'Doanh số (triệu VNĐ)' },
+          labels: { formatter: val => val.toFixed(0) }
+        },
+        tooltip: {
+          y: { formatter: val => val + ' triệu VNĐ' }
         }
       });
       categorySalesChart.render();
 
-      // Biểu đồ tồn kho
-      const inventoryChart = new ApexCharts(document.querySelector('#inventory-chart'), {
-        series: [71.4, 19.4, 9.2],
-        chart: { type: 'donut', height: 300 },
-        labels: ['Còn hàng', 'Sắp hết', 'Hết hàng'],
-        colors: ['#28a745', '#ffc107', '#dc3545'],
-        legend: { position: 'bottom' },
-        plotOptions: {
-          pie: {
-            donut: {
-              labels: {
-                show: true,
-                total: {
-                  show: true,
-                  label: 'Tổng SP',
-                  formatter: () => '458'
-                }
-              }
-            }
-          }
+      // ============================================
+      // POPULATE ALERTS FROM MOCK DATA
+      // ============================================
+      function renderAlerts() {
+        const currentLocation = 'HN'; // Mặc định là Hà Nội
+        const alerts = notificationsByLocation[currentLocation];
+
+        // Phân loại alerts
+        const warningAlerts = alerts.filter(a =>
+          a.priority === 'high' || a.priority === 'medium' || a.type === 'low_stock' || a.type === 'return' || a.type === 'slow_moving'
+        ).slice(0, 5); // Hiển thị tối đa 5 cảnh báo
+
+        const dangerAlerts = alerts.filter(a =>
+          a.priority === 'urgent' || a.type === 'out_stock' || a.type === 'defect'
+        ).slice(0, 5);
+
+        // Render warning alerts
+        const warningContainer = document.getElementById('warning-alerts-container');
+        warningContainer.innerHTML = '<ul class="products-list product-list-in-card pl-2 pr-2">' +
+          warningAlerts.map(alert => `
+            <li class="item">
+              <div class="product-img">
+                <i class="bi ${alert.icon} text-${alert.color}" style="font-size: 2rem;"></i>
+              </div>
+              <div class="product-info">
+                <a href="#" class="product-title">
+                  ${alert.product}
+                  <span class="badge badge-${alert.color} float-right">${alert.title}</span>
+                </a>
+                <span class="product-description">
+                  ${alert.detail}
+                  <br>
+                  <small class="text-muted"><i class="bi bi-clock"></i> ${alert.time}</small>
+                </span>
+              </div>
+            </li>
+          `).join('') +
+          '</ul>';
+
+        // Render danger alerts
+        const dangerContainer = document.getElementById('danger-alerts-container');
+        dangerContainer.innerHTML = '<ul class="products-list product-list-in-card pl-2 pr-2">' +
+          dangerAlerts.map(alert => `
+            <li class="item">
+              <div class="product-img">
+                <i class="bi ${alert.icon} text-${alert.color}" style="font-size: 2rem;"></i>
+              </div>
+              <div class="product-info">
+                <a href="#" class="product-title">
+                  ${alert.product}
+                  <span class="badge badge-${alert.color} float-right">${alert.title}</span>
+                </a>
+                <span class="product-description">
+                  ${alert.detail}
+                  <br>
+                  <small class="text-muted"><i class="bi bi-clock"></i> ${alert.time}</small>
+                </span>
+              </div>
+            </li>
+          `).join('') +
+          '</ul>';
+      }
+
+      // Function to view all alerts
+      function viewAllAlerts(type) {
+        const currentLocation = 'HN';
+        const alerts = notificationsByLocation[currentLocation];
+
+        let filteredAlerts;
+        let modalTitle;
+
+        if (type === 'warning') {
+          filteredAlerts = alerts.filter(a =>
+            a.priority === 'high' || a.priority === 'medium' || a.type === 'low_stock' || a.type === 'return' || a.type === 'slow_moving'
+          );
+          modalTitle = 'Tất cả cảnh báo quan trọng';
+        } else {
+          filteredAlerts = alerts.filter(a =>
+            a.priority === 'urgent' || a.type === 'out_stock' || a.type === 'defect'
+          );
+          modalTitle = 'Tất cả cảnh báo khẩn cấp';
         }
-      });
-      inventoryChart.render();
+
+        alert(`${modalTitle}\n\n${filteredAlerts.map((a, i) =>
+          `${i+1}. ${a.product}\n   ${a.title}: ${a.detail}\n   Thời gian: ${a.time}`
+        ).join('\n\n')}`);
+      }
+
+      // Initialize alerts on page load
+      document.addEventListener('DOMContentLoaded', renderAlerts);
     </script>
   </body>
 </html>
