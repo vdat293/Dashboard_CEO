@@ -228,17 +228,19 @@
               <div class="col-lg-8">
                 <div class="card">
                   <div class="card-header border-0">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <h3 class="card-title">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                      <h3 class="card-title mb-2 mb-md-0">
                         <i class="bi bi-graph-up mr-2"></i>
                         <span id="chart-title">Doanh thu theo tháng (Tổng hợp)</span>
                       </h3>
-                      <div>
+                      <div class="btn-group-sm">
                         <button type="button" class="btn btn-sm btn-outline-primary" id="btn-compare-years">
-                          <i class="bi bi-calendar3-range"></i> So sánh năm
+                          <i class="bi bi-calendar3-range"></i>
+                          <span class="d-none d-sm-inline"> So sánh năm</span>
                         </button>
-                        <button type="button" class="btn btn-sm btn-primary">
-                          <i class="bi bi-download"></i> Xuất dữ liệu
+                        <button type="button" class="btn btn-sm btn-primary ml-1">
+                          <i class="bi bi-download"></i>
+                          <span class="d-none d-sm-inline"> Xuất dữ liệu</span>
                         </button>
                       </div>
                     </div>
@@ -373,6 +375,17 @@
           showYearComparison = !showYearComparison;
           updateRevenueTrendChart();
           $(this).toggleClass('btn-primary btn-outline-primary');
+
+          // Update button text based on state
+          const icon = $(this).find('i');
+          const text = $(this).find('span');
+          if (showYearComparison) {
+            icon.removeClass('bi-calendar3-range').addClass('bi-calendar-check');
+            text.text(' Đang so sánh 3 năm');
+          } else {
+            icon.removeClass('bi-calendar-check').addClass('bi-calendar3-range');
+            text.text(' So sánh năm');
+          }
         });
       });
 
@@ -384,15 +397,34 @@
           chart: {
             height: 400,
             type: 'bar',
-            toolbar: { show: true },
-            zoom: { enabled: true }
+            toolbar: {
+              show: true,
+              tools: {
+                download: true,
+                selection: false,
+                zoom: false,
+                zoomin: false,
+                zoomout: false,
+                pan: false,
+                reset: false
+              }
+            },
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800,
+              animateGradually: {
+                enabled: true,
+                delay: 150
+              }
+            }
           },
-          colors: ['#007bff', '#6c757d', '#dee2e6'],
+          colors: ['#007bff', '#28a745', '#ffc107'],
           plotOptions: {
             bar: {
               horizontal: false,
               columnWidth: '60%',
-              borderRadius: 4,
+              borderRadius: 6,
               dataLabels: {
                 position: 'top'
               }
@@ -404,7 +436,8 @@
             offsetY: -20,
             style: {
               fontSize: '10px',
-              colors: ['#304758']
+              colors: ['#304758'],
+              fontWeight: 600
             }
           },
           stroke: {
@@ -412,39 +445,108 @@
             width: 2,
             colors: ['transparent']
           },
-          xaxis: { categories: monthLabelsShort },
+          xaxis: {
+            categories: monthLabelsShort,
+            labels: {
+              style: {
+                fontSize: '11px'
+              }
+            }
+          },
           yaxis: {
             labels: {
-              formatter: val => (val / 1000).toFixed(1) + ' tỷ'
+              formatter: val => (val / 1000).toFixed(1) + ' tỷ',
+              style: {
+                fontSize: '11px'
+              }
             }
           },
           fill: {
-            opacity: 0.9
+            opacity: 0.95
           },
           tooltip: {
+            shared: true,
+            intersect: false,
             y: {
               formatter: val => val.toLocaleString() + ' triệu VNĐ'
             }
           },
-          legend: { position: 'top' }
+          legend: {
+            position: 'top',
+            fontSize: '13px',
+            fontWeight: 600,
+            markers: {
+              width: 12,
+              height: 12,
+              radius: 3
+            }
+          },
+          responsive: [{
+            breakpoint: 768,
+            options: {
+              chart: {
+                height: 300
+              },
+              dataLabels: {
+                enabled: false
+              },
+              plotOptions: {
+                bar: {
+                  columnWidth: '80%'
+                }
+              }
+            }
+          }]
         });
         revenueTrendChart.render();
 
         // Distribution chart (Donut for overall, Bar for single location)
         distributionChart = new ApexCharts(document.querySelector('#revenue-distribution-chart'), {
           series: [],
-          chart: { type: 'donut', height: 400 },
+          chart: {
+            type: 'donut',
+            height: 400,
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800,
+              animateGradually: {
+                enabled: true,
+                delay: 150
+              }
+            }
+          },
           labels: [],
           colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107', '#6f42c1', '#fd7e14', '#20c997'],
-          legend: { position: 'bottom' },
+          legend: {
+            position: 'bottom',
+            fontSize: '12px',
+            markers: {
+              width: 10,
+              height: 10,
+              radius: 2
+            }
+          },
           plotOptions: {
             pie: {
               donut: {
+                size: '65%',
                 labels: {
                   show: true,
+                  name: {
+                    fontSize: '14px',
+                    fontWeight: 600
+                  },
+                  value: {
+                    fontSize: '20px',
+                    fontWeight: 700,
+                    formatter: val => (val / 1000).toFixed(1) + ' tỷ'
+                  },
                   total: {
                     show: true,
                     label: 'Tổng',
+                    fontSize: '14px',
+                    fontWeight: 600,
                     formatter: (w) => {
                       const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
                       return (total / 1000).toFixed(2) + ' tỷ';
@@ -458,7 +560,19 @@
             y: {
               formatter: val => (val / 1000).toFixed(2) + ' tỷ VNĐ'
             }
-          }
+          },
+          responsive: [{
+            breakpoint: 768,
+            options: {
+              chart: {
+                height: 320
+              },
+              legend: {
+                position: 'bottom',
+                fontSize: '11px'
+              }
+            }
+          }]
         });
         distributionChart.render();
 
@@ -468,13 +582,19 @@
           chart: {
             type: 'bar',
             height: 350,
-            toolbar: { show: false }
+            toolbar: { show: false },
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800
+            }
           },
           colors: ['#007bff', '#dc3545', '#28a745'],
           plotOptions: {
             bar: {
               horizontal: false,
-              columnWidth: '70%',
+              columnWidth: '60%',
+              borderRadius: 6,
               dataLabels: { position: 'top' }
             }
           },
@@ -482,22 +602,58 @@
             enabled: true,
             formatter: val => (val / 1000).toFixed(1) + 'tỷ',
             offsetY: -20,
-            style: { fontSize: '10px', colors: ['#304758'] }
-          },
-          stroke: { show: true, width: 2, colors: ['transparent'] },
-          xaxis: { categories: monthLabelsShort },
-          yaxis: {
-            labels: {
-              formatter: val => (val / 1000).toFixed(0) + ' tỷ'
+            style: {
+              fontSize: '10px',
+              colors: ['#304758'],
+              fontWeight: 600
             }
           },
-          fill: { opacity: 0.8 },
+          stroke: { show: true, width: 2, colors: ['transparent'] },
+          xaxis: {
+            categories: monthLabelsShort,
+            labels: {
+              style: {
+                fontSize: '11px'
+              }
+            }
+          },
+          yaxis: {
+            labels: {
+              formatter: val => (val / 1000).toFixed(1) + ' tỷ',
+              style: {
+                fontSize: '11px'
+              }
+            }
+          },
+          fill: { opacity: 0.9 },
           tooltip: {
+            shared: true,
+            intersect: false,
             y: {
               formatter: val => val.toLocaleString() + ' triệu VNĐ'
             }
           },
-          legend: { position: 'top' }
+          legend: {
+            position: 'top',
+            fontSize: '13px',
+            fontWeight: 600
+          },
+          responsive: [{
+            breakpoint: 768,
+            options: {
+              chart: {
+                height: 300
+              },
+              dataLabels: {
+                enabled: false
+              },
+              plotOptions: {
+                bar: {
+                  columnWidth: '80%'
+                }
+              }
+            }
+          }]
         });
         revenueExpenseProfitChart.render();
 
@@ -508,20 +664,66 @@
             data: []
           }],
           chart: {
-            type: 'line',
+            type: 'area',
             height: 350,
-            toolbar: { show: false }
+            toolbar: { show: false },
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800
+            }
           },
           colors: ['#28a745'],
-          stroke: { curve: 'smooth', width: 3 },
-          markers: { size: 5 },
-          xaxis: { categories: monthLabelsShort },
+          stroke: {
+            curve: 'smooth',
+            width: 3
+          },
+          fill: {
+            type: 'gradient',
+            gradient: {
+              shadeIntensity: 1,
+              opacityFrom: 0.4,
+              opacityTo: 0.1,
+              stops: [0, 90, 100]
+            }
+          },
+          markers: {
+            size: 5,
+            strokeWidth: 2,
+            hover: {
+              size: 7
+            }
+          },
+          xaxis: {
+            categories: monthLabelsShort,
+            labels: {
+              style: {
+                fontSize: '11px'
+              }
+            }
+          },
           yaxis: {
             labels: {
-              formatter: val => val.toFixed(1) + '%'
-            },
-            min: -10,
-            max: 10
+              formatter: val => val.toFixed(1) + '%',
+              style: {
+                fontSize: '11px'
+              }
+            }
+          },
+          annotations: {
+            yaxis: [{
+              y: 0,
+              borderColor: '#999',
+              strokeDashArray: 4,
+              label: {
+                borderColor: '#999',
+                style: {
+                  color: '#fff',
+                  background: '#999'
+                },
+                text: 'Hòa vốn'
+              }
+            }]
           },
           tooltip: {
             y: {
@@ -534,7 +736,15 @@
               colors: ['#f3f3f3', 'transparent'],
               opacity: 0.5
             }
-          }
+          },
+          responsive: [{
+            breakpoint: 768,
+            options: {
+              chart: {
+                height: 280
+              }
+            }
+          }]
         });
         profitMarginChart.render();
       }
@@ -637,16 +847,59 @@
           const labels = locations.map(loc => loc.name);
 
           distributionChart.updateOptions({
-            chart: { type: 'donut' },
+            chart: {
+              type: 'donut',
+              animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800
+              }
+            },
             series: locationTotals,
-            labels: labels
+            labels: labels,
+            plotOptions: {
+              pie: {
+                donut: {
+                  size: '65%',
+                  labels: {
+                    show: true,
+                    name: {
+                      fontSize: '14px',
+                      fontWeight: 600
+                    },
+                    value: {
+                      fontSize: '20px',
+                      fontWeight: 700,
+                      formatter: val => (val / 1000).toFixed(1) + ' tỷ'
+                    },
+                    total: {
+                      show: true,
+                      label: 'Tổng',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      formatter: (w) => {
+                        const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                        return (total / 1000).toFixed(2) + ' tỷ';
+                      }
+                    }
+                  }
+                }
+              }
+            }
           });
         } else {
           // Show monthly distribution for single location (as bar chart)
           const data = locationData[currentLocation].revenue;
 
           distributionChart.updateOptions({
-            chart: { type: 'bar' },
+            chart: {
+              type: 'bar',
+              animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800
+              }
+            },
             series: [{
               name: 'Doanh thu',
               data: data
@@ -656,7 +909,36 @@
               bar: {
                 horizontal: false,
                 columnWidth: '60%',
-                borderRadius: 4
+                borderRadius: 6,
+                dataLabels: {
+                  position: 'top'
+                }
+              }
+            },
+            dataLabels: {
+              enabled: true,
+              formatter: val => (val / 1000).toFixed(1) + 'tỷ',
+              offsetY: -20,
+              style: {
+                fontSize: '10px',
+                colors: ['#304758'],
+                fontWeight: 600
+              }
+            },
+            xaxis: {
+              categories: monthLabelsShort,
+              labels: {
+                style: {
+                  fontSize: '11px'
+                }
+              }
+            },
+            yaxis: {
+              labels: {
+                formatter: val => (val / 1000).toFixed(1) + ' tỷ',
+                style: {
+                  fontSize: '11px'
+                }
               }
             }
           });
@@ -756,10 +1038,10 @@
 
           const row = `
             <tr>
-              <td><strong>Tháng ${i + 1}/2024</strong></td>
+              <td><strong>Tháng ${i + 1}/2025</strong></td>
               <td class="text-right"><strong>${(revenue / 1000).toFixed(2)} tỷ</strong></td>
               <td class="text-right">${(expenses / 1000).toFixed(2)} tỷ</td>
-              <td class="text-right ${profitClass}"><strong>${profit >= 0 ? profit : '(' + Math.abs(profit) + ')'} triệu</strong></td>
+              <td class="text-right ${profitClass}"><strong>${profit >= 0 ? (profit / 1000).toFixed(2) + ' tỷ' : '(' + (Math.abs(profit) / 1000).toFixed(2) + ' tỷ)'}</strong></td>
               <td class="text-center"><span class="badge badge-${profit >= 0 ? 'success' : 'danger'}">${profitMargin.toFixed(1)}%</span></td>
               <td class="text-center"><span class="badge badge-${badgeClass}">${growthSign}${yoyGrowth.toFixed(1)}%</span></td>
               <td class="text-center"><span class="badge badge-${statusClass}">${status}</span></td>
