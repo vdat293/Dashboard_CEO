@@ -279,7 +279,7 @@ function getSystemTotals() {
 // Dữ liệu doanh thu (dùng tổng của tất cả cơ sở)
 const revenueData = {
   months: monthLabels,
-  values: businessDataByMonth[2024].revenue
+  values: businessDataByMonth[2025].revenue
 };
 
 // Dữ liệu sản phẩm (dùng của Hà Nội làm mặc định)

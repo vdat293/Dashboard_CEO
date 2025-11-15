@@ -301,7 +301,7 @@ function initLocationBarChart(selector, locations, locationData) {
 
   const options = {
     series: [{
-      name: 'Doanh thu năm 2024',
+      name: 'Doanh thu năm 2025',
       data: totals
     }],
     chart: {

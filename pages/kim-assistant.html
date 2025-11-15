@@ -454,7 +454,7 @@
 
           locationRanking.sort((a, b) => b.revenue - a.revenue);
 
-          response = `<strong>📊 Xếp hạng cơ sở theo doanh thu năm 2024:</strong><br><br>`;
+          response = `<strong>📊 Xếp hạng cơ sở theo doanh thu năm 2025:</strong><br><br>`;
           locationRanking.forEach((loc, index) => {
             const emoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
             response += `${emoji} <strong>${loc.name}</strong><br>`;
@@ -478,7 +478,7 @@
 
           customersByLoc.sort((a, b) => b.customers - a.customers);
 
-          response = `<strong>👥 Khách hàng tháng 11/2024:</strong><br><br>`;
+          response = `<strong>👥 Khách hàng tháng 11/2025:</strong><br><br>`;
           response += `🎯 <strong>Tổng:</strong> ${formatNumber(totalCustomers)} khách hàng<br><br>`;
           response += `<strong>Theo từng cơ sở:</strong><br>`;
           customersByLoc.forEach(loc => {
@@ -504,7 +504,7 @@
 
           profitData.sort((a, b) => b.profit - a.profit);
 
-          response = `<strong>💹 Phân tích lợi nhuận năm 2024:</strong><br><br>`;
+          response = `<strong>💹 Phân tích lợi nhuận năm 2025:</strong><br><br>`;
           profitData.forEach((loc, index) => {
             const emoji = index === 0 ? '🌟' : '⭐';
             const status = loc.margin >= 32 ? '✅ Tốt' : loc.margin >= 28 ? '⚠️ Trung bình' : '❌ Cần cải thiện';
@@ -540,26 +540,27 @@
 
         case 'growth':
           questionText = 'Xu hướng tăng trưởng như thế nào?';
-          const growth2022 = businessDataByMonth[2022].revenue.reduce((a, b) => a + b, 0);
           const growth2023 = businessDataByMonth[2023].revenue.reduce((a, b) => a + b, 0);
           const growth2024 = businessDataByMonth[2024].revenue.reduce((a, b) => a + b, 0);
+          const growth2025 = businessDataByMonth[2025].revenue.reduce((a, b) => a + b, 0);
 
-          const growth2223 = (((growth2023 - growth2022) / growth2022) * 100).toFixed(1);
           const growth2324 = (((growth2024 - growth2023) / growth2023) * 100).toFixed(1);
+          const growth2425 = (((growth2025 - growth2024) / growth2024) * 100).toFixed(1);
 
           response = `<strong>📈 Phân tích tăng trưởng:</strong><br><br>`;
           response += `<strong>Doanh thu theo năm:</strong><br>`;
-          response += `2022: ${formatCurrency(growth2022)}<br>`;
-          response += `2023: ${formatCurrency(growth2023)} (+${growth2223}%)<br>`;
-          response += `2024: ${formatCurrency(growth2024)} (+${growth2324}%)<br><br>`;
+          response += `2023: ${formatCurrency(growth2023)}<br>`;
+          response += `2024: ${formatCurrency(growth2024)} (+${growth2324}%)<br>`;
+          response += `2025: ${formatCurrency(growth2025)} (+${growth2425}%)<br><br>`;
           response += `<strong>Nhận xét:</strong><br>`;
 
-          if (parseFloat(growth2324) > parseFloat(growth2223)) {
+          if (parseFloat(growth2425) > parseFloat(growth2324)) {
             response += `✅ Tốc độ tăng trưởng đang tăng tốc!<br>`;
-            response += `🚀 Dự báo 2025 rất khả quan.`;
+            response += `🚀 Triển vọng kinh doanh rất tích cực.`;
           } else {
-            response += `⚠️ Tốc độ tăng trưởng đang chậm lại.<br>`;
-            response += `💡 Cần có chiến lược mới để đẩy mạnh.`;
+            response += `⚠️ Tốc độ tăng trưởng đang chậm lại từ ${growth2324}% xuống ${growth2425}%.<br>`;
+            response += `💡 Cần có chiến lược mới để đẩy mạnh kinh doanh.<br>`;
+            response += `🎯 Xem xét tối ưu chi phí và mở rộng thị trường.`;
           }
           break;
 

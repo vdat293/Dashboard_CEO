@@ -539,7 +539,7 @@
 
         if (currentLocation === '') {
           // All locations
-          data = businessDataByMonth[2024];
+          data = businessDataByMonth[2025];
           title = 'Tất cả cơ sở';
         } else {
           // Single location
@@ -554,7 +554,7 @@
         const avgRevenue = yearlyRevenue / 12;
 
         // YoY growth
-        const lastYearData = currentLocation === '' ? businessDataByMonth[2023] : null;
+        const lastYearData = currentLocation === '' ? businessDataByMonth[2024] : null;
         let yoyGrowth = 0;
         if (lastYearData) {
           const lastYearRevenue = lastYearData.revenue[currentMonth];
@@ -590,14 +590,14 @@
           // All locations - show comparison with previous years
           if (showYearComparison) {
             series = [
+              { name: '2025', data: businessDataByMonth[2025].revenue },
               { name: '2024', data: businessDataByMonth[2024].revenue },
-              { name: '2023', data: businessDataByMonth[2023].revenue },
-              { name: '2022', data: businessDataByMonth[2022].revenue }
+              { name: '2023', data: businessDataByMonth[2023].revenue }
             ];
           } else {
             series = [
-              { name: '2024', data: businessDataByMonth[2024].revenue },
-              { name: '2023', data: businessDataByMonth[2023].revenue }
+              { name: '2025', data: businessDataByMonth[2025].revenue },
+              { name: '2024', data: businessDataByMonth[2024].revenue }
             ];
           }
         } else {
@@ -651,7 +651,7 @@
         let data;
 
         if (currentLocation === '') {
-          data = businessDataByMonth[2024];
+          data = businessDataByMonth[2025];
         } else {
           data = locationData[currentLocation];
         }
@@ -670,7 +670,7 @@
         let data;
 
         if (currentLocation === '') {
-          data = businessDataByMonth[2024];
+          data = businessDataByMonth[2025];
         } else {
           data = locationData[currentLocation];
         }
@@ -691,30 +691,30 @@
         const tableBody = $('#revenue-table-body');
         tableBody.empty();
 
-        let data2024, data2023;
+        let data2025, data2024;
 
         if (currentLocation === '') {
+          data2025 = businessDataByMonth[2025];
           data2024 = businessDataByMonth[2024];
-          data2023 = businessDataByMonth[2023];
         } else {
-          data2024 = locationData[currentLocation];
-          // For single location, we don't have 2023 data, so use estimate
-          data2023 = {
-            revenue: data2024.revenue.map(r => r * 0.88), // Assume 12% growth
-            expenses: data2024.expenses.map(e => e * 0.88),
-            profit: data2024.profit.map(p => p * 0.88)
+          data2025 = locationData[currentLocation];
+          // For single location, we don't have 2024 data, so use estimate
+          data2024 = {
+            revenue: data2025.revenue.map(r => r * 0.952), // Assume ~5% growth from 2024
+            expenses: data2025.expenses.map(e => e * 0.952),
+            profit: data2025.profit.map(p => p * 0.952)
           };
         }
 
         // Iterate through months in reverse (December to January)
         for (let i = 11; i >= 0; i--) {
-          const revenue = data2024.revenue[i];
-          const expenses = data2024.expenses[i];
-          const profit = data2024.profit[i];
+          const revenue = data2025.revenue[i];
+          const expenses = data2025.expenses[i];
+          const profit = data2025.profit[i];
           const profitMargin = ((profit / revenue) * 100);
 
           // Calculate YoY growth
-          const revenueLastYear = data2023.revenue[i];
+          const revenueLastYear = data2024.revenue[i];
           const yoyGrowth = (((revenue - revenueLastYear) / revenueLastYear) * 100);
 
           // Determine status

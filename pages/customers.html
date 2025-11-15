@@ -682,7 +682,7 @@
 
         if (currentLocation === '') {
           // All locations
-          data = businessDataByMonth[2024];
+          data = businessDataByMonth[2025];
           title = 'Tất cả cơ sở';
         } else {
           // Single location
@@ -698,7 +698,7 @@
         const ordersPerCustomer = monthlyOrders / monthlyCustomers;
 
         // YoY growth (estimated)
-        const lastYearData = currentLocation === '' ? businessDataByMonth[2023] : null;
+        const lastYearData = currentLocation === '' ? businessDataByMonth[2024] : null;
         let yoyGrowth = 0;
         if (lastYearData) {
           const lastYearCustomers = lastYearData.customers[currentMonth];
@@ -730,10 +730,10 @@
         let series = [];
 
         if (currentLocation === '') {
-          // All locations - compare 2024 vs 2023
+          // All locations - compare 2025 vs 2024
           series = [
-            { name: '2024', data: businessDataByMonth[2024].customers },
-            { name: '2023', data: businessDataByMonth[2023].customers }
+            { name: '2025', data: businessDataByMonth[2025].customers },
+            { name: '2024', data: businessDataByMonth[2024].customers }
           ];
         } else {
           // Single location
@@ -786,7 +786,7 @@
         let data;
 
         if (currentLocation === '') {
-          data = businessDataByMonth[2024];
+          data = businessDataByMonth[2025];
         } else {
           data = locationData[currentLocation];
         }
@@ -806,7 +806,7 @@
         let totalCustomers;
 
         if (currentLocation === '') {
-          totalCustomers = businessDataByMonth[2024].customers.reduce((a, b) => a + b, 0);
+          totalCustomers = businessDataByMonth[2025].customers.reduce((a, b) => a + b, 0);
         } else {
           totalCustomers = locationData[currentLocation].customers.reduce((a, b) => a + b, 0);
         }
