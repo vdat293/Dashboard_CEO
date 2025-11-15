@@ -62,7 +62,7 @@ function renderOverviewMode() {
   // Cập nhật tiêu đề
   document.getElementById('main-chart-title').innerHTML = '<i class="bi bi-graph-up-arrow mr-2"></i>So sánh doanh thu 7 cơ sở';
   document.getElementById('top-table-title').textContent = 'Top 5 cơ sở doanh thu tốt nhất';
-  document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>Tổng doanh thu năm 2024';
+  document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>Tổng doanh thu năm 2025';
 
   // Destroy các chart cũ nếu có
   destroyCharts();
