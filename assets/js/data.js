@@ -171,6 +171,88 @@ const monthLabels = [
 const monthLabelsShort = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
 
 // ============================================
+// NGUỒN KHÁCH HÀNG (CUSTOMER ACQUISITION CHANNELS)
+// ============================================
+
+// Dữ liệu khách hàng mới theo kênh marketing (năm 2025, tổng tất cả cơ sở)
+const customerAcquisitionChannels = {
+  channels: [
+    { id: 'tiktok', name: 'TikTok Ads', color: '#000000' },
+    { id: 'facebook', name: 'Facebook Ads', color: '#1877f2' },
+    { id: 'google', name: 'Google Ads', color: '#4285f4' },
+    { id: 'seo', name: 'Organic Search (SEO)', color: '#34a853' },
+    { id: 'direct', name: 'Direct', color: '#6c757d' },
+    { id: 'referral', name: 'Referral/Giới thiệu', color: '#ffc107' },
+    { id: 'email', name: 'Email Marketing', color: '#ea4335' }
+  ],
+
+  // Phân bố khách hàng mới theo kênh (%)
+  // TikTok đang nổi lên mạnh, Facebook giảm dần, SEO ổn định
+  distribution: {
+    tiktok: 32,    // 32% - Kênh mới, đang tăng mạnh, ROI tốt với Gen Z
+    facebook: 24,  // 24% - Vẫn hiệu quả nhưng giảm dần, cạnh tranh cao
+    google: 18,    // 18% - Ổn định, conversion rate cao
+    seo: 12,       // 12% - Tự nhiên, miễn phí nhưng cần thời gian
+    direct: 8,     // 8% - Khách quen, biết brand
+    referral: 4,   // 4% - Chương trình referral
+    email: 2       // 2% - Email marketing, conversion thấp
+  },
+
+  // Chi phí marketing trung bình mỗi kênh (triệu VNĐ/tháng)
+  monthlyCost: {
+    tiktok: 245,     // TikTok Ads budget
+    facebook: 180,   // Facebook Ads budget
+    google: 220,     // Google Ads budget
+    seo: 45,         // SEO tools + content
+    direct: 0,       // Không tốn phí
+    referral: 35,    // Referral rewards
+    email: 15        // Email platform + design
+  },
+
+  // CAC (Customer Acquisition Cost) - Chi phí để có 1 khách hàng mới (nghìn VNĐ)
+  cac: {
+    tiktok: 420,     // 420k/KH - Rẻ, hiệu quả với Gen Z
+    facebook: 650,   // 650k/KH - Đắt hơn, cạnh tranh cao
+    google: 1050,    // 1.05tr/KH - Đắt nhất nhưng conversion tốt
+    seo: 325,        // 325k/KH - Rẻ nhưng cần thời gian
+    direct: 0,       // Miễn phí
+    referral: 750,   // 750k/KH - Bao gồm reward
+    email: 650       // 650k/KH - Trung bình
+  },
+
+  // Conversion rate (%) - Tỷ lệ chuyển đổi từ click sang khách hàng
+  conversionRate: {
+    tiktok: 3.2,     // 3.2% - Cao nhờ video content hấp dẫn
+    facebook: 2.1,   // 2.1% - Trung bình
+    google: 4.8,     // 4.8% - Cao nhất, intent rõ ràng
+    seo: 5.2,        // 5.2% - Rất cao, organic traffic chất lượng
+    direct: 12.5,    // 12.5% - Khách đã biết brand
+    referral: 8.5,   // 8.5% - Tin tưởng từ bạn bè
+    email: 1.8       // 1.8% - Thấp nhất
+  },
+
+  // LTV (Customer Lifetime Value) trung bình theo kênh (triệu VNĐ)
+  // Khách từ referral thường có LTV cao hơn
+  ltv: {
+    tiktok: 4.2,     // 4.2tr - Gen Z, mua ít hơn
+    facebook: 5.8,   // 5.8tr
+    google: 8.5,     // 8.5tr - Intent cao, mua nhiều
+    seo: 7.2,        // 7.2tr - Organic, chất lượng tốt
+    direct: 12.5,    // 12.5tr - Khách quen, trung thành
+    referral: 15.8,  // 15.8tr - Cao nhất, trust từ bạn bè
+    email: 3.5       // 3.5tr - Thấp
+  }
+};
+
+// Xu hướng khách hàng mới từ TikTok theo tháng (2025)
+// Tăng mạnh từ T3 khi bắt đầu invest nhiều vào TikTok
+const tiktokGrowthByMonth = [280, 310, 450, 520, 480, 650, 720, 780, 590, 580, 670, 800];
+
+// Xu hướng khách hàng mới từ Facebook theo tháng (2025)
+// Giảm dần do chuyển budget sang TikTok
+const facebookGrowthByMonth = [520, 510, 480, 450, 420, 480, 510, 540, 450, 430, 490, 550];
+
+// ============================================
 // DỮ LIỆU SẢN PHẨM THEO CƠ SỞ
 // ============================================
 
