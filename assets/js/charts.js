@@ -361,3 +361,150 @@ function initLocationBarChart(selector, locations, locationData) {
 
   return chart;
 }
+
+/**
+ * Khởi tạo biểu đồ thị phần các cơ sở
+ * @param {string} selector - CSS selector của element chứa biểu đồ
+ * @param {Array} locations - Mảng thông tin các cơ sở
+ * @param {Object} locationData - Dữ liệu chi tiết từng cơ sở
+ */
+function initLocationMarketShareChart(selector, locations, locationData) {
+  // Tính tổng doanh thu từng cơ sở
+  const totals = locations.map(loc => {
+    return locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+  });
+
+  const options = {
+    series: totals,
+    chart: {
+      type: 'donut',
+      height: 300
+    },
+    labels: locations.map(loc => loc.name),
+    colors: locations.map(loc => loc.color),
+    legend: {
+      position: 'bottom',
+      fontSize: '14px'
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function(val) {
+        return val.toFixed(1) + '%';
+      }
+    },
+    tooltip: {
+      y: {
+        formatter: function(value) {
+          return (value / 1000).toFixed(2) + ' tỷ VNĐ';
+        }
+      }
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '65%',
+          labels: {
+            show: true,
+            total: {
+              show: true,
+              label: 'Tổng doanh thu',
+              formatter: function(w) {
+                const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                return (total / 1000).toFixed(1) + ' tỷ';
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+
+  const chart = new ApexCharts(document.querySelector(selector), options);
+  chart.render();
+
+  return chart;
+}
+
+/**
+ * Khởi tạo biểu đồ so sánh sản phẩm của một cơ sở
+ * @param {string} selector - CSS selector của element chứa biểu đồ
+ * @param {string} locationId - ID của cơ sở
+ * @param {Object} productsByLocation - Dữ liệu sản phẩm theo cơ sở
+ */
+function initLocationProductComparisonChart(selector, locationId, productsByLocation) {
+  const locationProducts = productsByLocation[locationId];
+  if (!locationProducts) {
+    console.error('Không tìm thấy dữ liệu sản phẩm cho cơ sở:', locationId);
+    return null;
+  }
+
+  const topProducts = locationProducts.topProducts;
+
+  // Chuẩn bị dữ liệu cho biểu đồ
+  const series = [{
+    name: 'Doanh thu',
+    data: topProducts.map(p => (p.revenue / 1000000).toFixed(0)) // Chuyển sang triệu
+  }];
+
+  const options = {
+    series: series,
+    chart: {
+      height: 350,
+      type: 'bar',
+      toolbar: {
+        show: true
+      }
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        borderRadius: 4,
+        dataLabels: {
+          position: 'right'
+        }
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function(val) {
+        return val + ' triệu';
+      },
+      offsetX: 30,
+      style: {
+        fontSize: '12px',
+        colors: ['#304758']
+      }
+    },
+    xaxis: {
+      categories: topProducts.map(p => p.name),
+      labels: {
+        formatter: function(value) {
+          return value + ' triệu';
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        style: {
+          fontSize: '11px'
+        }
+      }
+    },
+    colors: ['#007bff'],
+    tooltip: {
+      y: {
+        formatter: function(value) {
+          return value + ' triệu VNĐ';
+        }
+      }
+    },
+    grid: {
+      borderColor: '#f1f1f1'
+    }
+  };
+
+  const chart = new ApexCharts(document.querySelector(selector), options);
+  chart.render();
+
+  return chart;
+}

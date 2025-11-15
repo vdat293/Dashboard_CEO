@@ -298,3 +298,364 @@ const sparklineData = {
   product4: [12, 10, 9, 8, 7, 6, 7, 8, 7, 8, 9, 8],          // AirPods Pro 2 - giảm nhẹ
   product5: [10, 11, 9, 8, 7, 6, 7, 6, 5, 6, 7, 8]           // Apple Watch Ultra 2 - giảm
 };
+
+// ============================================
+// DỮ LIỆU THÔNG BÁO CHO TỪNG CƠ SỞ
+// ============================================
+
+const notificationsByLocation = {
+  HN: [
+    {
+      type: 'low_stock',
+      icon: 'bi-exclamation-triangle',
+      color: 'warning',
+      title: 'Sắp hết hàng',
+      product: 'iPhone 15 Pro Max',
+      detail: 'Còn 12 chiếc, cần nhập thêm',
+      time: '2 giờ trước',
+      priority: 'high'
+    },
+    {
+      type: 'out_stock',
+      icon: 'bi-x-circle',
+      color: 'danger',
+      title: 'Hết hàng',
+      product: 'MacBook Air M3 256GB',
+      detail: 'Đã hết hàng, khách đang chờ',
+      time: '4 giờ trước',
+      priority: 'urgent'
+    },
+    {
+      type: 'slow_moving',
+      icon: 'bi-clock-history',
+      color: 'info',
+      title: 'Hàng tồn lâu',
+      product: 'Apple Watch Series 8',
+      detail: 'Tồn kho 45 ngày, 23 chiếc',
+      time: '1 ngày trước',
+      priority: 'low'
+    },
+    {
+      type: 'return',
+      icon: 'bi-arrow-return-left',
+      color: 'warning',
+      title: 'Đổi trả sản phẩm',
+      product: 'iPad Pro 11" bị lỗi màn hình',
+      detail: 'Khách Nguyễn Văn A yêu cầu đổi trả',
+      time: '3 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'defect',
+      icon: 'bi-bug',
+      color: 'danger',
+      title: 'Sản phẩm lỗi',
+      product: 'AirPods Pro 2',
+      detail: '3 khách báo lỗi pin trong tuần',
+      time: '5 giờ trước',
+      priority: 'high'
+    },
+    {
+      type: 'new_stock',
+      icon: 'bi-box-seam',
+      color: 'success',
+      title: 'Nhập hàng mới',
+      product: 'Samsung Galaxy S24 Ultra',
+      detail: 'Nhập 50 chiếc, giá tốt',
+      time: '1 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'return',
+      icon: 'bi-arrow-return-left',
+      color: 'warning',
+      title: 'Nhiều đổi trả',
+      product: 'Sony WH-1000XM5',
+      detail: '5 khách đổi trả trong 2 ngày',
+      time: '6 giờ trước',
+      priority: 'high'
+    },
+    {
+      type: 'low_stock',
+      icon: 'bi-exclamation-triangle',
+      color: 'warning',
+      title: 'Sắp hết hàng',
+      product: 'Samsung Galaxy Buds2 Pro',
+      detail: 'Còn 8 chiếc',
+      time: '7 giờ trước',
+      priority: 'medium'
+    }
+  ],
+  HCM: [
+    {
+      type: 'out_stock',
+      icon: 'bi-x-circle',
+      color: 'danger',
+      title: 'Hết hàng',
+      product: 'iPhone 15 Pro Max 1TB',
+      detail: 'Hết hàng, có 3 khách đang chờ',
+      time: '1 giờ trước',
+      priority: 'urgent'
+    },
+    {
+      type: 'defect',
+      icon: 'bi-bug',
+      color: 'danger',
+      title: 'Sản phẩm lỗi',
+      product: 'MacBook Pro M3',
+      detail: 'Khách báo màn hình bị đốm',
+      time: '3 giờ trước',
+      priority: 'high'
+    },
+    {
+      type: 'slow_moving',
+      icon: 'bi-clock-history',
+      color: 'info',
+      title: 'Hàng tồn lâu',
+      product: 'iPad Air 64GB',
+      detail: 'Tồn 60 ngày, 18 chiếc',
+      time: '2 ngày trước',
+      priority: 'low'
+    },
+    {
+      type: 'new_stock',
+      icon: 'bi-box-seam',
+      color: 'success',
+      title: 'Nhập hàng mới',
+      product: 'iPhone 15 Pro',
+      detail: 'Nhập 100 chiếc các màu',
+      time: '30 phút trước',
+      priority: 'medium'
+    },
+    {
+      type: 'return',
+      icon: 'bi-arrow-return-left',
+      color: 'warning',
+      title: 'Đổi trả sản phẩm',
+      product: 'Apple Watch Ultra 2',
+      detail: 'Khách Trần Thị B đổi size dây',
+      time: '4 giờ trước',
+      priority: 'low'
+    },
+    {
+      type: 'low_stock',
+      icon: 'bi-exclamation-triangle',
+      color: 'warning',
+      title: 'Sắp hết hàng',
+      product: 'AirPods Max',
+      detail: 'Còn 5 chiếc',
+      time: '5 giờ trước',
+      priority: 'high'
+    }
+  ],
+  DN: [
+    {
+      type: 'slow_moving',
+      icon: 'bi-clock-history',
+      color: 'info',
+      title: 'Hàng tồn lâu',
+      product: 'Samsung Galaxy Tab S9',
+      detail: 'Tồn 50 ngày, 15 chiếc',
+      time: '1 ngày trước',
+      priority: 'medium'
+    },
+    {
+      type: 'new_stock',
+      icon: 'bi-box-seam',
+      color: 'success',
+      title: 'Nhập hàng mới',
+      product: 'iPhone 14',
+      detail: 'Nhập 30 chiếc',
+      time: '2 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'return',
+      icon: 'bi-arrow-return-left',
+      color: 'warning',
+      title: 'Đổi trả sản phẩm',
+      product: 'Samsung Galaxy A54',
+      detail: 'Khách Lê Văn C đổi màu',
+      time: '6 giờ trước',
+      priority: 'low'
+    },
+    {
+      type: 'low_stock',
+      icon: 'bi-exclamation-triangle',
+      color: 'warning',
+      title: 'Sắp hết hàng',
+      product: 'AirPods Pro 2',
+      detail: 'Còn 7 chiếc',
+      time: '3 giờ trước',
+      priority: 'high'
+    }
+  ],
+  HP: [
+    {
+      type: 'slow_moving',
+      icon: 'bi-clock-history',
+      color: 'info',
+      title: 'Hàng tồn lâu',
+      product: 'iPhone 14',
+      detail: 'Tồn 70 ngày, 28 chiếc',
+      time: '3 ngày trước',
+      priority: 'high'
+    },
+    {
+      type: 'defect',
+      icon: 'bi-bug',
+      color: 'danger',
+      title: 'Sản phẩm lỗi',
+      product: 'Xiaomi Redmi Note 13',
+      detail: '2 khách báo lỗi sạc',
+      time: '4 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'new_stock',
+      icon: 'bi-box-seam',
+      color: 'success',
+      title: 'Nhập hàng mới',
+      product: 'Samsung Galaxy A54',
+      detail: 'Nhập 25 chiếc',
+      time: '5 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'low_stock',
+      icon: 'bi-exclamation-triangle',
+      color: 'warning',
+      title: 'Sắp hết hàng',
+      product: 'AirPods 3',
+      detail: 'Còn 4 chiếc',
+      time: '2 giờ trước',
+      priority: 'high'
+    }
+  ],
+  CT: [
+    {
+      type: 'new_stock',
+      icon: 'bi-box-seam',
+      color: 'success',
+      title: 'Nhập hàng mới',
+      product: 'Xiaomi Redmi Note 13',
+      detail: 'Nhập 40 chiếc, giá tốt',
+      time: '1 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'low_stock',
+      icon: 'bi-exclamation-triangle',
+      color: 'warning',
+      title: 'Sắp hết hàng',
+      product: 'Samsung Galaxy A34',
+      detail: 'Còn 9 chiếc',
+      time: '4 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'return',
+      icon: 'bi-arrow-return-left',
+      color: 'warning',
+      title: 'Đổi trả sản phẩm',
+      product: 'Oppo Reno 10',
+      detail: 'Khách Phạm Thị D không ưng màu',
+      time: '7 giờ trước',
+      priority: 'low'
+    },
+    {
+      type: 'slow_moving',
+      icon: 'bi-clock-history',
+      color: 'info',
+      title: 'Hàng tồn lâu',
+      product: 'iPhone 13',
+      detail: 'Tồn 40 ngày, 12 chiếc',
+      time: '2 ngày trước',
+      priority: 'low'
+    }
+  ],
+  NT: [
+    {
+      type: 'out_stock',
+      icon: 'bi-x-circle',
+      color: 'danger',
+      title: 'Hết hàng',
+      product: 'Samsung Galaxy A34',
+      detail: 'Hết hàng do mùa cao điểm',
+      time: '2 giờ trước',
+      priority: 'urgent'
+    },
+    {
+      type: 'slow_moving',
+      icon: 'bi-clock-history',
+      color: 'info',
+      title: 'Hàng tồn lâu',
+      product: 'Oppo A78',
+      detail: 'Tồn 55 ngày, 20 chiếc',
+      time: '2 ngày trước',
+      priority: 'medium'
+    },
+    {
+      type: 'new_stock',
+      icon: 'bi-box-seam',
+      color: 'success',
+      title: 'Nhập hàng mới',
+      product: 'iPhone 13',
+      detail: 'Nhập 20 chiếc',
+      time: '3 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'return',
+      icon: 'bi-arrow-return-left',
+      color: 'warning',
+      title: 'Đổi trả sản phẩm',
+      product: 'JBL Flip 6',
+      detail: 'Khách Hoàng Văn E báo lỗi Bluetooth',
+      time: '5 giờ trước',
+      priority: 'medium'
+    }
+  ],
+  VT: [
+    {
+      type: 'slow_moving',
+      icon: 'bi-clock-history',
+      color: 'info',
+      title: 'Hàng tồn lâu',
+      product: 'Samsung Galaxy A34',
+      detail: 'Tồn 65 ngày, 25 chiếc',
+      time: '3 ngày trước',
+      priority: 'high'
+    },
+    {
+      type: 'low_stock',
+      icon: 'bi-exclamation-triangle',
+      color: 'warning',
+      title: 'Sắp hết hàng',
+      product: 'Xiaomi Redmi Note 12',
+      detail: 'Còn 6 chiếc',
+      time: '4 giờ trước',
+      priority: 'medium'
+    },
+    {
+      type: 'defect',
+      icon: 'bi-bug',
+      color: 'danger',
+      title: 'Sản phẩm lỗi',
+      product: 'Oppo A78',
+      detail: 'Khách báo camera bị mờ',
+      time: '6 giờ trước',
+      priority: 'high'
+    },
+    {
+      type: 'new_stock',
+      icon: 'bi-box-seam',
+      color: 'success',
+      title: 'Nhập hàng mới',
+      product: 'Samsung Galaxy Buds FE',
+      detail: 'Nhập 30 chiếc',
+      time: '2 giờ trước',
+      priority: 'medium'
+    }
+  ]
+};
