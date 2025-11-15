@@ -168,9 +168,9 @@
                   <div class="info-box-content">
                     <span class="info-box-text">Khách hàng mới tháng này</span>
                     <span class="info-box-number" id="kpi-new-customers">
-                      1,724
+                      1,806
                       <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> <span id="kpi-new-customers-growth">4.8%</span>
+                        <i class="bi bi-arrow-up"></i> 4.8%
                       </small>
                     </span>
                   </div>
@@ -180,12 +180,12 @@
               <div class="col-lg-3 col-6">
                 <div class="info-box">
                   <span class="info-box-icon bg-gradient-success elevation-1">
-                    <i class="bi bi-person-plus"></i>
+                    <i class="bi bi-people-fill"></i>
                   </span>
                   <div class="info-box-content">
-                    <span class="info-box-text">Tổng khách hàng năm</span>
+                    <span class="info-box-text">Tổng khách hàng tích lũy</span>
                     <span class="info-box-number" id="kpi-total-customers">
-                      66,089
+                      84,617
                     </span>
                   </div>
                 </div>
@@ -199,7 +199,7 @@
                   <div class="info-box-content">
                     <span class="info-box-text">Khách hàng VIP</span>
                     <span class="info-box-number" id="kpi-vip">
-                      342
+                      423
                     </span>
                   </div>
                 </div>
@@ -213,7 +213,7 @@
                   <div class="info-box-content">
                     <span class="info-box-text">Trung bình đơn/KH</span>
                     <span class="info-box-number" id="kpi-orders-per-customer">
-                      3.32
+                      3.31
                     </span>
                   </div>
                 </div>
@@ -241,7 +241,7 @@
                   <div class="card-header border-0">
                     <h3 class="card-title">
                       <i class="bi bi-pie-chart mr-2"></i>
-                      Phân bố khách hàng mới
+                      <span id="distribution-title">Phân bố khách hàng theo cơ sở</span>
                     </h3>
                   </div>
                   <div class="card-body">
@@ -693,7 +693,7 @@
 
         // Calculate totals
         const monthlyNewCustomers = data.newCustomers[currentMonth];
-        const yearlyCustomers = data.customers.reduce((a, b) => a + b, 0);
+        const totalCumulativeCustomers = data.cumulativeCustomers[currentMonth]; // Tổng KH tích lũy đến tháng hiện tại
         const monthlyOrders = data.orders[currentMonth];
         const monthlyCustomers = data.customers[currentMonth];
         const ordersPerCustomer = monthlyOrders / monthlyCustomers;
@@ -708,8 +708,8 @@
           yoyGrowth = 4.8; // Default for single location
         }
 
-        // VIP customers (estimated 2% of total)
-        const vipCustomers = Math.round(yearlyCustomers * 0.02);
+        // VIP customers (estimated 0.5% of cumulative total - more realistic)
+        const vipCustomers = Math.round(totalCumulativeCustomers * 0.005);
 
         // Update KPIs
         $('#kpi-new-customers').html(`
@@ -718,7 +718,7 @@
             <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${Math.abs(yoyGrowth).toFixed(1)}%
           </small>
         `);
-        $('#kpi-total-customers').text(yearlyCustomers.toLocaleString());
+        $('#kpi-total-customers').text(totalCumulativeCustomers.toLocaleString());
         $('#kpi-vip').text(vipCustomers.toLocaleString());
         $('#kpi-orders-per-customer').text(ordersPerCustomer.toFixed(2));
 
@@ -749,35 +749,37 @@
       // Update distribution chart
       function updateDistributionChart() {
         if (currentLocation === '') {
-          // Show all locations distribution (yearly total new customers)
+          // Show all locations distribution (yearly cumulative customers)
           const locationTotals = locations.map(loc => {
-            return locationData[loc.id].newCustomers.reduce((a, b) => a + b, 0);
+            // Lấy cumulative customers cuối năm (tháng 11)
+            return locationData[loc.id].cumulativeCustomers[11];
           });
           const labels = locations.map(loc => loc.name);
 
+          $('#distribution-title').text('Phân bố khách hàng theo cơ sở');
           distributionChart.updateOptions({
             chart: { type: 'donut' },
             series: locationTotals,
             labels: labels
           });
         } else {
-          // Show monthly distribution for single location (as bar chart)
+          // Show top 6 months with most new customers for single location (donut chart)
           const data = locationData[currentLocation].newCustomers;
 
+          // Tạo array với tháng và số lượng, sau đó sort
+          const monthData = data.map((value, index) => ({
+            month: monthLabels[index],
+            value: value
+          })).sort((a, b) => b.value - a.value).slice(0, 6); // Top 6 tháng
+
+          const labels = monthData.map(item => item.month);
+          const values = monthData.map(item => item.value);
+
+          $('#distribution-title').text('Top 6 tháng có nhiều KH mới nhất');
           distributionChart.updateOptions({
-            chart: { type: 'bar' },
-            series: [{
-              name: 'Khách hàng mới',
-              data: data
-            }],
-            labels: monthLabelsShort,
-            plotOptions: {
-              bar: {
-                horizontal: false,
-                columnWidth: '60%',
-                borderRadius: 4
-              }
-            }
+            chart: { type: 'donut' },
+            series: values,
+            labels: labels
           });
         }
       }
@@ -803,19 +805,20 @@
       // Update segment chart
       function updateSegmentChart() {
         // Customer segmentation by value (estimated distribution)
-        // VIP: 2%, Loyal: 8%, Regular: 20%, Normal: 70%
-        let totalCustomers;
+        // VIP: 0.5%, Loyal: 3%, Regular: 15%, Normal: 81.5%
+        const currentMonth = 10;
+        let totalCumulativeCustomers;
 
         if (currentLocation === '') {
-          totalCustomers = businessDataByMonth[2025].customers.reduce((a, b) => a + b, 0);
+          totalCumulativeCustomers = businessDataByMonth[2025].cumulativeCustomers[currentMonth];
         } else {
-          totalCustomers = locationData[currentLocation].customers.reduce((a, b) => a + b, 0);
+          totalCumulativeCustomers = locationData[currentLocation].cumulativeCustomers[currentMonth];
         }
 
-        const vip = Math.round(totalCustomers * 0.02);
-        const loyal = Math.round(totalCustomers * 0.08);
-        const regular = Math.round(totalCustomers * 0.20);
-        const normal = totalCustomers - vip - loyal - regular;
+        const vip = Math.round(totalCumulativeCustomers * 0.005);      // 0.5% - khách VIP (chi >100tr)
+        const loyal = Math.round(totalCumulativeCustomers * 0.03);     // 3% - khách thân thiết (50-100tr)
+        const regular = Math.round(totalCumulativeCustomers * 0.15);   // 15% - khách thường xuyên (10-50tr)
+        const normal = totalCumulativeCustomers - vip - loyal - regular; // 81.5% - khách bình thường (<10tr)
 
         segmentChart.updateSeries([vip, loyal, regular, normal]);
       }
