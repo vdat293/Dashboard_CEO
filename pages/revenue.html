@@ -138,10 +138,18 @@
                 <h1 class="m-0">Doanh Thu Chi Tiết</h1>
               </div>
               <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                  <li class="breadcrumb-item active">Doanh thu</li>
-                </ol>
+                <div class="float-sm-right">
+                  <select id="location-selector" class="form-control" style="width: auto; display: inline-block; min-width: 200px;">
+                    <option value="">Tất cả cơ sở (Tổng hợp)</option>
+                    <option value="HN">Hà Nội</option>
+                    <option value="HCM">TP. Hồ Chí Minh</option>
+                    <option value="DN">Đà Nẵng</option>
+                    <option value="HP">Hải Phòng</option>
+                    <option value="CT">Cần Thơ</option>
+                    <option value="NT">Nha Trang</option>
+                    <option value="VT">Vũng Tàu</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -154,49 +162,62 @@
             <!-- Tổng quan doanh thu -->
             <div class="row">
               <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-primary">
-                  <div class="inner">
-                    <h3>3.68 tỷ</h3>
-                    <p>Doanh thu tháng này</p>
-                  </div>
-                  <div class="icon">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-primary elevation-1">
                     <i class="bi bi-currency-dollar"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh thu tháng này</span>
+                    <span class="info-box-number" id="kpi-revenue">
+                      14.22 tỷ
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> <span id="kpi-revenue-growth">14.1%</span>
+                      </small>
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-success">
-                  <div class="inner">
-                    <h3>35.94 tỷ</h3>
-                    <p>Doanh thu năm nay</p>
-                  </div>
-                  <div class="icon">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-success elevation-1">
                     <i class="bi bi-graph-up-arrow"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh thu năm nay</span>
+                    <span class="info-box-number" id="kpi-yearly">
+                      167.48 tỷ
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-info">
-                  <div class="inner">
-                    <h3>2.995 tỷ</h3>
-                    <p>Trung bình/tháng</p>
-                  </div>
-                  <div class="icon">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-info elevation-1">
                     <i class="bi bi-bar-chart"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Trung bình/tháng</span>
+                    <span class="info-box-number" id="kpi-average">
+                      13.96 tỷ
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-warning">
-                  <div class="inner">
-                    <h3>+15.0%</h3>
-                    <p>Tăng trưởng so với năm trước</p>
-                  </div>
-                  <div class="icon">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-warning elevation-1">
                     <i class="bi bi-arrow-up-circle"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Tăng trưởng YoY</span>
+                    <span class="info-box-number" id="kpi-yoy">
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> +13.6%
+                      </small>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -206,50 +227,69 @@
             <div class="row">
               <div class="col-lg-8">
                 <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="bi bi-graph-up mr-1"></i>
-                      Doanh thu theo tháng
-                    </h3>
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-sm btn-primary">
-                        <i class="bi bi-download"></i> Xuất dữ liệu
-                      </button>
+                  <div class="card-header border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h3 class="card-title">
+                        <i class="bi bi-graph-up mr-2"></i>
+                        <span id="chart-title">Doanh thu theo tháng (Tổng hợp)</span>
+                      </h3>
+                      <div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="btn-compare-years">
+                          <i class="bi bi-calendar3-range"></i> So sánh năm
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary">
+                          <i class="bi bi-download"></i> Xuất dữ liệu
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div class="card-body">
-                    <div id="revenue-trend-chart" style="height: 350px;"></div>
+                    <div id="revenue-trend-chart" style="height: 400px;"></div>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-4">
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-pie-chart mr-1"></i>
-                      Doanh thu theo khu vực
+                      <i class="bi bi-pie-chart mr-2"></i>
+                      Phân bố doanh thu
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="region-chart" style="height: 350px;"></div>
+                    <div id="revenue-distribution-chart" style="height: 400px;"></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- So sánh năm -->
+            <!-- Phân tích chi tiết -->
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-calendar-range mr-1"></i>
-                      So sánh doanh thu theo năm
+                      <i class="bi bi-bar-chart-line mr-2"></i>
+                      So sánh Doanh thu - Chi phí - Lợi nhuận
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="year-comparison-chart" style="height: 300px;"></div>
+                    <div id="revenue-expense-profit-chart" style="height: 350px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-percent mr-2"></i>
+                      Biên lợi nhuận theo tháng
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="profit-margin-chart" style="height: 350px;"></div>
                   </div>
                 </div>
               </div>
@@ -259,20 +299,23 @@
             <div class="row">
               <div class="col-12">
                 <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Chi tiết doanh thu theo tháng</h3>
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-table mr-2"></i>
+                      Chi tiết doanh thu theo tháng
+                    </h3>
                   </div>
                   <div class="card-body table-responsive p-0">
                     <table class="table table-hover table-striped">
-                      <thead>
+                      <thead class="bg-light">
                         <tr>
                           <th>Tháng</th>
-                          <th>Doanh thu</th>
-                          <th>Chi phí</th>
-                          <th>Lợi nhuận</th>
-                          <th>Biên LN</th>
-                          <th>Tăng trưởng YoY</th>
-                          <th>Trạng thái</th>
+                          <th class="text-right">Doanh thu</th>
+                          <th class="text-right">Chi phí</th>
+                          <th class="text-right">Lợi nhuận</th>
+                          <th class="text-center">Biên LN</th>
+                          <th class="text-center">So với năm trước</th>
+                          <th class="text-center">Trạng thái</th>
                         </tr>
                       </thead>
                       <tbody id="revenue-table-body">
@@ -308,109 +351,406 @@
     <script src="../assets/js/data.js"></script>
 
     <script>
-      // Biểu đồ xu hướng doanh thu
-      const revenueTrendChart = new ApexCharts(document.querySelector('#revenue-trend-chart'), {
-        series: [{
-          name: '2024',
-          data: businessDataByMonth[2024].revenue
-        }, {
-          name: '2023',
-          data: businessDataByMonth[2023].revenue
-        }],
-        chart: { height: 350, type: 'area', toolbar: { show: true } },
-        colors: ['#007bff', '#6c757d'],
-        dataLabels: { enabled: false },
-        stroke: { curve: 'smooth', width: 2 },
-        fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.1 } },
-        xaxis: { categories: monthLabelsShort },
-        yaxis: { labels: { formatter: val => val.toFixed(0) + ' triệu' } },
-        tooltip: { y: { formatter: val => val.toFixed(0) + ' triệu VNĐ' } }
+      // State management
+      let currentLocation = '';
+      let showYearComparison = false;
+
+      // Chart instances
+      let revenueTrendChart, distributionChart, revenueExpenseProfitChart, profitMarginChart;
+
+      // Initialize page
+      $(document).ready(function() {
+        initCharts();
+        updateDashboard();
+
+        // Event listeners
+        $('#location-selector').on('change', function() {
+          currentLocation = $(this).val();
+          updateDashboard();
+        });
+
+        $('#btn-compare-years').on('click', function() {
+          showYearComparison = !showYearComparison;
+          updateRevenueTrendChart();
+          $(this).toggleClass('btn-primary btn-outline-primary');
+        });
       });
-      revenueTrendChart.render();
 
-      // Biểu đồ theo khu vực
-      const regionChart = new ApexCharts(document.querySelector('#region-chart'), {
-        series: revenueByRegion.percentages,
-        chart: { type: 'donut', height: 350 },
-        labels: revenueByRegion.labels,
-        colors: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
-        legend: { position: 'bottom' },
-        tooltip: { y: { formatter: val => val + '%' } }
-      });
-      regionChart.render();
+      // Initialize all charts
+      function initCharts() {
+        // Revenue trend chart
+        revenueTrendChart = new ApexCharts(document.querySelector('#revenue-trend-chart'), {
+          series: [],
+          chart: {
+            height: 400,
+            type: 'area',
+            toolbar: { show: true },
+            zoom: { enabled: true }
+          },
+          colors: ['#007bff', '#6c757d', '#dee2e6'],
+          dataLabels: { enabled: false },
+          stroke: { curve: 'smooth', width: 3 },
+          fill: {
+            type: 'gradient',
+            gradient: {
+              shadeIntensity: 1,
+              opacityFrom: 0.4,
+              opacityTo: 0.1
+            }
+          },
+          xaxis: { categories: monthLabelsShort },
+          yaxis: {
+            labels: {
+              formatter: val => (val / 1000).toFixed(1) + ' tỷ'
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: val => val.toLocaleString() + ' triệu VNĐ'
+            }
+          },
+          legend: { position: 'top' }
+        });
+        revenueTrendChart.render();
 
-      // Biểu đồ so sánh năm
-      const yearComparisonChart = new ApexCharts(document.querySelector('#year-comparison-chart'), {
-        series: [{
-          name: '2024',
-          data: businessDataByMonth[2024].revenue
-        }, {
-          name: '2023',
-          data: businessDataByMonth[2023].revenue
-        }, {
-          name: '2022',
-          data: businessDataByMonth[2022].revenue
-        }],
-        chart: { type: 'bar', height: 300, toolbar: { show: false } },
-        colors: ['#007bff', '#6c757d', '#dee2e6'],
-        plotOptions: { bar: { horizontal: false, columnWidth: '55%' } },
-        dataLabels: { enabled: false },
-        stroke: { show: true, width: 2, colors: ['transparent'] },
-        xaxis: { categories: monthLabelsShort },
-        yaxis: { labels: { formatter: val => val.toFixed(0) + ' triệu' } },
-        fill: { opacity: 1 },
-        tooltip: { y: { formatter: val => val + ' triệu VNĐ' } }
-      });
-      yearComparisonChart.render();
+        // Distribution chart (Donut for overall, Bar for single location)
+        distributionChart = new ApexCharts(document.querySelector('#revenue-distribution-chart'), {
+          series: [],
+          chart: { type: 'donut', height: 400 },
+          labels: [],
+          colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107', '#6f42c1', '#fd7e14', '#20c997'],
+          legend: { position: 'bottom' },
+          plotOptions: {
+            pie: {
+              donut: {
+                labels: {
+                  show: true,
+                  total: {
+                    show: true,
+                    label: 'Tổng',
+                    formatter: (w) => {
+                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                      return (total / 1000).toFixed(2) + ' tỷ';
+                    }
+                  }
+                }
+              }
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: val => (val / 1000).toFixed(2) + ' tỷ VNĐ'
+            }
+          }
+        });
+        distributionChart.render();
 
-      // Populate revenue table
-      const tableBody = document.getElementById('revenue-table-body');
-      const months2024 = businessDataByMonth[2024];
-      const months2023 = businessDataByMonth[2023];
+        // Revenue-Expense-Profit comparison chart
+        revenueExpenseProfitChart = new ApexCharts(document.querySelector('#revenue-expense-profit-chart'), {
+          series: [],
+          chart: {
+            type: 'bar',
+            height: 350,
+            toolbar: { show: false }
+          },
+          colors: ['#007bff', '#dc3545', '#28a745'],
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              columnWidth: '70%',
+              dataLabels: { position: 'top' }
+            }
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: val => (val / 1000).toFixed(1) + 'tỷ',
+            offsetY: -20,
+            style: { fontSize: '10px', colors: ['#304758'] }
+          },
+          stroke: { show: true, width: 2, colors: ['transparent'] },
+          xaxis: { categories: monthLabelsShort },
+          yaxis: {
+            labels: {
+              formatter: val => (val / 1000).toFixed(0) + ' tỷ'
+            }
+          },
+          fill: { opacity: 0.8 },
+          tooltip: {
+            y: {
+              formatter: val => val.toLocaleString() + ' triệu VNĐ'
+            }
+          },
+          legend: { position: 'top' }
+        });
+        revenueExpenseProfitChart.render();
 
-      // Iterate through months in reverse (December to January)
-      for (let i = 11; i >= 0; i--) {
-        const revenue = months2024.revenue[i];
-        const expenses = months2024.expenses[i];
-        const profit = months2024.profit[i];
-        const profitMargin = ((profit / revenue) * 100).toFixed(1);
+        // Profit margin chart
+        profitMarginChart = new ApexCharts(document.querySelector('#profit-margin-chart'), {
+          series: [{
+            name: 'Biên lợi nhuận',
+            data: []
+          }],
+          chart: {
+            type: 'line',
+            height: 350,
+            toolbar: { show: false }
+          },
+          colors: ['#28a745'],
+          stroke: { curve: 'smooth', width: 3 },
+          markers: { size: 5 },
+          xaxis: { categories: monthLabelsShort },
+          yaxis: {
+            labels: {
+              formatter: val => val.toFixed(1) + '%'
+            },
+            min: -10,
+            max: 10
+          },
+          tooltip: {
+            y: {
+              formatter: val => val.toFixed(2) + '%'
+            }
+          },
+          grid: {
+            borderColor: '#e7e7e7',
+            row: {
+              colors: ['#f3f3f3', 'transparent'],
+              opacity: 0.5
+            }
+          }
+        });
+        profitMarginChart.render();
+      }
 
-        // Calculate YoY growth
-        const revenueLastYear = months2023.revenue[i];
-        const yoyGrowth = (((revenue - revenueLastYear) / revenueLastYear) * 100).toFixed(1);
+      // Update dashboard based on selected location
+      function updateDashboard() {
+        updateKPIs();
+        updateRevenueTrendChart();
+        updateDistributionChart();
+        updateRevenueExpenseProfitChart();
+        updateProfitMarginChart();
+        updateTable();
+      }
 
-        // Determine status
-        let status, statusClass;
-        if (yoyGrowth >= 15) {
-          status = 'Vượt mục tiêu';
-          statusClass = 'success';
-        } else if (yoyGrowth >= 10) {
-          status = 'Đạt mục tiêu';
-          statusClass = 'success';
-        } else if (yoyGrowth >= 5) {
-          status = 'Gần đạt';
-          statusClass = 'warning';
+      // Update KPI boxes
+      function updateKPIs() {
+        const currentMonth = 10; // November (index 10)
+        let data, title;
+
+        if (currentLocation === '') {
+          // All locations
+          data = businessDataByMonth[2024];
+          title = 'Tất cả cơ sở';
         } else {
-          status = 'Cần cải thiện';
-          statusClass = 'danger';
+          // Single location
+          data = locationData[currentLocation];
+          const loc = locations.find(l => l.id === currentLocation);
+          title = loc.name;
         }
 
-        const badgeClass = yoyGrowth >= 0 ? 'success' : 'danger';
-        const growthSign = yoyGrowth >= 0 ? '+' : '';
+        // Calculate totals
+        const monthlyRevenue = data.revenue[currentMonth];
+        const yearlyRevenue = data.revenue.reduce((a, b) => a + b, 0);
+        const avgRevenue = yearlyRevenue / 12;
 
-        const row = `
-          <tr>
-            <td><strong>Tháng ${i + 1}/2024</strong></td>
-            <td><strong>${(revenue / 1000).toFixed(2)} tỷ</strong></td>
-            <td>${(expenses / 1000).toFixed(2)} tỷ</td>
-            <td class="text-success"><strong>${profit} triệu</strong></td>
-            <td>${profitMargin}%</td>
-            <td><span class="badge badge-${badgeClass}">${growthSign}${yoyGrowth}%</span></td>
-            <td><span class="badge badge-${statusClass}">${status}</span></td>
-          </tr>
-        `;
+        // YoY growth
+        const lastYearData = currentLocation === '' ? businessDataByMonth[2023] : null;
+        let yoyGrowth = 0;
+        if (lastYearData) {
+          const lastYearRevenue = lastYearData.revenue[currentMonth];
+          yoyGrowth = ((monthlyRevenue - lastYearRevenue) / lastYearRevenue * 100);
+        } else {
+          yoyGrowth = 13.6; // Default for single location
+        }
 
-        tableBody.innerHTML += row;
+        // Update KPIs
+        $('#kpi-revenue').html(`
+          ${(monthlyRevenue / 1000).toFixed(2)} tỷ
+          <small class="${yoyGrowth >= 0 ? 'trend-up' : 'trend-down'}">
+            <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${Math.abs(yoyGrowth).toFixed(1)}%
+          </small>
+        `);
+        $('#kpi-yearly').text((yearlyRevenue / 1000).toFixed(2) + ' tỷ');
+        $('#kpi-average').text((avgRevenue / 1000).toFixed(2) + ' tỷ');
+        $('#kpi-yoy').html(`
+          <small class="${yoyGrowth >= 0 ? 'trend-up' : 'trend-down'}">
+            <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${yoyGrowth >= 0 ? '+' : ''}${yoyGrowth.toFixed(1)}%
+          </small>
+        `);
+
+        // Update chart title
+        $('#chart-title').text(`Doanh thu theo tháng (${title})`);
+      }
+
+      // Update revenue trend chart
+      function updateRevenueTrendChart() {
+        let series = [];
+
+        if (currentLocation === '') {
+          // All locations - show comparison with previous years
+          if (showYearComparison) {
+            series = [
+              { name: '2024', data: businessDataByMonth[2024].revenue },
+              { name: '2023', data: businessDataByMonth[2023].revenue },
+              { name: '2022', data: businessDataByMonth[2022].revenue }
+            ];
+          } else {
+            series = [
+              { name: '2024', data: businessDataByMonth[2024].revenue },
+              { name: '2023', data: businessDataByMonth[2023].revenue }
+            ];
+          }
+        } else {
+          // Single location
+          series = [
+            { name: currentLocation, data: locationData[currentLocation].revenue }
+          ];
+        }
+
+        revenueTrendChart.updateSeries(series);
+      }
+
+      // Update distribution chart
+      function updateDistributionChart() {
+        if (currentLocation === '') {
+          // Show all locations distribution (yearly total)
+          const locationTotals = locations.map(loc => {
+            return locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+          });
+          const labels = locations.map(loc => loc.name);
+
+          distributionChart.updateOptions({
+            chart: { type: 'donut' },
+            series: locationTotals,
+            labels: labels
+          });
+        } else {
+          // Show monthly distribution for single location (as bar chart)
+          const data = locationData[currentLocation].revenue;
+
+          distributionChart.updateOptions({
+            chart: { type: 'bar' },
+            series: [{
+              name: 'Doanh thu',
+              data: data
+            }],
+            labels: monthLabelsShort,
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '60%',
+                borderRadius: 4
+              }
+            }
+          });
+        }
+      }
+
+      // Update Revenue-Expense-Profit chart
+      function updateRevenueExpenseProfitChart() {
+        let data;
+
+        if (currentLocation === '') {
+          data = businessDataByMonth[2024];
+        } else {
+          data = locationData[currentLocation];
+        }
+
+        const series = [
+          { name: 'Doanh thu', data: data.revenue },
+          { name: 'Chi phí', data: data.expenses },
+          { name: 'Lợi nhuận', data: data.profit }
+        ];
+
+        revenueExpenseProfitChart.updateSeries(series);
+      }
+
+      // Update Profit Margin chart
+      function updateProfitMarginChart() {
+        let data;
+
+        if (currentLocation === '') {
+          data = businessDataByMonth[2024];
+        } else {
+          data = locationData[currentLocation];
+        }
+
+        // Calculate profit margin for each month
+        const profitMargins = data.revenue.map((rev, idx) => {
+          return (data.profit[idx] / rev * 100);
+        });
+
+        profitMarginChart.updateSeries([{
+          name: 'Biên lợi nhuận',
+          data: profitMargins
+        }]);
+      }
+
+      // Update table
+      function updateTable() {
+        const tableBody = $('#revenue-table-body');
+        tableBody.empty();
+
+        let data2024, data2023;
+
+        if (currentLocation === '') {
+          data2024 = businessDataByMonth[2024];
+          data2023 = businessDataByMonth[2023];
+        } else {
+          data2024 = locationData[currentLocation];
+          // For single location, we don't have 2023 data, so use estimate
+          data2023 = {
+            revenue: data2024.revenue.map(r => r * 0.88), // Assume 12% growth
+            expenses: data2024.expenses.map(e => e * 0.88),
+            profit: data2024.profit.map(p => p * 0.88)
+          };
+        }
+
+        // Iterate through months in reverse (December to January)
+        for (let i = 11; i >= 0; i--) {
+          const revenue = data2024.revenue[i];
+          const expenses = data2024.expenses[i];
+          const profit = data2024.profit[i];
+          const profitMargin = ((profit / revenue) * 100);
+
+          // Calculate YoY growth
+          const revenueLastYear = data2023.revenue[i];
+          const yoyGrowth = (((revenue - revenueLastYear) / revenueLastYear) * 100);
+
+          // Determine status
+          let status, statusClass;
+          if (profit > 0 && yoyGrowth >= 10) {
+            status = 'Xuất sắc';
+            statusClass = 'success';
+          } else if (profit > 0 && yoyGrowth >= 0) {
+            status = 'Tốt';
+            statusClass = 'info';
+          } else if (profit > 0) {
+            status = 'Trung bình';
+            statusClass = 'warning';
+          } else {
+            status = 'Cần cải thiện';
+            statusClass = 'danger';
+          }
+
+          const badgeClass = yoyGrowth >= 0 ? 'success' : 'danger';
+          const growthSign = yoyGrowth >= 0 ? '+' : '';
+          const profitClass = profit >= 0 ? 'text-success' : 'text-danger';
+
+          const row = `
+            <tr>
+              <td><strong>Tháng ${i + 1}/2024</strong></td>
+              <td class="text-right"><strong>${(revenue / 1000).toFixed(2)} tỷ</strong></td>
+              <td class="text-right">${(expenses / 1000).toFixed(2)} tỷ</td>
+              <td class="text-right ${profitClass}"><strong>${profit >= 0 ? profit : '(' + Math.abs(profit) + ')'} triệu</strong></td>
+              <td class="text-center"><span class="badge badge-${profit >= 0 ? 'success' : 'danger'}">${profitMargin.toFixed(1)}%</span></td>
+              <td class="text-center"><span class="badge badge-${badgeClass}">${growthSign}${yoyGrowth.toFixed(1)}%</span></td>
+              <td class="text-center"><span class="badge badge-${statusClass}">${status}</span></td>
+            </tr>
+          `;
+
+          tableBody.append(row);
+        }
       }
     </script>
   </body>

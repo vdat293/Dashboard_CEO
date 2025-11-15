@@ -137,10 +137,18 @@
                 <h1 class="m-0">Quản Lý Khách Hàng</h1>
               </div>
               <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                  <li class="breadcrumb-item active">Khách hàng</li>
-                </ol>
+                <div class="float-sm-right">
+                  <select id="location-selector" class="form-control" style="width: auto; display: inline-block; min-width: 200px;">
+                    <option value="">Tất cả cơ sở (Tổng hợp)</option>
+                    <option value="HN">Hà Nội</option>
+                    <option value="HCM">TP. Hồ Chí Minh</option>
+                    <option value="DN">Đà Nẵng</option>
+                    <option value="HP">Hải Phòng</option>
+                    <option value="CT">Cần Thơ</option>
+                    <option value="NT">Nha Trang</option>
+                    <option value="VT">Vũng Tàu</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -154,15 +162,15 @@
             <div class="row">
               <div class="col-lg-3 col-6">
                 <div class="info-box">
-                  <span class="info-box-icon bg-gradient-info">
+                  <span class="info-box-icon bg-gradient-info elevation-1">
                     <i class="bi bi-people"></i>
                   </span>
                   <div class="info-box-content">
-                    <span class="info-box-text">Tổng khách hàng</span>
-                    <span class="info-box-number">
-                      15,678
+                    <span class="info-box-text">Khách hàng tháng này</span>
+                    <span class="info-box-number" id="kpi-customers">
+                      5,441
                       <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> 15%
+                        <i class="bi bi-arrow-up"></i> <span id="kpi-customers-growth">13.1%</span>
                       </small>
                     </span>
                   </div>
@@ -171,16 +179,13 @@
 
               <div class="col-lg-3 col-6">
                 <div class="info-box">
-                  <span class="info-box-icon bg-gradient-success">
+                  <span class="info-box-icon bg-gradient-success elevation-1">
                     <i class="bi bi-person-plus"></i>
                   </span>
                   <div class="info-box-content">
-                    <span class="info-box-text">Khách hàng mới</span>
-                    <span class="info-box-number">
-                      1,456
-                      <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> 22%
-                      </small>
+                    <span class="info-box-text">Tổng khách hàng năm</span>
+                    <span class="info-box-number" id="kpi-total-customers">
+                      66,089
                     </span>
                   </div>
                 </div>
@@ -188,28 +193,27 @@
 
               <div class="col-lg-3 col-6">
                 <div class="info-box">
-                  <span class="info-box-icon bg-gradient-warning">
+                  <span class="info-box-icon bg-gradient-warning elevation-1">
                     <i class="bi bi-star"></i>
                   </span>
                   <div class="info-box-content">
                     <span class="info-box-text">Khách hàng VIP</span>
-                    <span class="info-box-number">342</span>
+                    <span class="info-box-number" id="kpi-vip">
+                      342
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-3 col-6">
                 <div class="info-box">
-                  <span class="info-box-icon bg-gradient-danger">
-                    <i class="bi bi-person-x"></i>
+                  <span class="info-box-icon bg-gradient-primary elevation-1">
+                    <i class="bi bi-cart"></i>
                   </span>
                   <div class="info-box-content">
-                    <span class="info-box-text">Mất khách hàng</span>
-                    <span class="info-box-number">
-                      45
-                      <small class="trend-down">
-                        <i class="bi bi-arrow-down"></i> 5%
-                      </small>
+                    <span class="info-box-text">Trung bình đơn/KH</span>
+                    <span class="info-box-number" id="kpi-orders-per-customer">
+                      3.32
                     </span>
                   </div>
                 </div>
@@ -220,28 +224,59 @@
             <div class="row">
               <div class="col-lg-8">
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-graph-up mr-1"></i>
-                      Xu hướng khách hàng mới
+                      <i class="bi bi-graph-up mr-2"></i>
+                      <span id="chart-title">Xu hướng khách hàng mới (Tổng hợp)</span>
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="customer-trend-chart" style="height: 300px;"></div>
+                    <div id="customer-trend-chart" style="height: 400px;"></div>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-4">
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-pie-chart mr-1"></i>
-                      Phân loại khách hàng
+                      <i class="bi bi-pie-chart mr-2"></i>
+                      Phân bố khách hàng
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="customer-segment-chart" style="height: 300px;"></div>
+                    <div id="customer-distribution-chart" style="height: 400px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phân tích chi tiết -->
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-bar-chart-line mr-2"></i>
+                      Khách hàng & Đơn hàng theo tháng
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="customers-orders-chart" style="height: 350px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-trophy mr-2"></i>
+                      Phân loại khách hàng theo giá trị
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="customer-segment-chart" style="height: 350px;"></div>
                   </div>
                 </div>
               </div>
@@ -251,128 +286,197 @@
             <div class="row">
               <div class="col-12">
                 <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Top 10 Khách Hàng VIP</h3>
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-sm btn-primary">
-                        <i class="bi bi-plus-circle"></i> Thêm khách hàng
-                      </button>
+                  <div class="card-header border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h3 class="card-title">
+                        <i class="bi bi-star-fill text-warning mr-2"></i>
+                        Top 10 Khách Hàng VIP
+                      </h3>
+                      <div>
+                        <button type="button" class="btn btn-sm btn-outline-primary">
+                          <i class="bi bi-funnel"></i> Lọc
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary">
+                          <i class="bi bi-plus-circle"></i> Thêm khách hàng
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div class="card-body table-responsive p-0">
                     <table class="table table-hover">
-                      <thead>
+                      <thead class="bg-light">
                         <tr>
+                          <th>STT</th>
                           <th>ID</th>
                           <th>Tên khách hàng</th>
                           <th>Email</th>
                           <th>Điện thoại</th>
-                          <th>Tổng chi tiêu</th>
-                          <th>Đơn hàng</th>
-                          <th>Hạng</th>
-                          <th>Trạng thái</th>
+                          <th class="text-right">Tổng chi tiêu</th>
+                          <th class="text-center">Đơn hàng</th>
+                          <th class="text-center">Hạng</th>
+                          <th class="text-center">Trạng thái</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>#KH00156</td>
-                          <td><strong>Nguyễn Văn Minh</strong></td>
-                          <td>minh.nguyen@techcorp.vn</td>
-                          <td>0901234567</td>
-                          <td><span class="text-success"><strong>485 triệu</strong></span></td>
-                          <td>142</td>
-                          <td><span class="badge badge-warning"><i class="bi bi-star-fill"></i> Diamond</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>1</strong></td>
+                          <td><span class="badge badge-light">#KH00156</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Nguyễn Văn Minh</strong>
+                            </div>
+                          </td>
+                          <td><small>minh.nguyen@techcorp.vn</small></td>
+                          <td><small>0901234567</small></td>
+                          <td class="text-right"><span class="text-success"><strong>485 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">142</span></td>
+                          <td class="text-center"><span class="badge badge-warning"><i class="bi bi-star-fill"></i> Diamond</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH00089</td>
-                          <td><strong>Trần Thị Hương</strong></td>
-                          <td>huong.tran@bizgroup.com</td>
-                          <td>0912345678</td>
-                          <td><span class="text-success"><strong>428 triệu</strong></span></td>
-                          <td>118</td>
-                          <td><span class="badge badge-warning"><i class="bi bi-star-fill"></i> Diamond</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>2</strong></td>
+                          <td><span class="badge badge-light">#KH00089</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Trần Thị Hương</strong>
+                            </div>
+                          </td>
+                          <td><small>huong.tran@bizgroup.com</small></td>
+                          <td><small>0912345678</small></td>
+                          <td class="text-right"><span class="text-success"><strong>428 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">118</span></td>
+                          <td class="text-center"><span class="badge badge-warning"><i class="bi bi-star-fill"></i> Diamond</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH00234</td>
-                          <td><strong>Lê Hoàng Nam</strong></td>
-                          <td>nam.le.hoang@gmail.com</td>
-                          <td>0923456789</td>
-                          <td><span class="text-success"><strong>375 triệu</strong></span></td>
-                          <td>96</td>
-                          <td><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>3</strong></td>
+                          <td><span class="badge badge-light">#KH00234</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Lê Hoàng Nam</strong>
+                            </div>
+                          </td>
+                          <td><small>nam.le.hoang@gmail.com</small></td>
+                          <td><small>0923456789</small></td>
+                          <td class="text-right"><span class="text-success"><strong>375 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">96</span></td>
+                          <td class="text-center"><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH00512</td>
-                          <td><strong>Phạm Minh Châu</strong></td>
-                          <td>chau.pham@outlook.com</td>
-                          <td>0934567890</td>
-                          <td><span class="text-success"><strong>328 triệu</strong></span></td>
-                          <td>84</td>
-                          <td><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>4</strong></td>
+                          <td><span class="badge badge-light">#KH00512</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Phạm Minh Châu</strong>
+                            </div>
+                          </td>
+                          <td><small>chau.pham@outlook.com</small></td>
+                          <td><small>0934567890</small></td>
+                          <td class="text-right"><span class="text-success"><strong>328 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">84</span></td>
+                          <td class="text-center"><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH00678</td>
-                          <td><strong>Võ Thành Đạt</strong></td>
-                          <td>dat.vo@techsolutions.vn</td>
-                          <td>0945678901</td>
-                          <td><span class="text-success"><strong>295 triệu</strong></span></td>
-                          <td>72</td>
-                          <td><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
-                          <td><span class="badge badge-warning">Chưa hoạt động 30 ngày</span></td>
+                          <td><strong>5</strong></td>
+                          <td><span class="badge badge-light">#KH00678</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Võ Thành Đạt</strong>
+                            </div>
+                          </td>
+                          <td><small>dat.vo@techsolutions.vn</small></td>
+                          <td><small>0945678901</small></td>
+                          <td class="text-right"><span class="text-success"><strong>295 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">72</span></td>
+                          <td class="text-center"><span class="badge badge-info"><i class="bi bi-star"></i> Platinum</span></td>
+                          <td class="text-center"><span class="badge badge-warning">Chưa hoạt động 30 ngày</span></td>
                         </tr>
                         <tr>
-                          <td>#KH00891</td>
-                          <td><strong>Đặng Thị Mai</strong></td>
-                          <td>mai.dang@gmail.com</td>
-                          <td>0956789012</td>
-                          <td><span class="text-success"><strong>268 triệu</strong></span></td>
-                          <td>65</td>
-                          <td><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>6</strong></td>
+                          <td><span class="badge badge-light">#KH00891</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Đặng Thị Mai</strong>
+                            </div>
+                          </td>
+                          <td><small>mai.dang@gmail.com</small></td>
+                          <td><small>0956789012</small></td>
+                          <td class="text-right"><span class="text-success"><strong>268 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">65</span></td>
+                          <td class="text-center"><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH01023</td>
-                          <td><strong>Bùi Quang Huy</strong></td>
-                          <td>huy.bui@startup.io</td>
-                          <td>0967890123</td>
-                          <td><span class="text-success"><strong>242 triệu</strong></span></td>
-                          <td>58</td>
-                          <td><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>7</strong></td>
+                          <td><span class="badge badge-light">#KH01023</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Bùi Quang Huy</strong>
+                            </div>
+                          </td>
+                          <td><small>huy.bui@startup.io</small></td>
+                          <td><small>0967890123</small></td>
+                          <td class="text-right"><span class="text-success"><strong>242 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">58</span></td>
+                          <td class="text-center"><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH01156</td>
-                          <td><strong>Hoàng Thu Thảo</strong></td>
-                          <td>thao.hoang@company.vn</td>
-                          <td>0978901234</td>
-                          <td><span class="text-success"><strong>215 triệu</strong></span></td>
-                          <td>51</td>
-                          <td><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>8</strong></td>
+                          <td><span class="badge badge-light">#KH01156</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Hoàng Thu Thảo</strong>
+                            </div>
+                          </td>
+                          <td><small>thao.hoang@company.vn</small></td>
+                          <td><small>0978901234</small></td>
+                          <td class="text-right"><span class="text-success"><strong>215 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">51</span></td>
+                          <td class="text-center"><span class="badge badge-primary"><i class="bi bi-star"></i> Gold</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH01289</td>
-                          <td><strong>Dương Văn Long</strong></td>
-                          <td>long.duong@enterprise.com</td>
-                          <td>0989012345</td>
-                          <td><span class="text-success"><strong>188 triệu</strong></span></td>
-                          <td>45</td>
-                          <td><span class="badge badge-secondary"><i class="bi bi-star"></i> Silver</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>9</strong></td>
+                          <td><span class="badge badge-light">#KH01289</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Dương Văn Long</strong>
+                            </div>
+                          </td>
+                          <td><small>long.duong@enterprise.com</small></td>
+                          <td><small>0989012345</small></td>
+                          <td class="text-right"><span class="text-success"><strong>188 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">45</span></td>
+                          <td class="text-center"><span class="badge badge-secondary"><i class="bi bi-star"></i> Silver</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                         <tr>
-                          <td>#KH01445</td>
-                          <td><strong>Trương Thị Lan</strong></td>
-                          <td>lan.truong@yahoo.com</td>
-                          <td>0990123456</td>
-                          <td><span class="text-success"><strong>165 triệu</strong></span></td>
-                          <td>39</td>
-                          <td><span class="badge badge-secondary"><i class="bi bi-star"></i> Silver</span></td>
-                          <td><span class="badge badge-success">Hoạt động</span></td>
+                          <td><strong>10</strong></td>
+                          <td><span class="badge badge-light">#KH01445</span></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-primary mr-2" style="font-size: 1.5rem;"></i>
+                              <strong>Trương Thị Lan</strong>
+                            </div>
+                          </td>
+                          <td><small>lan.truong@yahoo.com</small></td>
+                          <td><small>0990123456</small></td>
+                          <td class="text-right"><span class="text-success"><strong>165 triệu</strong></span></td>
+                          <td class="text-center"><span class="badge badge-info">39</span></td>
+                          <td class="text-center"><span class="badge badge-secondary"><i class="bi bi-star"></i> Silver</span></td>
+                          <td class="text-center"><span class="badge badge-success">Hoạt động</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -410,46 +514,310 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
 
-    <script>
-      // Biểu đồ xu hướng khách hàng
-      const customerTrendChart = new ApexCharts(document.querySelector('#customer-trend-chart'), {
-        series: [{
-          name: 'Khách hàng mới',
-          data: [850, 920, 1050, 980, 1100, 1150, 1200, 1280, 1180, 1250, 1200, 1234]
-        }],
-        chart: { height: 300, type: 'area', toolbar: { show: false } },
-        colors: ['#17a2b8'],
-        dataLabels: { enabled: false },
-        stroke: { curve: 'smooth', width: 2 },
-        fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.5, opacityTo: 0.1 } },
-        xaxis: { categories: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'] },
-        tooltip: { y: { formatter: val => val + ' khách hàng' } }
-      });
-      customerTrendChart.render();
+    <!-- Load Data -->
+    <script src="../assets/js/data.js"></script>
 
-      // Biểu đồ phân loại khách hàng
-      const customerSegmentChart = new ApexCharts(document.querySelector('#customer-segment-chart'), {
-        series: [256, 458, 892, 10852],
-        chart: { type: 'donut', height: 300 },
-        labels: ['VIP', 'Thân thiết', 'Thường xuyên', 'Bình thường'],
-        colors: ['#ffc107', '#007bff', '#28a745', '#6c757d'],
-        legend: { position: 'bottom' },
-        plotOptions: {
-          pie: {
-            donut: {
-              labels: {
-                show: true,
-                total: {
+    <script>
+      // State management
+      let currentLocation = '';
+
+      // Chart instances
+      let customerTrendChart, distributionChart, customersOrdersChart, segmentChart;
+
+      // Initialize page
+      $(document).ready(function() {
+        initCharts();
+        updateDashboard();
+
+        // Event listeners
+        $('#location-selector').on('change', function() {
+          currentLocation = $(this).val();
+          updateDashboard();
+        });
+      });
+
+      // Initialize all charts
+      function initCharts() {
+        // Customer trend chart
+        customerTrendChart = new ApexCharts(document.querySelector('#customer-trend-chart'), {
+          series: [],
+          chart: {
+            height: 400,
+            type: 'area',
+            toolbar: { show: true },
+            zoom: { enabled: true }
+          },
+          colors: ['#17a2b8', '#6c757d'],
+          dataLabels: { enabled: false },
+          stroke: { curve: 'smooth', width: 3 },
+          fill: {
+            type: 'gradient',
+            gradient: {
+              shadeIntensity: 1,
+              opacityFrom: 0.5,
+              opacityTo: 0.1
+            }
+          },
+          xaxis: { categories: monthLabelsShort },
+          yaxis: {
+            labels: {
+              formatter: val => val.toLocaleString()
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: val => val.toLocaleString() + ' khách hàng'
+            }
+          },
+          legend: { position: 'top' }
+        });
+        customerTrendChart.render();
+
+        // Distribution chart
+        distributionChart = new ApexCharts(document.querySelector('#customer-distribution-chart'), {
+          series: [],
+          chart: { type: 'donut', height: 400 },
+          labels: [],
+          colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107', '#6f42c1', '#fd7e14', '#20c997'],
+          legend: { position: 'bottom' },
+          plotOptions: {
+            pie: {
+              donut: {
+                labels: {
                   show: true,
-                  label: 'Tổng',
-                  formatter: () => '15,678'
+                  total: {
+                    show: true,
+                    label: 'Tổng',
+                    formatter: (w) => {
+                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                      return total.toLocaleString();
+                    }
+                  }
+                }
+              }
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: val => val.toLocaleString() + ' khách hàng'
+            }
+          }
+        });
+        distributionChart.render();
+
+        // Customers & Orders chart
+        customersOrdersChart = new ApexCharts(document.querySelector('#customers-orders-chart'), {
+          series: [],
+          chart: {
+            type: 'line',
+            height: 350,
+            toolbar: { show: false }
+          },
+          colors: ['#007bff', '#28a745'],
+          stroke: { curve: 'smooth', width: 3 },
+          markers: { size: 5 },
+          xaxis: { categories: monthLabelsShort },
+          yaxis: [{
+            title: { text: 'Khách hàng' },
+            labels: {
+              formatter: val => val.toLocaleString()
+            }
+          }, {
+            opposite: true,
+            title: { text: 'Đơn hàng' },
+            labels: {
+              formatter: val => val.toLocaleString()
+            }
+          }],
+          tooltip: {
+            y: {
+              formatter: val => val.toLocaleString()
+            }
+          },
+          legend: { position: 'top' }
+        });
+        customersOrdersChart.render();
+
+        // Customer segment chart (by value)
+        segmentChart = new ApexCharts(document.querySelector('#customer-segment-chart'), {
+          series: [],
+          chart: { type: 'donut', height: 350 },
+          labels: ['VIP (>100 triệu)', 'Thân thiết (50-100tr)', 'Thường xuyên (10-50tr)', 'Bình thường (<10tr)'],
+          colors: ['#ffc107', '#007bff', '#28a745', '#6c757d'],
+          legend: { position: 'bottom' },
+          plotOptions: {
+            pie: {
+              donut: {
+                labels: {
+                  show: true,
+                  total: {
+                    show: true,
+                    label: 'Tổng KH',
+                    formatter: (w) => {
+                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                      return total.toLocaleString();
+                    }
+                  }
                 }
               }
             }
           }
+        });
+        segmentChart.render();
+      }
+
+      // Update dashboard
+      function updateDashboard() {
+        updateKPIs();
+        updateCustomerTrendChart();
+        updateDistributionChart();
+        updateCustomersOrdersChart();
+        updateSegmentChart();
+      }
+
+      // Update KPIs
+      function updateKPIs() {
+        const currentMonth = 10; // November (index 10)
+        let data, title;
+
+        if (currentLocation === '') {
+          // All locations
+          data = businessDataByMonth[2024];
+          title = 'Tất cả cơ sở';
+        } else {
+          // Single location
+          data = locationData[currentLocation];
+          const loc = locations.find(l => l.id === currentLocation);
+          title = loc.name;
         }
-      });
-      customerSegmentChart.render();
+
+        // Calculate totals
+        const monthlyCustomers = data.customers[currentMonth];
+        const yearlyCustomers = data.customers.reduce((a, b) => a + b, 0);
+        const monthlyOrders = data.orders[currentMonth];
+        const ordersPerCustomer = monthlyOrders / monthlyCustomers;
+
+        // YoY growth (estimated)
+        const lastYearData = currentLocation === '' ? businessDataByMonth[2023] : null;
+        let yoyGrowth = 0;
+        if (lastYearData) {
+          const lastYearCustomers = lastYearData.customers[currentMonth];
+          yoyGrowth = ((monthlyCustomers - lastYearCustomers) / lastYearCustomers * 100);
+        } else {
+          yoyGrowth = 13.1; // Default for single location
+        }
+
+        // VIP customers (estimated 2% of total)
+        const vipCustomers = Math.round(yearlyCustomers * 0.02);
+
+        // Update KPIs
+        $('#kpi-customers').html(`
+          ${monthlyCustomers.toLocaleString()}
+          <small class="${yoyGrowth >= 0 ? 'trend-up' : 'trend-down'}">
+            <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${Math.abs(yoyGrowth).toFixed(1)}%
+          </small>
+        `);
+        $('#kpi-total-customers').text(yearlyCustomers.toLocaleString());
+        $('#kpi-vip').text(vipCustomers.toLocaleString());
+        $('#kpi-orders-per-customer').text(ordersPerCustomer.toFixed(2));
+
+        // Update chart title
+        $('#chart-title').text(`Xu hướng khách hàng mới (${title})`);
+      }
+
+      // Update customer trend chart
+      function updateCustomerTrendChart() {
+        let series = [];
+
+        if (currentLocation === '') {
+          // All locations - compare 2024 vs 2023
+          series = [
+            { name: '2024', data: businessDataByMonth[2024].customers },
+            { name: '2023', data: businessDataByMonth[2023].customers }
+          ];
+        } else {
+          // Single location
+          series = [
+            { name: currentLocation, data: locationData[currentLocation].customers }
+          ];
+        }
+
+        customerTrendChart.updateSeries(series);
+      }
+
+      // Update distribution chart
+      function updateDistributionChart() {
+        if (currentLocation === '') {
+          // Show all locations distribution (yearly total)
+          const locationTotals = locations.map(loc => {
+            return locationData[loc.id].customers.reduce((a, b) => a + b, 0);
+          });
+          const labels = locations.map(loc => loc.name);
+
+          distributionChart.updateOptions({
+            chart: { type: 'donut' },
+            series: locationTotals,
+            labels: labels
+          });
+        } else {
+          // Show monthly distribution for single location (as bar chart)
+          const data = locationData[currentLocation].customers;
+
+          distributionChart.updateOptions({
+            chart: { type: 'bar' },
+            series: [{
+              name: 'Khách hàng',
+              data: data
+            }],
+            labels: monthLabelsShort,
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '60%',
+                borderRadius: 4
+              }
+            }
+          });
+        }
+      }
+
+      // Update Customers & Orders chart
+      function updateCustomersOrdersChart() {
+        let data;
+
+        if (currentLocation === '') {
+          data = businessDataByMonth[2024];
+        } else {
+          data = locationData[currentLocation];
+        }
+
+        const series = [
+          { name: 'Khách hàng', data: data.customers },
+          { name: 'Đơn hàng', data: data.orders }
+        ];
+
+        customersOrdersChart.updateSeries(series);
+      }
+
+      // Update segment chart
+      function updateSegmentChart() {
+        // Customer segmentation by value (estimated distribution)
+        // VIP: 2%, Loyal: 8%, Regular: 20%, Normal: 70%
+        let totalCustomers;
+
+        if (currentLocation === '') {
+          totalCustomers = businessDataByMonth[2024].customers.reduce((a, b) => a + b, 0);
+        } else {
+          totalCustomers = locationData[currentLocation].customers.reduce((a, b) => a + b, 0);
+        }
+
+        const vip = Math.round(totalCustomers * 0.02);
+        const loyal = Math.round(totalCustomers * 0.08);
+        const regular = Math.round(totalCustomers * 0.20);
+        const normal = totalCustomers - vip - loyal - regular;
+
+        segmentChart.updateSeries([vip, loyal, regular, normal]);
+      }
     </script>
   </body>
 </html>
