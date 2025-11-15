@@ -235,7 +235,7 @@ function initLocationComparisonChart(selector, locations, locationData) {
   const options = {
     series: series,
     chart: {
-      height: 350,
+      height: 400,
       type: 'line',
       toolbar: {
         show: true
@@ -306,15 +306,27 @@ function initLocationBarChart(selector, locations, locationData) {
     }],
     chart: {
       type: 'bar',
-      height: 300,
+      height: 350,
       toolbar: {
         show: false
+      },
+      events: {
+        dataPointSelection: function(event, chartContext, config) {
+          // Lấy index của cột được click
+          const locationIndex = config.dataPointIndex;
+          const locationId = locations[locationIndex].id;
+
+          // Gọi hàm hiển thị chi tiết (hàm này được định nghĩa trong main.js)
+          if (typeof showLocationDetail === 'function') {
+            showLocationDetail(locationId);
+          }
+        }
       }
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '55%',
+        columnWidth: '65%',
         borderRadius: 4,
         dataLabels: {
           position: 'top',
@@ -328,13 +340,19 @@ function initLocationBarChart(selector, locations, locationData) {
       },
       offsetY: -20,
       style: {
-        fontSize: '12px',
-        colors: ["#304758"]
+        fontSize: '11px',
+        colors: ["#304758"],
+        fontWeight: 'bold'
       }
     },
     xaxis: {
       categories: locations.map(loc => loc.name),
       position: 'bottom',
+      labels: {
+        style: {
+          fontSize: '11px'
+        }
+      }
     },
     yaxis: {
       labels: {
@@ -351,6 +369,20 @@ function initLocationBarChart(selector, locations, locationData) {
       y: {
         formatter: function(val) {
           return (val / 1000).toFixed(2) + ' tỷ VNĐ';
+        }
+      }
+    },
+    states: {
+      hover: {
+        filter: {
+          type: 'darken',
+          value: 0.15,
+        }
+      },
+      active: {
+        filter: {
+          type: 'darken',
+          value: 0.2,
         }
       }
     }
@@ -449,7 +481,7 @@ function initLocationProductComparisonChart(selector, locationId, productsByLoca
   const options = {
     series: series,
     chart: {
-      height: 350,
+      height: 400,
       type: 'bar',
       toolbar: {
         show: true
