@@ -163,14 +163,14 @@
               <div class="col-lg-3 col-6">
                 <div class="info-box">
                   <span class="info-box-icon bg-gradient-info elevation-1">
-                    <i class="bi bi-people"></i>
+                    <i class="bi bi-person-plus"></i>
                   </span>
                   <div class="info-box-content">
-                    <span class="info-box-text">Khách hàng tháng này</span>
-                    <span class="info-box-number" id="kpi-customers">
-                      5,441
+                    <span class="info-box-text">Khách hàng mới tháng này</span>
+                    <span class="info-box-number" id="kpi-new-customers">
+                      1,724
                       <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> <span id="kpi-customers-growth">13.1%</span>
+                        <i class="bi bi-arrow-up"></i> <span id="kpi-new-customers-growth">4.8%</span>
                       </small>
                     </span>
                   </div>
@@ -241,7 +241,7 @@
                   <div class="card-header border-0">
                     <h3 class="card-title">
                       <i class="bi bi-pie-chart mr-2"></i>
-                      Phân bố khách hàng
+                      Phân bố khách hàng mới
                     </h3>
                   </div>
                   <div class="card-body">
@@ -258,7 +258,7 @@
                   <div class="card-header border-0">
                     <h3 class="card-title">
                       <i class="bi bi-bar-chart-line mr-2"></i>
-                      Khách hàng & Đơn hàng theo tháng
+                      Khách hàng mới & Đơn hàng theo tháng
                     </h3>
                   </div>
                   <div class="card-body">
@@ -566,7 +566,7 @@
           },
           tooltip: {
             y: {
-              formatter: val => val.toLocaleString() + ' khách hàng'
+              formatter: val => val.toLocaleString() + ' khách hàng mới'
             }
           },
           legend: { position: 'top' }
@@ -692,27 +692,28 @@
         }
 
         // Calculate totals
-        const monthlyCustomers = data.customers[currentMonth];
+        const monthlyNewCustomers = data.newCustomers[currentMonth];
         const yearlyCustomers = data.customers.reduce((a, b) => a + b, 0);
         const monthlyOrders = data.orders[currentMonth];
+        const monthlyCustomers = data.customers[currentMonth];
         const ordersPerCustomer = monthlyOrders / monthlyCustomers;
 
-        // YoY growth (estimated)
+        // YoY growth for new customers
         const lastYearData = currentLocation === '' ? businessDataByMonth[2024] : null;
         let yoyGrowth = 0;
         if (lastYearData) {
-          const lastYearCustomers = lastYearData.customers[currentMonth];
-          yoyGrowth = ((monthlyCustomers - lastYearCustomers) / lastYearCustomers * 100);
+          const lastYearNewCustomers = lastYearData.newCustomers[currentMonth];
+          yoyGrowth = ((monthlyNewCustomers - lastYearNewCustomers) / lastYearNewCustomers * 100);
         } else {
-          yoyGrowth = 13.1; // Default for single location
+          yoyGrowth = 4.8; // Default for single location
         }
 
         // VIP customers (estimated 2% of total)
         const vipCustomers = Math.round(yearlyCustomers * 0.02);
 
         // Update KPIs
-        $('#kpi-customers').html(`
-          ${monthlyCustomers.toLocaleString()}
+        $('#kpi-new-customers').html(`
+          ${monthlyNewCustomers.toLocaleString()}
           <small class="${yoyGrowth >= 0 ? 'trend-up' : 'trend-down'}">
             <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${Math.abs(yoyGrowth).toFixed(1)}%
           </small>
@@ -730,15 +731,15 @@
         let series = [];
 
         if (currentLocation === '') {
-          // All locations - compare 2025 vs 2024
+          // All locations - compare 2025 vs 2024 (new customers)
           series = [
-            { name: '2025', data: businessDataByMonth[2025].customers },
-            { name: '2024', data: businessDataByMonth[2024].customers }
+            { name: 'KH mới 2025', data: businessDataByMonth[2025].newCustomers },
+            { name: 'KH mới 2024', data: businessDataByMonth[2024].newCustomers }
           ];
         } else {
-          // Single location
+          // Single location (new customers)
           series = [
-            { name: currentLocation, data: locationData[currentLocation].customers }
+            { name: 'Khách hàng mới', data: locationData[currentLocation].newCustomers }
           ];
         }
 
@@ -748,9 +749,9 @@
       // Update distribution chart
       function updateDistributionChart() {
         if (currentLocation === '') {
-          // Show all locations distribution (yearly total)
+          // Show all locations distribution (yearly total new customers)
           const locationTotals = locations.map(loc => {
-            return locationData[loc.id].customers.reduce((a, b) => a + b, 0);
+            return locationData[loc.id].newCustomers.reduce((a, b) => a + b, 0);
           });
           const labels = locations.map(loc => loc.name);
 
@@ -761,12 +762,12 @@
           });
         } else {
           // Show monthly distribution for single location (as bar chart)
-          const data = locationData[currentLocation].customers;
+          const data = locationData[currentLocation].newCustomers;
 
           distributionChart.updateOptions({
             chart: { type: 'bar' },
             series: [{
-              name: 'Khách hàng',
+              name: 'Khách hàng mới',
               data: data
             }],
             labels: monthLabelsShort,
@@ -792,7 +793,7 @@
         }
 
         const series = [
-          { name: 'Khách hàng', data: data.customers },
+          { name: 'Khách hàng mới', data: data.newCustomers },
           { name: 'Đơn hàng', data: data.orders }
         ];
 
