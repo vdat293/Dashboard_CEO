@@ -168,9 +168,9 @@
                   <div class="info-box-content">
                     <span class="info-box-text">Khách hàng mới tháng này</span>
                     <span class="info-box-number" id="kpi-new-customers">
-                      1,724
+                      1,806
                       <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> <span id="kpi-new-customers-growth">4.8%</span>
+                        <i class="bi bi-arrow-up"></i> 4.8%
                       </small>
                     </span>
                   </div>
@@ -180,12 +180,12 @@
               <div class="col-lg-3 col-6">
                 <div class="info-box">
                   <span class="info-box-icon bg-gradient-success elevation-1">
-                    <i class="bi bi-person-plus"></i>
+                    <i class="bi bi-people-fill"></i>
                   </span>
                   <div class="info-box-content">
-                    <span class="info-box-text">Tổng khách hàng năm</span>
+                    <span class="info-box-text">Tổng khách hàng tích lũy</span>
                     <span class="info-box-number" id="kpi-total-customers">
-                      66,089
+                      84,617
                     </span>
                   </div>
                 </div>
@@ -199,7 +199,7 @@
                   <div class="info-box-content">
                     <span class="info-box-text">Khách hàng VIP</span>
                     <span class="info-box-number" id="kpi-vip">
-                      342
+                      423
                     </span>
                   </div>
                 </div>
@@ -213,7 +213,7 @@
                   <div class="info-box-content">
                     <span class="info-box-text">Trung bình đơn/KH</span>
                     <span class="info-box-number" id="kpi-orders-per-customer">
-                      3.32
+                      3.31
                     </span>
                   </div>
                 </div>
@@ -240,9 +240,12 @@
                 <div class="card">
                   <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-pie-chart mr-2"></i>
-                      Phân bố khách hàng mới
+                      <i class="bi bi-megaphone mr-2"></i>
+                      Nguồn khách hàng mới
                     </h3>
+                    <div class="card-tools">
+                      <small class="text-muted">Kênh marketing hiệu quả nhất</small>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div id="customer-distribution-chart" style="height: 400px;"></div>
@@ -257,9 +260,12 @@
                 <div class="card">
                   <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-bar-chart-line mr-2"></i>
-                      Khách hàng mới & Đơn hàng theo tháng
+                      <i class="bi bi-graph-up mr-2"></i>
+                      Xu hướng Marketing: TikTok vs Facebook
                     </h3>
+                    <div class="card-tools">
+                      <small class="text-muted">Khách hàng mới theo tháng</small>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div id="customers-orders-chart" style="height: 350px;"></div>
@@ -271,9 +277,12 @@
                 <div class="card">
                   <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-trophy mr-2"></i>
-                      Phân loại khách hàng theo giá trị
+                      <i class="bi bi-cash-coin mr-2"></i>
+                      Hiệu quả Marketing - ROI theo kênh
                     </h3>
+                    <div class="card-tools">
+                      <small class="text-muted">LTV/CAC Ratio</small>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div id="customer-segment-chart" style="height: 350px;"></div>
@@ -638,30 +647,24 @@
         });
         customersOrdersChart.render();
 
-        // Customer segment chart (by value)
+        // Marketing ROI chart (horizontal bar)
         segmentChart = new ApexCharts(document.querySelector('#customer-segment-chart'), {
           series: [],
-          chart: { type: 'donut', height: 350 },
-          labels: ['VIP (>100 triệu)', 'Thân thiết (50-100tr)', 'Thường xuyên (10-50tr)', 'Bình thường (<10tr)'],
-          colors: ['#ffc107', '#007bff', '#28a745', '#6c757d'],
-          legend: { position: 'bottom' },
+          chart: {
+            type: 'bar',
+            height: 350,
+            toolbar: { show: false }
+          },
           plotOptions: {
-            pie: {
-              donut: {
-                labels: {
-                  show: true,
-                  total: {
-                    show: true,
-                    label: 'Tổng KH',
-                    formatter: (w) => {
-                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
-                      return total.toLocaleString();
-                    }
-                  }
-                }
-              }
+            bar: {
+              horizontal: true,
+              distributed: true
             }
-          }
+          },
+          dataLabels: {
+            enabled: true
+          },
+          legend: { show: false }
         });
         segmentChart.render();
       }
@@ -693,7 +696,7 @@
 
         // Calculate totals
         const monthlyNewCustomers = data.newCustomers[currentMonth];
-        const yearlyCustomers = data.customers.reduce((a, b) => a + b, 0);
+        const totalCumulativeCustomers = data.cumulativeCustomers[currentMonth]; // Tổng KH tích lũy đến tháng hiện tại
         const monthlyOrders = data.orders[currentMonth];
         const monthlyCustomers = data.customers[currentMonth];
         const ordersPerCustomer = monthlyOrders / monthlyCustomers;
@@ -708,8 +711,8 @@
           yoyGrowth = 4.8; // Default for single location
         }
 
-        // VIP customers (estimated 2% of total)
-        const vipCustomers = Math.round(yearlyCustomers * 0.02);
+        // VIP customers (estimated 0.5% of cumulative total - more realistic)
+        const vipCustomers = Math.round(totalCumulativeCustomers * 0.005);
 
         // Update KPIs
         $('#kpi-new-customers').html(`
@@ -718,7 +721,7 @@
             <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${Math.abs(yoyGrowth).toFixed(1)}%
           </small>
         `);
-        $('#kpi-total-customers').text(yearlyCustomers.toLocaleString());
+        $('#kpi-total-customers').text(totalCumulativeCustomers.toLocaleString());
         $('#kpi-vip').text(vipCustomers.toLocaleString());
         $('#kpi-orders-per-customer').text(ordersPerCustomer.toFixed(2));
 
@@ -746,78 +749,128 @@
         customerTrendChart.updateSeries(series);
       }
 
-      // Update distribution chart
+      // Update distribution chart - Customer Acquisition Channels
       function updateDistributionChart() {
-        if (currentLocation === '') {
-          // Show all locations distribution (yearly total new customers)
-          const locationTotals = locations.map(loc => {
-            return locationData[loc.id].newCustomers.reduce((a, b) => a + b, 0);
-          });
-          const labels = locations.map(loc => loc.name);
+        // Hiển thị nguồn khách hàng theo kênh marketing
+        const channels = customerAcquisitionChannels.channels;
+        const distribution = customerAcquisitionChannels.distribution;
 
-          distributionChart.updateOptions({
-            chart: { type: 'donut' },
-            series: locationTotals,
-            labels: labels
-          });
-        } else {
-          // Show monthly distribution for single location (as bar chart)
-          const data = locationData[currentLocation].newCustomers;
+        const labels = channels.map(ch => ch.name);
+        const values = channels.map(ch => distribution[ch.id]);
+        const colors = channels.map(ch => ch.color);
 
-          distributionChart.updateOptions({
-            chart: { type: 'bar' },
-            series: [{
-              name: 'Khách hàng mới',
-              data: data
-            }],
-            labels: monthLabelsShort,
-            plotOptions: {
-              bar: {
-                horizontal: false,
-                columnWidth: '60%',
-                borderRadius: 4
+        distributionChart.updateOptions({
+          chart: { type: 'donut' },
+          series: values,
+          labels: labels,
+          colors: colors,
+          legend: {
+            position: 'bottom',
+            fontSize: '13px'
+          },
+          plotOptions: {
+            pie: {
+              donut: {
+                labels: {
+                  show: true,
+                  total: {
+                    show: true,
+                    label: 'Tổng',
+                    formatter: () => '100%'
+                  }
+                }
               }
             }
-          });
-        }
+          },
+          tooltip: {
+            y: {
+              formatter: (val) => val + '%'
+            }
+          }
+        });
       }
 
-      // Update Customers & Orders chart
+      // Update Customers & Orders chart - Marketing Trends (TikTok vs Facebook)
       function updateCustomersOrdersChart() {
-        let data;
-
-        if (currentLocation === '') {
-          data = businessDataByMonth[2025];
-        } else {
-          data = locationData[currentLocation];
-        }
-
+        // Hiển thị xu hướng TikTok vs Facebook
         const series = [
-          { name: 'Khách hàng mới', data: data.newCustomers },
-          { name: 'Đơn hàng', data: data.orders }
+          {
+            name: 'TikTok Ads',
+            data: tiktokGrowthByMonth,
+            color: '#000000'
+          },
+          {
+            name: 'Facebook Ads',
+            data: facebookGrowthByMonth,
+            color: '#1877f2'
+          }
         ];
 
         customersOrdersChart.updateSeries(series);
       }
 
-      // Update segment chart
+      // Update segment chart - Marketing ROI (LTV/CAC Ratio)
       function updateSegmentChart() {
-        // Customer segmentation by value (estimated distribution)
-        // VIP: 2%, Loyal: 8%, Regular: 20%, Normal: 70%
-        let totalCustomers;
+        // Tính ROI cho mỗi kênh marketing (LTV/CAC)
+        // ROI > 3 là tốt (LTV gấp 3 lần CAC)
+        const channels = customerAcquisitionChannels.channels;
+        const ltv = customerAcquisitionChannels.ltv;
+        const cac = customerAcquisitionChannels.cac;
 
-        if (currentLocation === '') {
-          totalCustomers = businessDataByMonth[2025].customers.reduce((a, b) => a + b, 0);
-        } else {
-          totalCustomers = locationData[currentLocation].customers.reduce((a, b) => a + b, 0);
-        }
+        // Tính ROI ratio cho mỗi kênh (LTV/CAC)
+        const roiData = channels.map(ch => {
+          const ltvValue = ltv[ch.id];
+          const cacValue = cac[ch.id] / 1000; // Convert từ nghìn VNĐ sang triệu VNĐ
+          return cacValue > 0 ? (ltvValue / cacValue).toFixed(1) : 0;
+        });
 
-        const vip = Math.round(totalCustomers * 0.02);
-        const loyal = Math.round(totalCustomers * 0.08);
-        const regular = Math.round(totalCustomers * 0.20);
-        const normal = totalCustomers - vip - loyal - regular;
+        const labels = channels.map(ch => ch.name);
+        const colors = channels.map(ch => ch.color);
 
-        segmentChart.updateSeries([vip, loyal, regular, normal]);
+        segmentChart.updateOptions({
+          chart: { type: 'bar', horizontal: true },
+          series: [{
+            name: 'ROI (LTV/CAC)',
+            data: roiData.map(v => parseFloat(v))
+          }],
+          xaxis: {
+            categories: labels,
+            title: { text: 'ROI Ratio' }
+          },
+          yaxis: {
+            title: { text: 'Kênh Marketing' }
+          },
+          colors: colors,
+          plotOptions: {
+            bar: {
+              horizontal: true,
+              distributed: true,
+              dataLabels: {
+                position: 'top'
+              }
+            }
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: (val) => val.toFixed(1) + 'x',
+            offsetX: 30,
+            style: {
+              fontSize: '12px',
+              colors: ['#304758']
+            }
+          },
+          legend: {
+            show: false
+          },
+          tooltip: {
+            y: {
+              formatter: (val) => val.toFixed(1) + 'x (LTV/CAC)',
+              title: {
+                formatter: () => 'ROI: '
+              }
+            }
+          }
+        });
       }
     </script>
   </body>
