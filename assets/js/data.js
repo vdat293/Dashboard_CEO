@@ -171,6 +171,79 @@ const monthLabels = [
 const monthLabelsShort = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
 
 // ============================================
+// HÀM TÍNH TOÁN DỮ LIỆU THEO PERIOD
+// ============================================
+
+/**
+ * Tính tổng dữ liệu theo quý từ dữ liệu tháng
+ * @param {Array} monthlyData - Mảng 12 giá trị theo tháng
+ * @returns {Array} - Mảng 4 giá trị theo quý
+ */
+function calculateQuarterlyData(monthlyData) {
+  const quarterly = [];
+  for (let i = 0; i < 4; i++) {
+    const start = i * 3;
+    const sum = monthlyData[start] + monthlyData[start + 1] + monthlyData[start + 2];
+    quarterly.push(sum);
+  }
+  return quarterly;
+}
+
+/**
+ * Tính trung bình dữ liệu theo tuần từ dữ liệu tháng (ước lượng)
+ * Giả định: Chia đều dữ liệu tháng thành 4 tuần
+ * @param {Array} monthlyData - Mảng 12 giá trị theo tháng
+ * @returns {Array} - Mảng ~48 giá trị theo tuần (4 tuần/tháng)
+ */
+function calculateWeeklyData(monthlyData) {
+  const weekly = [];
+  monthlyData.forEach(monthValue => {
+    // Chia mỗi tháng thành 4 tuần với giá trị biến động nhẹ
+    const baseWeekValue = monthValue / 4;
+    weekly.push(
+      Math.round(baseWeekValue * 0.9),  // Tuần 1: thấp hơn
+      Math.round(baseWeekValue * 1.0),  // Tuần 2: trung bình
+      Math.round(baseWeekValue * 1.1),  // Tuần 3: cao hơn
+      Math.round(baseWeekValue * 1.0)   // Tuần 4: trung bình
+    );
+  });
+  return weekly;
+}
+
+/**
+ * Lấy labels theo period
+ */
+function getLabelsForPeriod(period) {
+  if (period === 'weekly') {
+    // Tạo labels cho 48 tuần (12 tháng x 4 tuần)
+    const labels = [];
+    for (let month = 1; month <= 12; month++) {
+      for (let week = 1; week <= 4; week++) {
+        labels.push(`T${month}/W${week}`);
+      }
+    }
+    return labels;
+  } else if (period === 'quarterly') {
+    return ['Quý 1', 'Quý 2', 'Quý 3', 'Quý 4'];
+  } else { // monthly
+    return monthLabelsShort;
+  }
+}
+
+/**
+ * Chuyển đổi dữ liệu theo period
+ */
+function transformDataByPeriod(monthlyData, period) {
+  if (period === 'weekly') {
+    return calculateWeeklyData(monthlyData);
+  } else if (period === 'quarterly') {
+    return calculateQuarterlyData(monthlyData);
+  } else { // monthly
+    return monthlyData;
+  }
+}
+
+// ============================================
 // NGUỒN KHÁCH HÀNG (CUSTOMER ACQUISITION CHANNELS)
 // ============================================
 
@@ -393,6 +466,17 @@ const productData = {
 
 // Top sản phẩm (dùng của Hà Nội làm mặc định)
 const topProducts = productsByLocation.HN.topProducts;
+
+// ============================================
+// DỮ LIỆU KÊNH BÁN HÀNG
+// ============================================
+
+// Dữ liệu hiệu suất theo kênh bán hàng
+const salesChannels = {
+  labels: ['Cửa hàng', 'Website', 'App Mobile', 'Đại lý'],
+  percentages: [45, 30, 18, 7],
+  colors: ['#007bff', '#28a745', '#ffc107', '#dc3545']
+};
 
 // ============================================
 // DỮ LIỆU CHO BIỂU ĐỒ THỊ PHẦN SẢN PHẨM

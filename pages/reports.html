@@ -156,24 +156,19 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-outline-primary">
-                          <i class="bi bi-calendar-day"></i> Hôm nay
+                      <div class="col-md-4">
+                        <button type="button" id="btn-weekly" class="btn btn-block btn-outline-primary period-btn" data-period="weekly">
+                          <i class="bi bi-calendar-week"></i> Theo tuần
                         </button>
                       </div>
-                      <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-outline-primary">
-                          <i class="bi bi-calendar-week"></i> Tuần này
+                      <div class="col-md-4">
+                        <button type="button" id="btn-monthly" class="btn btn-block btn-primary period-btn active" data-period="monthly">
+                          <i class="bi bi-calendar-month"></i> Theo tháng
                         </button>
                       </div>
-                      <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-primary">
-                          <i class="bi bi-calendar-month"></i> Tháng này
-                        </button>
-                      </div>
-                      <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-outline-primary">
-                          <i class="bi bi-calendar-range"></i> Năm nay
+                      <div class="col-md-4">
+                        <button type="button" id="btn-quarterly" class="btn btn-block btn-outline-primary period-btn" data-period="quarterly">
+                          <i class="bi bi-calendar3"></i> Theo quý
                         </button>
                       </div>
                     </div>
@@ -187,7 +182,7 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Tổng quan tháng 12/2024</h3>
+                    <h3 class="card-title" id="report-title">Tổng quan tháng 12/2024</h3>
                     <div class="card-tools">
                       <button type="button" class="btn btn-sm btn-success">
                         <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
@@ -204,11 +199,11 @@
                           <span class="info-box-icon"><i class="bi bi-currency-dollar"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Tổng doanh thu</span>
-                            <span class="info-box-number">3.68 tỷ</span>
+                            <span class="info-box-number" id="kpi-revenue">3.68 tỷ</span>
                             <div class="progress">
-                              <div class="progress-bar" style="width: 92%"></div>
+                              <div class="progress-bar" id="kpi-revenue-progress" style="width: 92%"></div>
                             </div>
-                            <span class="progress-description">
+                            <span class="progress-description" id="kpi-revenue-desc">
                               92% mục tiêu (4 tỷ)
                             </span>
                           </div>
@@ -220,11 +215,11 @@
                           <span class="info-box-icon"><i class="bi bi-graph-up"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Lợi nhuận</span>
-                            <span class="info-box-number">1.29 tỷ</span>
+                            <span class="info-box-number" id="kpi-profit">1.29 tỷ</span>
                             <div class="progress">
-                              <div class="progress-bar" style="width: 90%"></div>
+                              <div class="progress-bar" id="kpi-profit-progress" style="width: 90%"></div>
                             </div>
-                            <span class="progress-description">
+                            <span class="progress-description" id="kpi-profit-desc">
                               35.0% biên lợi nhuận
                             </span>
                           </div>
@@ -236,11 +231,11 @@
                           <span class="info-box-icon"><i class="bi bi-cart"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Đơn hàng</span>
-                            <span class="info-box-number">4,892</span>
+                            <span class="info-box-number" id="kpi-orders">4,892</span>
                             <div class="progress">
-                              <div class="progress-bar" style="width: 98%"></div>
+                              <div class="progress-bar" id="kpi-orders-progress" style="width: 98%"></div>
                             </div>
-                            <span class="progress-description">
+                            <span class="progress-description" id="kpi-orders-desc">
                               Giá trị TB: 752,000đ
                             </span>
                           </div>
@@ -252,11 +247,11 @@
                           <span class="info-box-icon"><i class="bi bi-people"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Khách hàng mới</span>
-                            <span class="info-box-number">1,456</span>
+                            <span class="info-box-number" id="kpi-customers">1,456</span>
                             <div class="progress">
-                              <div class="progress-bar" style="width: 97%"></div>
+                              <div class="progress-bar" id="kpi-customers-progress" style="width: 97%"></div>
                             </div>
-                            <span class="progress-description">
+                            <span class="progress-description" id="kpi-customers-desc">
                               +6.7% so với tháng trước
                             </span>
                           </div>
@@ -466,96 +461,260 @@
     <script src="../assets/js/data.js"></script>
 
     <script>
-      // Biểu đồ xu hướng kinh doanh
-      const businessTrendChart = new ApexCharts(document.querySelector('#business-trend-chart'), {
-        series: [{
-          name: 'Doanh thu (triệu)',
-          type: 'column',
-          data: businessDataByMonth[2025].revenue
-        }, {
-          name: 'Lợi nhuận (triệu)',
-          type: 'line',
-          data: businessDataByMonth[2025].profit
-        }, {
-          name: 'Khách hàng mới',
-          type: 'line',
-          data: businessDataByMonth[2025].customers
-        }],
-        chart: { height: 400, type: 'line', toolbar: { show: true } },
-        stroke: { width: [0, 2, 2], curve: 'smooth' },
-        plotOptions: { bar: { columnWidth: '50%' } },
-        colors: ['#007bff', '#28a745', '#ffc107'],
-        fill: { opacity: [0.85, 1, 1] },
-        labels: monthLabelsShort,
-        markers: { size: 0 },
-        yaxis: [
-          {
-            title: { text: 'Doanh thu & Lợi nhuận (triệu VNĐ)' },
-            labels: { formatter: val => val.toFixed(0) }
-          },
-          {
-            opposite: true,
-            title: { text: 'Khách hàng mới' },
-            labels: { formatter: val => val.toFixed(0) }
+      // ============================================
+      // BIẾN GLOBAL VÀ KHỞI TẠO
+      // ============================================
+
+      let currentPeriod = 'monthly'; // Mặc định là theo tháng
+      let businessTrendChart;
+
+      // ============================================
+      // HÀM FORMAT DỮ LIỆU
+      // ============================================
+
+      function formatCurrency(value) {
+        if (value >= 1000) {
+          return (value / 1000).toFixed(2) + ' tỷ';
+        }
+        return value + ' triệu';
+      }
+
+      function formatNumber(value) {
+        return value.toLocaleString('vi-VN');
+      }
+
+      // ============================================
+      // HÀM CẬP NHẬT KPI
+      // ============================================
+
+      function updateKPIs(period) {
+        const data = businessDataByMonth[2025];
+        let revenue, profit, orders, customers;
+        let periodLabel;
+
+        if (period === 'weekly') {
+          // Lấy tuần hiện tại (giả sử tuần cuối tháng 12)
+          const weeklyRevenue = calculateWeeklyData(data.revenue);
+          const weeklyProfit = calculateWeeklyData(data.profit);
+          const weeklyOrders = calculateWeeklyData(data.orders);
+          const weeklyCustomers = calculateWeeklyData(data.newCustomers);
+
+          // Tuần hiện tại = tuần cuối cùng của tháng 12 (week 48)
+          revenue = weeklyRevenue[47];
+          profit = weeklyProfit[47];
+          orders = weeklyOrders[47];
+          customers = weeklyCustomers[47];
+          periodLabel = 'Tuần 4 - Tháng 12/2024';
+        } else if (period === 'quarterly') {
+          // Quý 4 (tháng 10-12)
+          const quarterlyRevenue = calculateQuarterlyData(data.revenue);
+          const quarterlyProfit = calculateQuarterlyData(data.profit);
+          const quarterlyOrders = calculateQuarterlyData(data.orders);
+          const quarterlyCustomers = calculateQuarterlyData(data.newCustomers);
+
+          revenue = quarterlyRevenue[3]; // Quý 4
+          profit = quarterlyProfit[3];
+          orders = quarterlyOrders[3];
+          customers = quarterlyCustomers[3];
+          periodLabel = 'Quý 4/2024';
+        } else { // monthly
+          // Tháng 12
+          revenue = data.revenue[11];
+          profit = data.profit[11];
+          orders = data.orders[11];
+          customers = data.newCustomers[11];
+          periodLabel = 'Tháng 12/2024';
+        }
+
+        // Cập nhật tiêu đề
+        document.getElementById('report-title').textContent = `Tổng quan ${periodLabel}`;
+
+        // Cập nhật KPI revenue
+        document.getElementById('kpi-revenue').textContent = formatCurrency(revenue);
+        const revenueProgress = Math.min(100, (revenue / 4000) * 100);
+        document.getElementById('kpi-revenue-progress').style.width = revenueProgress + '%';
+        document.getElementById('kpi-revenue-desc').textContent = `${revenueProgress.toFixed(0)}% mục tiêu`;
+
+        // Cập nhật KPI profit
+        document.getElementById('kpi-profit').textContent = formatCurrency(profit);
+        const profitMargin = ((profit / revenue) * 100).toFixed(1);
+        document.getElementById('kpi-profit-progress').style.width = Math.min(100, profitMargin * 3);
+        document.getElementById('kpi-profit-desc').textContent = `${profitMargin}% biên lợi nhuận`;
+
+        // Cập nhật KPI orders
+        document.getElementById('kpi-orders').textContent = formatNumber(orders);
+        const avgOrderValue = (revenue * 1000000 / orders).toFixed(0);
+        document.getElementById('kpi-orders-progress').style.width = '98%';
+        document.getElementById('kpi-orders-desc').textContent = `Giá trị TB: ${formatNumber(avgOrderValue)}đ`;
+
+        // Cập nhật KPI customers
+        document.getElementById('kpi-customers').textContent = formatNumber(customers);
+        document.getElementById('kpi-customers-progress').style.width = '97%';
+        document.getElementById('kpi-customers-desc').textContent = `Khách hàng mới trong kỳ`;
+      }
+
+      // ============================================
+      // HÀM CẬP NHẬT BIỂU ĐỒ XU HƯỚNG
+      // ============================================
+
+      function updateBusinessTrendChart(period) {
+        const data = businessDataByMonth[2025];
+        const labels = getLabelsForPeriod(period);
+
+        const revenueData = transformDataByPeriod(data.revenue, period);
+        const profitData = transformDataByPeriod(data.profit, period);
+        const customersData = transformDataByPeriod(data.customers, period);
+
+        const periodText = period === 'weekly' ? '48 tuần' : period === 'quarterly' ? '4 quý' : '12 tháng';
+
+        businessTrendChart.updateOptions({
+          series: [{
+            name: 'Doanh thu (triệu)',
+            type: 'column',
+            data: revenueData
+          }, {
+            name: 'Lợi nhuận (triệu)',
+            type: 'line',
+            data: profitData
+          }, {
+            name: 'Khách hàng hoạt động',
+            type: 'line',
+            data: customersData
+          }],
+          labels: labels,
+          chart: {
+            height: 400,
+            type: 'line',
+            toolbar: { show: true }
           }
-        ],
-        tooltip: {
-          y: {
-            formatter: (val, opts) => {
-              if (opts.seriesIndex === 2) return val.toFixed(0) + ' khách';
-              return val.toFixed(0) + ' triệu VNĐ';
+        });
+
+        // Cập nhật tiêu đề chart
+        document.querySelector('#business-trend-chart').closest('.card').querySelector('.card-title').innerHTML =
+          `<i class="bi bi-graph-up mr-1"></i>Xu hướng kinh doanh ${periodText}`;
+      }
+
+      // ============================================
+      // XỬ LÝ SỰ KIỆN CLICK NÚT PERIOD
+      // ============================================
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Khởi tạo biểu đồ xu hướng kinh doanh
+        businessTrendChart = new ApexCharts(document.querySelector('#business-trend-chart'), {
+          series: [{
+            name: 'Doanh thu (triệu)',
+            type: 'column',
+            data: businessDataByMonth[2025].revenue
+          }, {
+            name: 'Lợi nhuận (triệu)',
+            type: 'line',
+            data: businessDataByMonth[2025].profit
+          }, {
+            name: 'Khách hàng hoạt động',
+            type: 'line',
+            data: businessDataByMonth[2025].customers
+          }],
+          chart: { height: 400, type: 'line', toolbar: { show: true } },
+          stroke: { width: [0, 2, 2], curve: 'smooth' },
+          plotOptions: { bar: { columnWidth: '50%' } },
+          colors: ['#007bff', '#28a745', '#ffc107'],
+          fill: { opacity: [0.85, 1, 1] },
+          labels: monthLabelsShort,
+          markers: { size: 0 },
+          yaxis: [
+            {
+              title: { text: 'Doanh thu & Lợi nhuận (triệu VNĐ)' },
+              labels: { formatter: val => val.toFixed(0) }
+            },
+            {
+              opposite: true,
+              title: { text: 'Khách hàng' },
+              labels: { formatter: val => val.toFixed(0) }
             }
-          }
-        }
-      });
-      businessTrendChart.render();
-
-      // Biểu đồ top sản phẩm (sử dụng dữ liệu thực từ topProducts)
-      const topProductsChart = new ApexCharts(document.querySelector('#top-products-chart'), {
-        series: [{
-          name: 'Doanh thu',
-          data: topProducts.map(p => parseInt(p.revenue.replace(/[^\d]/g, '')))
-        }],
-        chart: { type: 'bar', height: 300 },
-        plotOptions: { bar: { borderRadius: 4, horizontal: true } },
-        colors: ['#007bff'],
-        dataLabels: { enabled: false },
-        xaxis: {
-          categories: topProducts.map(p => p.name),
-          labels: { formatter: val => val + ' triệu' }
-        },
-        tooltip: {
-          y: { formatter: val => val + ' triệu VNĐ' }
-        }
-      });
-      topProductsChart.render();
-
-      // Biểu đồ kênh bán hàng (sử dụng salesChannels data)
-      const channelChart = new ApexCharts(document.querySelector('#channel-performance-chart'), {
-        series: salesChannels.percentages,
-        chart: { type: 'donut', height: 300 },
-        labels: salesChannels.labels,
-        colors: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
-        legend: { position: 'bottom' },
-        plotOptions: {
-          pie: {
-            donut: {
-              labels: {
-                show: true,
-                total: {
-                  show: true,
-                  label: 'Tổng',
-                  formatter: () => '100%'
-                }
+          ],
+          tooltip: {
+            y: {
+              formatter: (val, opts) => {
+                if (opts.seriesIndex === 2) return val.toFixed(0) + ' khách';
+                return val.toFixed(0) + ' triệu VNĐ';
               }
             }
           }
-        },
-        tooltip: {
-          y: { formatter: val => val + '%' }
-        }
+        });
+        businessTrendChart.render();
+
+        // Biểu đồ top sản phẩm
+        const topProductsChart = new ApexCharts(document.querySelector('#top-products-chart'), {
+          series: [{
+            name: 'Doanh thu',
+            data: topProducts.map(p => parseInt(p.revenue.replace(/[^\d]/g, '')))
+          }],
+          chart: { type: 'bar', height: 300 },
+          plotOptions: { bar: { borderRadius: 4, horizontal: true } },
+          colors: ['#007bff'],
+          dataLabels: { enabled: false },
+          xaxis: {
+            categories: topProducts.map(p => p.name),
+            labels: { formatter: val => val + ' triệu' }
+          },
+          tooltip: {
+            y: { formatter: val => val + ' triệu VNĐ' }
+          }
+        });
+        topProductsChart.render();
+
+        // Biểu đồ kênh bán hàng
+        const channelChart = new ApexCharts(document.querySelector('#channel-performance-chart'), {
+          series: salesChannels.percentages,
+          chart: { type: 'donut', height: 300 },
+          labels: salesChannels.labels,
+          colors: salesChannels.colors,
+          legend: { position: 'bottom' },
+          plotOptions: {
+            pie: {
+              donut: {
+                labels: {
+                  show: true,
+                  total: {
+                    show: true,
+                    label: 'Tổng',
+                    formatter: () => '100%'
+                  }
+                }
+              }
+            }
+          },
+          tooltip: {
+            y: { formatter: val => val + '%' }
+          }
+        });
+        channelChart.render();
+
+        // Xử lý click nút period
+        document.querySelectorAll('.period-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            // Xóa class active từ tất cả nút
+            document.querySelectorAll('.period-btn').forEach(b => {
+              b.classList.remove('btn-primary', 'active');
+              b.classList.add('btn-outline-primary');
+            });
+
+            // Thêm class active cho nút được click
+            this.classList.remove('btn-outline-primary');
+            this.classList.add('btn-primary', 'active');
+
+            // Lấy period
+            currentPeriod = this.getAttribute('data-period');
+
+            // Cập nhật KPI và biểu đồ
+            updateKPIs(currentPeriod);
+            updateBusinessTrendChart(currentPeriod);
+          });
+        });
+
+        // Khởi tạo KPI ban đầu
+        updateKPIs(currentPeriod);
       });
-      channelChart.render();
     </script>
   </body>
 </html>
