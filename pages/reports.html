@@ -134,10 +134,18 @@
                 <h1 class="m-0">Báo Cáo Tổng Hợp</h1>
               </div>
               <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                  <li class="breadcrumb-item active">Báo cáo</li>
-                </ol>
+                <div class="float-sm-right">
+                  <select id="location-selector" class="form-control" style="width: auto; display: inline-block; min-width: 200px;">
+                    <option value="">Tất cả cơ sở (Tổng hợp)</option>
+                    <option value="HN">Hà Nội</option>
+                    <option value="HCM">TP. Hồ Chí Minh</option>
+                    <option value="DN">Đà Nẵng</option>
+                    <option value="HP">Hải Phòng</option>
+                    <option value="CT">Cần Thơ</option>
+                    <option value="NT">Nha Trang</option>
+                    <option value="VT">Vũng Tàu</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -150,27 +158,27 @@
             <!-- Chọn khoảng thời gian -->
             <div class="row">
               <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Chọn khoảng thời gian báo cáo</h3>
+                <div class="card border-0">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-calendar-range mr-2"></i>
+                      Khoảng thời gian báo cáo
+                    </h3>
                   </div>
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <button type="button" id="btn-weekly" class="btn btn-block btn-outline-primary period-btn" data-period="weekly">
-                          <i class="bi bi-calendar-week"></i> Theo tuần
-                        </button>
-                      </div>
-                      <div class="col-md-4">
-                        <button type="button" id="btn-monthly" class="btn btn-block btn-primary period-btn active" data-period="monthly">
-                          <i class="bi bi-calendar-month"></i> Theo tháng
-                        </button>
-                      </div>
-                      <div class="col-md-4">
-                        <button type="button" id="btn-quarterly" class="btn btn-block btn-outline-primary period-btn" data-period="quarterly">
-                          <i class="bi bi-calendar3"></i> Theo quý
-                        </button>
-                      </div>
+                    <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                      <label class="btn btn-outline-primary flex-fill period-btn" id="btn-weekly" data-period="weekly">
+                        <input type="radio" name="period">
+                        <i class="bi bi-calendar-week"></i> Theo tuần
+                      </label>
+                      <label class="btn btn-primary flex-fill period-btn active" id="btn-monthly" data-period="monthly">
+                        <input type="radio" name="period" checked>
+                        <i class="bi bi-calendar-month"></i> Theo tháng
+                      </label>
+                      <label class="btn btn-outline-primary flex-fill period-btn" id="btn-quarterly" data-period="quarterly">
+                        <input type="radio" name="period">
+                        <i class="bi bi-calendar3"></i> Theo quý
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -180,9 +188,12 @@
             <!-- KPI tổng quan -->
             <div class="row">
               <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title" id="report-title">Tổng quan tháng 12/2024</h3>
+                <div class="card border-0">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-bar-chart-fill mr-2"></i>
+                      <span id="report-title">Tổng quan tháng 12/2024</span>
+                    </h3>
                     <div class="card-tools">
                       <button type="button" class="btn btn-sm btn-success">
                         <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
@@ -195,7 +206,7 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-3">
-                        <div class="info-box bg-gradient-primary">
+                        <div class="info-box bg-gradient-primary elevation-1">
                           <span class="info-box-icon"><i class="bi bi-currency-dollar"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Tổng doanh thu</span>
@@ -211,7 +222,7 @@
                       </div>
 
                       <div class="col-md-3">
-                        <div class="info-box bg-gradient-success">
+                        <div class="info-box bg-gradient-success elevation-1">
                           <span class="info-box-icon"><i class="bi bi-graph-up"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Lợi nhuận</span>
@@ -227,7 +238,7 @@
                       </div>
 
                       <div class="col-md-3">
-                        <div class="info-box bg-gradient-warning">
+                        <div class="info-box bg-gradient-warning elevation-1">
                           <span class="info-box-icon"><i class="bi bi-cart"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Đơn hàng</span>
@@ -243,7 +254,7 @@
                       </div>
 
                       <div class="col-md-3">
-                        <div class="info-box bg-gradient-info">
+                        <div class="info-box bg-gradient-info elevation-1">
                           <span class="info-box-icon"><i class="bi bi-people"></i></span>
                           <div class="info-box-content">
                             <span class="info-box-text">Khách hàng mới</span>
@@ -267,14 +278,17 @@
             <div class="row">
               <!-- Báo cáo doanh thu -->
               <div class="col-md-6">
-                <div class="card">
-                  <div class="card-header border-transparent">
-                    <h3 class="card-title">Báo cáo Doanh thu</h3>
+                <div class="card border-0">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-currency-dollar mr-2"></i>
+                      Báo cáo Doanh thu
+                    </h3>
                   </div>
                   <div class="card-body p-0">
                     <div class="table-responsive">
-                      <table class="table m-0">
-                        <thead>
+                      <table class="table table-hover m-0">
+                        <thead class="bg-light">
                           <tr>
                             <th>Chỉ tiêu</th>
                             <th>Giá trị</th>
@@ -284,22 +298,22 @@
                         <tbody>
                           <tr>
                             <td>Doanh thu tháng</td>
-                            <td>3.68 tỷ</td>
+                            <td><strong>3.68 tỷ</strong></td>
                             <td><span class="badge badge-success">92%</span></td>
                           </tr>
                           <tr>
                             <td>Doanh thu năm</td>
-                            <td>35.94 tỷ</td>
+                            <td><strong>35.94 tỷ</strong></td>
                             <td><span class="badge badge-success">90%</span></td>
                           </tr>
                           <tr>
                             <td>Tăng trưởng MoM</td>
-                            <td>+7.6%</td>
+                            <td><strong>+7.6%</strong></td>
                             <td><span class="badge badge-success">Tốt</span></td>
                           </tr>
                           <tr>
                             <td>Tăng trưởng YoY</td>
-                            <td>+15.0%</td>
+                            <td><strong>+15.0%</strong></td>
                             <td><span class="badge badge-success">Tốt</span></td>
                           </tr>
                         </tbody>
@@ -311,14 +325,17 @@
 
               <!-- Báo cáo khách hàng -->
               <div class="col-md-6">
-                <div class="card">
-                  <div class="card-header border-transparent">
-                    <h3 class="card-title">Báo cáo Khách hàng</h3>
+                <div class="card border-0">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-people mr-2"></i>
+                      Báo cáo Khách hàng
+                    </h3>
                   </div>
                   <div class="card-body p-0">
                     <div class="table-responsive">
-                      <table class="table m-0">
-                        <thead>
+                      <table class="table table-hover m-0">
+                        <thead class="bg-light">
                           <tr>
                             <th>Chỉ tiêu</th>
                             <th>Giá trị</th>
@@ -328,22 +345,22 @@
                         <tbody>
                           <tr>
                             <td>Tổng khách hàng</td>
-                            <td>15,678</td>
+                            <td><strong>15,678</strong></td>
                             <td><span class="badge badge-success">+10.2%</span></td>
                           </tr>
                           <tr>
                             <td>Khách hàng mới</td>
-                            <td>1,456</td>
+                            <td><strong>1,456</strong></td>
                             <td><span class="badge badge-success">+6.7%</span></td>
                           </tr>
                           <tr>
                             <td>Khách hàng VIP</td>
-                            <td>342</td>
+                            <td><strong>342</strong></td>
                             <td><span class="badge badge-success">+12%</span></td>
                           </tr>
                           <tr>
                             <td>Tỷ lệ giữ chân</td>
-                            <td>92.5%</td>
+                            <td><strong>92.5%</strong></td>
                             <td><span class="badge badge-success">+1.5%</span></td>
                           </tr>
                         </tbody>
@@ -357,10 +374,10 @@
             <!-- Biểu đồ tổng hợp -->
             <div class="row">
               <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
+                <div class="card border-0">
+                  <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-graph-up mr-1"></i>
+                      <i class="bi bi-graph-up mr-2"></i>
                       Xu hướng kinh doanh 12 tháng
                     </h3>
                   </div>
@@ -374,9 +391,12 @@
             <!-- Báo cáo sản phẩm và hoạt động -->
             <div class="row">
               <div class="col-md-6">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Top 5 sản phẩm đóng góp doanh thu</h3>
+                <div class="card border-0">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-box-seam mr-2"></i>
+                      Top 5 sản phẩm đóng góp doanh thu
+                    </h3>
                   </div>
                   <div class="card-body">
                     <div id="top-products-chart" style="height: 300px;"></div>
@@ -385,9 +405,12 @@
               </div>
 
               <div class="col-md-6">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Hiệu suất theo kênh bán hàng</h3>
+                <div class="card border-0">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-shop mr-2"></i>
+                      Hiệu suất theo kênh bán hàng
+                    </h3>
                   </div>
                   <div class="card-body">
                     <div id="channel-performance-chart" style="height: 300px;"></div>
@@ -398,40 +421,90 @@
 
             <!-- Nhận xét và đề xuất -->
             <div class="row">
-              <div class="col-md-12">
-                <div class="card card-primary">
+              <!-- Điểm mạnh -->
+              <div class="col-md-4">
+                <div class="card card-success">
                   <div class="card-header">
                     <h3 class="card-title">
-                      <i class="bi bi-lightbulb mr-1"></i>
-                      Nhận xét và Đề xuất
+                      <i class="bi bi-check-circle mr-2"></i>
+                      Điểm mạnh
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <h5>Điểm mạnh:</h5>
-                        <ul>
-                          <li><i class="bi bi-check-circle text-success"></i> Doanh thu tăng trưởng ổn định 12% so với tháng trước</li>
-                          <li><i class="bi bi-check-circle text-success"></i> Tỷ lệ khách hàng quay lại cao (92.5%)</li>
-                          <li><i class="bi bi-check-circle text-success"></i> Biên lợi nhuận cải thiện lên 34%</li>
-                          <li><i class="bi bi-check-circle text-success"></i> Sản phẩm mới được thị trường đón nhận tốt</li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6">
-                        <h5>Điểm cần cải thiện:</h5>
-                        <ul>
-                          <li><i class="bi bi-exclamation-triangle text-warning"></i> Tình trạng hết hàng ở một số sản phẩm chủ lực</li>
-                          <li><i class="bi bi-exclamation-triangle text-warning"></i> Chi phí marketing tăng cao hơn dự kiến</li>
-                          <li><i class="bi bi-exclamation-triangle text-warning"></i> Thời gian giao hàng trung bình tăng nhẹ</li>
-                        </ul>
-                        <h5 class="mt-3">Đề xuất:</h5>
-                        <ul>
-                          <li><i class="bi bi-arrow-right text-primary"></i> Tăng cường quản lý tồn kho, đặc biệt sản phẩm bán chạy</li>
-                          <li><i class="bi bi-arrow-right text-primary"></i> Tối ưu hóa chi phí marketing, tập trung vào kênh hiệu quả</li>
-                          <li><i class="bi bi-arrow-right text-primary"></i> Cải thiện quy trình logistics để giảm thời gian giao hàng</li>
-                        </ul>
-                      </div>
-                    </div>
+                    <ul class="list-unstyled">
+                      <li class="mb-2">
+                        <i class="bi bi-arrow-up-circle text-success mr-1"></i>
+                        Doanh thu tăng trưởng ổn định 12% so với tháng trước
+                      </li>
+                      <li class="mb-2">
+                        <i class="bi bi-arrow-up-circle text-success mr-1"></i>
+                        Tỷ lệ khách hàng quay lại cao (92.5%)
+                      </li>
+                      <li class="mb-2">
+                        <i class="bi bi-arrow-up-circle text-success mr-1"></i>
+                        Biên lợi nhuận cải thiện lên 34%
+                      </li>
+                      <li class="mb-2">
+                        <i class="bi bi-arrow-up-circle text-success mr-1"></i>
+                        Sản phẩm mới được thị trường đón nhận tốt
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Điểm cần cải thiện -->
+              <div class="col-md-4">
+                <div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-exclamation-triangle mr-2"></i>
+                      Điểm cần cải thiện
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled">
+                      <li class="mb-2">
+                        <i class="bi bi-exclamation-circle text-warning mr-1"></i>
+                        Tình trạng hết hàng ở một số sản phẩm chủ lực
+                      </li>
+                      <li class="mb-2">
+                        <i class="bi bi-exclamation-circle text-warning mr-1"></i>
+                        Chi phí marketing tăng cao hơn dự kiến
+                      </li>
+                      <li class="mb-2">
+                        <i class="bi bi-exclamation-circle text-warning mr-1"></i>
+                        Thời gian giao hàng trung bình tăng nhẹ
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Đề xuất -->
+              <div class="col-md-4">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-lightbulb mr-2"></i>
+                      Đề xuất hành động
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled">
+                      <li class="mb-2">
+                        <i class="bi bi-arrow-right-circle text-primary mr-1"></i>
+                        Tăng cường quản lý tồn kho, đặc biệt sản phẩm bán chạy
+                      </li>
+                      <li class="mb-2">
+                        <i class="bi bi-arrow-right-circle text-primary mr-1"></i>
+                        Tối ưu hóa chi phí marketing, tập trung vào kênh hiệu quả
+                      </li>
+                      <li class="mb-2">
+                        <i class="bi bi-arrow-right-circle text-primary mr-1"></i>
+                        Cải thiện quy trình logistics để giảm thời gian giao hàng
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -526,7 +599,7 @@
           periodLabel = 'Tháng 12/2024';
         }
 
-        // Cập nhật tiêu đề
+        // Cập nhật tiêu đề (chỉ cập nhật text content của span, không thay icon)
         document.getElementById('report-title').textContent = `Tổng quan ${periodLabel}`;
 
         // Cập nhật KPI revenue
@@ -591,7 +664,7 @@
 
         // Cập nhật tiêu đề chart
         document.querySelector('#business-trend-chart').closest('.card').querySelector('.card-title').innerHTML =
-          `<i class="bi bi-graph-up mr-1"></i>Xu hướng kinh doanh ${periodText}`;
+          `<i class="bi bi-graph-up mr-2"></i>Xu hướng kinh doanh ${periodText}`;
       }
 
       // ============================================
@@ -710,6 +783,13 @@
             updateKPIs(currentPeriod);
             updateBusinessTrendChart(currentPeriod);
           });
+        });
+
+        // Xử lý location selector
+        document.getElementById('location-selector').addEventListener('change', function() {
+          const location = this.value;
+          // TODO: Implement location filtering logic
+          console.log('Location changed to:', location || 'Tất cả');
         });
 
         // Khởi tạo KPI ban đầu
