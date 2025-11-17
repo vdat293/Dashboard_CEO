@@ -23,6 +23,35 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="../assets/css/variables.css" />
     <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <style>
+      /* Transition cho KPI updates */
+      #report-title {
+        transition: opacity 0.3s ease;
+      }
+
+      .info-box-number, .info-box-text {
+        transition: all 0.3s ease;
+      }
+
+      .progress-bar {
+        transition: width 0.5s ease;
+      }
+
+      /* Hiệu ứng khi click nút period */
+      .period-btn {
+        transition: all 0.2s ease;
+      }
+
+      .period-btn:active {
+        transform: scale(0.95);
+      }
+
+      /* Transition cho content khi thay đổi period */
+      .content {
+        transition: opacity 0.2s ease;
+      }
+    </style>
   </head>
 
   <body class="hold-transition sidebar-mini layout-fixed">
@@ -561,9 +590,12 @@
       // ============================================
 
       function updateKPIs(period) {
+        console.log('Updating KPIs for period:', period); // Debug
+
         const data = businessDataByMonth[2025];
         let revenue, profit, orders, customers;
         let periodLabel;
+        let targetRevenue; // Mục tiêu doanh thu thay đổi theo kỳ
 
         if (period === 'weekly') {
           // Lấy tuần hiện tại (giả sử tuần cuối tháng 12)
@@ -578,6 +610,7 @@
           orders = weeklyOrders[47];
           customers = weeklyCustomers[47];
           periodLabel = 'Tuần 4 - Tháng 12/2024';
+          targetRevenue = 1000; // Mục tiêu 1 tỷ/tuần
         } else if (period === 'quarterly') {
           // Quý 4 (tháng 10-12)
           const quarterlyRevenue = calculateQuarterlyData(data.revenue);
@@ -590,6 +623,7 @@
           orders = quarterlyOrders[3];
           customers = quarterlyCustomers[3];
           periodLabel = 'Quý 4/2024';
+          targetRevenue = 12000; // Mục tiêu 12 tỷ/quý
         } else { // monthly
           // Tháng 12
           revenue = data.revenue[11];
@@ -597,16 +631,24 @@
           orders = data.orders[11];
           customers = data.newCustomers[11];
           periodLabel = 'Tháng 12/2024';
+          targetRevenue = 4000; // Mục tiêu 4 tỷ/tháng
         }
 
-        // Cập nhật tiêu đề (chỉ cập nhật text content của span, không thay icon)
-        document.getElementById('report-title').textContent = `Tổng quan ${periodLabel}`;
+        console.log('Revenue:', revenue, 'Profit:', profit, 'Orders:', orders, 'Customers:', customers); // Debug
 
-        // Cập nhật KPI revenue
+        // Cập nhật tiêu đề với hiệu ứng fade
+        const titleElement = document.getElementById('report-title');
+        titleElement.style.opacity = '0.5';
+        setTimeout(() => {
+          titleElement.textContent = `Tổng quan ${periodLabel}`;
+          titleElement.style.opacity = '1';
+        }, 150);
+
+        // Cập nhật KPI revenue với animation
         document.getElementById('kpi-revenue').textContent = formatCurrency(revenue);
-        const revenueProgress = Math.min(100, (revenue / 4000) * 100);
+        const revenueProgress = Math.min(100, (revenue / targetRevenue) * 100);
         document.getElementById('kpi-revenue-progress').style.width = revenueProgress + '%';
-        document.getElementById('kpi-revenue-desc').textContent = `${revenueProgress.toFixed(0)}% mục tiêu`;
+        document.getElementById('kpi-revenue-desc').textContent = `${revenueProgress.toFixed(0)}% mục tiêu (${formatCurrency(targetRevenue)})`;
 
         // Cập nhật KPI profit
         document.getElementById('kpi-profit').textContent = formatCurrency(profit);
@@ -765,7 +807,9 @@
 
         // Xử lý click nút period
         document.querySelectorAll('.period-btn').forEach(btn => {
-          btn.addEventListener('click', function() {
+          btn.addEventListener('click', function(e) {
+            console.log('Period button clicked:', this.getAttribute('data-period')); // Debug
+
             // Xóa class active từ tất cả nút
             document.querySelectorAll('.period-btn').forEach(b => {
               b.classList.remove('btn-primary', 'active');
@@ -777,11 +821,19 @@
             this.classList.add('btn-primary', 'active');
 
             // Lấy period
-            currentPeriod = this.getAttribute('data-period');
+            const newPeriod = this.getAttribute('data-period');
+            console.log('Switching from', currentPeriod, 'to', newPeriod); // Debug
+            currentPeriod = newPeriod;
 
-            // Cập nhật KPI và biểu đồ
-            updateKPIs(currentPeriod);
-            updateBusinessTrendChart(currentPeriod);
+            // Thêm loading indicator
+            document.querySelector('.content').style.opacity = '0.7';
+
+            // Cập nhật KPI và biểu đồ với delay nhỏ để thấy hiệu ứng
+            setTimeout(() => {
+              updateKPIs(currentPeriod);
+              updateBusinessTrendChart(currentPeriod);
+              document.querySelector('.content').style.opacity = '1';
+            }, 100);
           });
         });
 
