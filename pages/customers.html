@@ -783,7 +783,7 @@
       // Update distribution chart - Customer Acquisition Channels
       function updateDistributionChart() {
         // Hiển thị nguồn khách hàng theo kênh marketing
-        const channels = customerAcquisitionChannels.channels;
+        const channels = customerAcquisitionChannels.channels.filter(ch => ch.id !== 'direct');
         const distribution = customerAcquisitionChannels.distribution;
 
         const labels = channels.map(ch => ch.name);
@@ -844,7 +844,7 @@
       function updateSegmentChart() {
         // Tính ROI cho mỗi kênh marketing (LTV/CAC)
         // ROI > 3 là tốt (LTV gấp 3 lần CAC)
-        const channels = customerAcquisitionChannels.channels;
+        const channels = customerAcquisitionChannels.channels.filter(ch => ch.id !== 'direct');
         const ltv = customerAcquisitionChannels.ltv;
         const cac = customerAcquisitionChannels.cac;
 
