@@ -128,10 +128,18 @@
                 <h1 class="m-0">Quản Lý Sản Phẩm</h1>
               </div>
               <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                  <li class="breadcrumb-item active">Sản phẩm</li>
-                </ol>
+                <div class="float-sm-right">
+                  <select id="location-selector" class="form-control" style="width: auto; display: inline-block; min-width: 200px;">
+                    <option value="">Tất cả cơ sở (Tổng hợp)</option>
+                    <option value="HN">Hà Nội</option>
+                    <option value="HCM">TP. Hồ Chí Minh</option>
+                    <option value="DN">Đà Nẵng</option>
+                    <option value="HP">Hải Phòng</option>
+                    <option value="CT">Cần Thơ</option>
+                    <option value="NT">Nha Trang</option>
+                    <option value="VT">Vũng Tàu</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -144,49 +152,62 @@
             <!-- Thống kê sản phẩm -->
             <div class="row">
               <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-primary">
-                  <div class="inner">
-                    <h3>458</h3>
-                    <p>Tổng sản phẩm</p>
-                  </div>
-                  <div class="icon">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-primary elevation-1">
                     <i class="bi bi-box-seam"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh số sản phẩm</span>
+                    <span class="info-box-number" id="kpi-total-sales">
+                      2.55 tỷ
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> <span id="kpi-sales-growth">12.3%</span>
+                      </small>
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-success">
-                  <div class="inner">
-                    <h3>327</h3>
-                    <p>Còn hàng</p>
-                  </div>
-                  <div class="icon">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-success elevation-1">
                     <i class="bi bi-check-circle"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Sản phẩm bán chạy</span>
+                    <span class="info-box-number" id="kpi-best-seller">
+                      iPhone 15 Pro Max
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-warning">
-                  <div class="inner">
-                    <h3>89</h3>
-                    <p>Sắp hết hàng</p>
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-info elevation-1">
+                    <i class="bi bi-bar-chart"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Danh mục hàng đầu</span>
+                    <span class="info-box-number" id="kpi-top-category">
+                      Điện tử
+                    </span>
                   </div>
-                  <div class="icon">
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-warning elevation-1">
                     <i class="bi bi-exclamation-triangle"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-danger">
-                  <div class="inner">
-                    <h3>42</h3>
-                    <p>Hết hàng</p>
-                  </div>
-                  <div class="icon">
-                    <i class="bi bi-x-circle"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Cảnh báo tồn kho</span>
+                    <span class="info-box-number" id="kpi-alerts">
+                      <small class="text-warning">
+                        <span id="alert-count">12</span> sản phẩm
+                      </small>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -196,28 +217,28 @@
             <div class="row">
               <div class="col-lg-8">
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-graph-up mr-1"></i>
-                      Xu hướng mua hàng của khách hàng
+                      <i class="bi bi-graph-up mr-2"></i>
+                      <span id="sales-trend-title">Xu hướng doanh số sản phẩm (Tổng hợp)</span>
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="customer-trend-chart" style="height: 300px;"></div>
+                    <div id="sales-trend-chart" style="height: 350px;"></div>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-4">
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header border-0">
                     <h3 class="card-title">
-                      <i class="bi bi-bar-chart mr-1"></i>
+                      <i class="bi bi-pie-chart mr-2"></i>
                       Doanh số theo danh mục
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div id="category-sales-chart" style="height: 300px;"></div>
+                    <div id="category-sales-chart" style="height: 350px;"></div>
                   </div>
                 </div>
               </div>
@@ -244,126 +265,16 @@
                     <table class="table table-hover table-striped">
                       <thead>
                         <tr>
-                          <th>Mã SP</th>
+                          <th>STT</th>
                           <th>Tên sản phẩm</th>
                           <th>Danh mục</th>
                           <th>Giá bán</th>
-                          <th>Tồn kho</th>
-                          <th>Đã bán</th>
-                          <th>Doanh thu</th>
-                          <th>Trạng thái</th>
-                          <th>Xu hướng</th>
+                          <th class="text-center">Đã bán</th>
+                          <th class="text-right">Doanh thu</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>#SP001</td>
-                          <td>
-                            <i class="bi bi-laptop text-primary mr-2"></i>
-                            <strong>Laptop Dell XPS 15</strong>
-                          </td>
-                          <td><span class="badge badge-primary">Laptop</span></td>
-                          <td>35,000,000đ</td>
-                          <td><span class="text-success">45</span></td>
-                          <td>245</td>
-                          <td class="text-success"><strong>857 triệu</strong></td>
-                          <td><span class="badge badge-success">Còn hàng</span></td>
-                          <td>
-                            <small class="text-success">
-                              <i class="bi bi-arrow-up"></i> +15%
-                            </small>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#SP002</td>
-                          <td>
-                            <i class="bi bi-phone text-info mr-2"></i>
-                            <strong>iPhone 15 Pro Max</strong>
-                          </td>
-                          <td><span class="badge badge-info">Điện thoại</span></td>
-                          <td>32,000,000đ</td>
-                          <td><span class="text-success">32</span></td>
-                          <td>198</td>
-                          <td class="text-success"><strong>633 triệu</strong></td>
-                          <td><span class="badge badge-success">Còn hàng</span></td>
-                          <td>
-                            <small class="text-success">
-                              <i class="bi bi-arrow-up"></i> +22%
-                            </small>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#SP003</td>
-                          <td>
-                            <i class="bi bi-headphones text-warning mr-2"></i>
-                            <strong>AirPods Pro 2</strong>
-                          </td>
-                          <td><span class="badge badge-warning">Âm thanh</span></td>
-                          <td>6,500,000đ</td>
-                          <td><span class="text-success">87</span></td>
-                          <td>423</td>
-                          <td class="text-success"><strong>275 triệu</strong></td>
-                          <td><span class="badge badge-success">Còn hàng</span></td>
-                          <td>
-                            <small class="text-success">
-                              <i class="bi bi-arrow-up"></i> +18%
-                            </small>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#SP004</td>
-                          <td>
-                            <i class="bi bi-smartwatch text-danger mr-2"></i>
-                            <strong>Apple Watch Ultra 2</strong>
-                          </td>
-                          <td><span class="badge badge-danger">Wearable</span></td>
-                          <td>22,000,000đ</td>
-                          <td><span class="text-warning">8</span></td>
-                          <td>87</td>
-                          <td class="text-success"><strong>191 triệu</strong></td>
-                          <td><span class="badge badge-warning">Sắp hết</span></td>
-                          <td>
-                            <small class="text-danger">
-                              <i class="bi bi-arrow-down"></i> -5%
-                            </small>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#SP005</td>
-                          <td>
-                            <i class="bi bi-tablet text-success mr-2"></i>
-                            <strong>iPad Pro M2</strong>
-                          </td>
-                          <td><span class="badge badge-success">Tablet</span></td>
-                          <td>28,000,000đ</td>
-                          <td><span class="text-success">23</span></td>
-                          <td>156</td>
-                          <td class="text-success"><strong>437 triệu</strong></td>
-                          <td><span class="badge badge-success">Còn hàng</span></td>
-                          <td>
-                            <small class="text-success">
-                              <i class="bi bi-arrow-up"></i> +12%
-                            </small>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#SP006</td>
-                          <td>
-                            <i class="bi bi-laptop text-primary mr-2"></i>
-                            <strong>MacBook Pro 16"</strong>
-                          </td>
-                          <td><span class="badge badge-primary">Laptop</span></td>
-                          <td>65,000,000đ</td>
-                          <td><span class="text-danger">0</span></td>
-                          <td>45</td>
-                          <td class="text-success"><strong>292 triệu</strong></td>
-                          <td><span class="badge badge-danger">Hết hàng</span></td>
-                          <td>
-                            <small class="text-muted">
-                              <i class="bi bi-dash"></i> 0%
-                            </small>
-                          </td>
-                        </tr>
+                      <tbody id="products-table-body">
+                        <!-- Sẽ được populate bằng JavaScript -->
                       </tbody>
                     </table>
                   </div>
@@ -442,115 +353,385 @@
 
     <script>
       // ============================================
-      // CHART 1: XU HƯỚNG MUA HÀNG CỦA KHÁCH (12 THÁNG)
+      // STATE MANAGEMENT
       // ============================================
-      // Dữ liệu xu hướng bán hàng theo danh mục qua 12 tháng
-      const customerTrendData = {
-        months: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
-        categories: {
-          'Điện tử': [450, 480, 520, 490, 550, 600, 640, 680, 720, 760, 800, 857],
-          'Thời trang': [320, 350, 380, 360, 400, 440, 470, 500, 530, 560, 600, 633],
-          'Gia dụng': [220, 240, 260, 250, 280, 310, 330, 350, 370, 390, 415, 437],
-          'Mỹ phẩm': [95, 105, 115, 110, 125, 140, 150, 160, 170, 180, 185, 191]
-        }
-      };
+      let currentLocation = '';
 
-      const customerTrendChart = new ApexCharts(document.querySelector('#customer-trend-chart'), {
-        series: [
-          { name: 'Điện tử', data: customerTrendData.categories['Điện tử'] },
-          { name: 'Thời trang', data: customerTrendData.categories['Thời trang'] },
-          { name: 'Gia dụng', data: customerTrendData.categories['Gia dụng'] },
-          { name: 'Mỹ phẩm', data: customerTrendData.categories['Mỹ phẩm'] }
-        ],
-        chart: {
-          type: 'area',
-          height: 300,
-          toolbar: { show: false },
-          animations: { enabled: true }
-        },
-        colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107'],
-        dataLabels: { enabled: false },
-        stroke: { curve: 'smooth', width: 2 },
-        fill: {
-          type: 'gradient',
-          gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.4,
-            opacityTo: 0.1,
-          }
-        },
-        xaxis: {
-          categories: customerTrendData.months,
-          title: { text: 'Tháng' }
-        },
-        yaxis: {
-          title: { text: 'Doanh số (triệu VNĐ)' },
-          labels: { formatter: val => val.toFixed(0) }
-        },
-        legend: {
-          position: 'top',
-          horizontalAlign: 'right'
-        },
-        tooltip: {
-          y: { formatter: val => val.toFixed(0) + ' triệu VNĐ' }
-        }
+      // Chart instances
+      let salesTrendChart, categorySalesChart;
+
+      // ============================================
+      // INITIALIZE PAGE
+      // ============================================
+      $(document).ready(function() {
+        initCharts();
+        updateDashboard();
+
+        // Event listeners
+        $('#location-selector').on('change', function() {
+          currentLocation = $(this).val();
+          updateDashboard();
+        });
       });
-      customerTrendChart.render();
 
       // ============================================
-      // CHART 2: DOANH SỐ THEO DANH MỤC (COLUMN CHART)
+      // CHART INITIALIZATION
       // ============================================
-      const categorySalesChart = new ApexCharts(document.querySelector('#category-sales-chart'), {
-        series: [{
-          name: 'Doanh số',
-          data: productsByLocation.HN.sales
-        }],
-        chart: {
-          type: 'bar',
-          height: 300,
-          toolbar: { show: false }
-        },
-        colors: ['#007bff'],
-        plotOptions: {
-          bar: {
-            borderRadius: 4,
-            columnWidth: '60%',
-            distributed: false
-          }
-        },
-        dataLabels: {
-          enabled: true,
-          formatter: val => val + 'tr',
-          style: { fontSize: '11px' }
-        },
-        xaxis: {
-          categories: productsByLocation.HN.categories,
-          labels: {
-            rotate: -45,
-            style: { fontSize: '11px' }
-          }
-        },
-        yaxis: {
-          title: { text: 'Doanh số (triệu VNĐ)' },
-          labels: { formatter: val => val.toFixed(0) }
-        },
-        tooltip: {
-          y: { formatter: val => val + ' triệu VNĐ' }
+      function initCharts() {
+        // Sales trend chart (area chart by categories)
+        salesTrendChart = new ApexCharts(document.querySelector('#sales-trend-chart'), {
+          series: [],
+          chart: {
+            type: 'area',
+            height: 350,
+            toolbar: { show: false },
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800,
+              animateGradually: {
+                enabled: true,
+                delay: 150
+              }
+            }
+          },
+          colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107', '#6f42c1', '#fd7e14'],
+          dataLabels: { enabled: false },
+          stroke: { curve: 'smooth', width: 3 },
+          fill: {
+            type: 'gradient',
+            gradient: {
+              shadeIntensity: 1,
+              opacityFrom: 0.5,
+              opacityTo: 0.1,
+              stops: [0, 90, 100]
+            }
+          },
+          xaxis: {
+            categories: monthLabelsShort,
+            labels: {
+              style: { fontSize: '11px' }
+            }
+          },
+          yaxis: {
+            title: { text: 'Doanh số (triệu VNĐ)' },
+            labels: {
+              formatter: val => val.toFixed(0),
+              style: { fontSize: '11px' }
+            }
+          },
+          legend: {
+            position: 'top',
+            horizontalAlign: 'right',
+            fontSize: '13px',
+            fontWeight: 600
+          },
+          tooltip: {
+            shared: true,
+            intersect: false,
+            y: {
+              formatter: val => val.toFixed(0) + ' triệu VNĐ'
+            }
+          },
+          responsive: [{
+            breakpoint: 768,
+            options: {
+              chart: { height: 280 },
+              dataLabels: { enabled: false },
+              legend: {
+                position: 'bottom',
+                fontSize: '11px'
+              }
+            }
+          }]
+        });
+        salesTrendChart.render();
+
+        // Category sales chart (donut or bar)
+        categorySalesChart = new ApexCharts(document.querySelector('#category-sales-chart'), {
+          series: [],
+          chart: {
+            type: 'donut',
+            height: 350,
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800,
+              animateGradually: {
+                enabled: true,
+                delay: 150
+              }
+            }
+          },
+          labels: [],
+          colors: ['#007bff', '#28a745', '#17a2b8', '#ffc107', '#6f42c1', '#fd7e14'],
+          legend: {
+            position: 'bottom',
+            fontSize: '12px',
+            markers: {
+              width: 10,
+              height: 10,
+              radius: 2
+            }
+          },
+          plotOptions: {
+            pie: {
+              donut: {
+                size: '65%',
+                labels: {
+                  show: true,
+                  name: {
+                    fontSize: '14px',
+                    fontWeight: 600
+                  },
+                  value: {
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    formatter: val => val + ' tr'
+                  },
+                  total: {
+                    show: true,
+                    label: 'Tổng',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    formatter: (w) => {
+                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                      return total.toFixed(0) + ' tr';
+                    }
+                  }
+                }
+              }
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: val => val + ' triệu VNĐ'
+            }
+          },
+          responsive: [{
+            breakpoint: 768,
+            options: {
+              chart: { height: 300 },
+              legend: {
+                position: 'bottom',
+                fontSize: '11px'
+              }
+            }
+          }]
+        });
+        categorySalesChart.render();
+      }
+
+      // ============================================
+      // UPDATE DASHBOARD
+      // ============================================
+      function updateDashboard() {
+        updateKPIs();
+        updateSalesTrendChart();
+        updateCategorySalesChart();
+        updateProductsTable();
+        updateAlerts();
+      }
+
+      // ============================================
+      // UPDATE KPIs
+      // ============================================
+      function updateKPIs() {
+        let productData, title;
+
+        if (currentLocation === '') {
+          // Aggregate all locations
+          productData = {
+            categories: productsByLocation.HN.categories,
+            sales: productsByLocation.HN.categories.map((cat, idx) => {
+              return locations.reduce((sum, loc) => {
+                return sum + (productsByLocation[loc.id].sales[idx] || 0);
+              }, 0);
+            }),
+            topProducts: []
+          };
+
+          // Aggregate top products from all locations
+          const allProducts = {};
+          locations.forEach(loc => {
+            productsByLocation[loc.id].topProducts.forEach(p => {
+              if (!allProducts[p.name]) {
+                allProducts[p.name] = { ...p };
+              } else {
+                allProducts[p.name].sold += p.sold;
+                allProducts[p.name].revenue += p.revenue;
+              }
+            });
+          });
+          productData.topProducts = Object.values(allProducts).sort((a, b) => b.revenue - a.revenue);
+          title = 'Tổng hợp';
+        } else {
+          productData = productsByLocation[currentLocation];
+          const loc = locations.find(l => l.id === currentLocation);
+          title = loc.name;
         }
-      });
-      categorySalesChart.render();
+
+        // Calculate KPIs
+        const totalSales = productData.sales.reduce((a, b) => a + b, 0);
+        const bestSeller = productData.topProducts[0];
+        const topCategory = productData.categories[productData.sales.indexOf(Math.max(...productData.sales))];
+
+        // Get alerts count
+        const alertsLoc = currentLocation === '' ? 'HN' : currentLocation;
+        const alerts = notificationsByLocation[alertsLoc] || [];
+        const alertCount = alerts.filter(a =>
+          a.type === 'low_stock' || a.type === 'out_stock'
+        ).length;
+
+        // Update KPIs
+        $('#kpi-total-sales').html(`
+          ${(totalSales / 1000).toFixed(2)} tỷ
+          <small class="trend-up">
+            <i class="bi bi-arrow-up"></i> <span>12.3%</span>
+          </small>
+        `);
+
+        $('#kpi-best-seller').text(bestSeller ? bestSeller.name : 'N/A');
+        $('#kpi-top-category').text(topCategory);
+        $('#alert-count').text(alertCount);
+
+        // Update chart title
+        $('#sales-trend-title').text(`Xu hướng doanh số sản phẩm (${title})`);
+      }
 
       // ============================================
-      // POPULATE ALERTS FROM MOCK DATA
+      // UPDATE SALES TREND CHART
       // ============================================
-      function renderAlerts() {
-        const currentLocation = 'HN'; // Mặc định là Hà Nội
-        const alerts = notificationsByLocation[currentLocation];
+      function updateSalesTrendChart() {
+        let series = [];
+
+        if (currentLocation === '') {
+          // Show all categories trend (aggregate from all locations)
+          const categories = productsByLocation.HN.categories;
+          series = categories.map(cat => {
+            // Generate mock monthly data for each category
+            const baseSales = locations.reduce((sum, loc) => {
+              const idx = productsByLocation[loc.id].categories.indexOf(cat);
+              return sum + (productsByLocation[loc.id].sales[idx] || 0);
+            }, 0);
+
+            // Create trend data (simulate monthly growth)
+            const monthlyData = monthLabelsShort.map((_, monthIdx) => {
+              const variance = (Math.random() * 0.2 - 0.1); // ±10% variance
+              const trend = 1 + (monthIdx * 0.02); // 2% monthly growth
+              return Math.round(baseSales / 12 * trend * (1 + variance));
+            });
+
+            return { name: cat, data: monthlyData };
+          });
+        } else {
+          // Show categories trend for single location
+          const categories = productsByLocation[currentLocation].categories;
+          series = categories.map(cat => {
+            const idx = productsByLocation[currentLocation].categories.indexOf(cat);
+            const baseSales = productsByLocation[currentLocation].sales[idx];
+
+            // Create trend data
+            const monthlyData = monthLabelsShort.map((_, monthIdx) => {
+              const variance = (Math.random() * 0.2 - 0.1);
+              const trend = 1 + (monthIdx * 0.02);
+              return Math.round(baseSales / 12 * trend * (1 + variance));
+            });
+
+            return { name: cat, data: monthlyData };
+          });
+        }
+
+        salesTrendChart.updateSeries(series);
+      }
+
+      // ============================================
+      // UPDATE CATEGORY SALES CHART
+      // ============================================
+      function updateCategorySalesChart() {
+        let productData;
+
+        if (currentLocation === '') {
+          // Aggregate all locations
+          productData = {
+            categories: productsByLocation.HN.categories,
+            sales: productsByLocation.HN.categories.map((cat, idx) => {
+              return locations.reduce((sum, loc) => {
+                return sum + (productsByLocation[loc.id].sales[idx] || 0);
+              }, 0);
+            })
+          };
+        } else {
+          productData = productsByLocation[currentLocation];
+        }
+
+        categorySalesChart.updateOptions({
+          series: productData.sales,
+          labels: productData.categories
+        });
+      }
+
+      // ============================================
+      // UPDATE PRODUCTS TABLE
+      // ============================================
+      function updateProductsTable() {
+        const tableBody = $('#products-table-body');
+        tableBody.empty();
+
+        let products;
+
+        if (currentLocation === '') {
+          // Aggregate top products from all locations
+          const allProducts = {};
+          locations.forEach(loc => {
+            productsByLocation[loc.id].topProducts.forEach(p => {
+              if (!allProducts[p.name]) {
+                allProducts[p.name] = { ...p };
+              } else {
+                allProducts[p.name].sold += p.sold;
+                allProducts[p.name].revenue += p.revenue;
+              }
+            });
+          });
+          products = Object.values(allProducts).sort((a, b) => b.revenue - a.revenue).slice(0, 10);
+        } else {
+          products = productsByLocation[currentLocation].topProducts;
+        }
+
+        // Render products
+        products.forEach((product, idx) => {
+          const icon = getProductIcon(product.category);
+          const badgeColor = getCategoryBadgeColor(product.category);
+
+          const row = `
+            <tr>
+              <td><strong>${idx + 1}</strong></td>
+              <td>
+                <i class="bi ${icon} text-${badgeColor} mr-2"></i>
+                <strong>${product.name}</strong>
+              </td>
+              <td><span class="badge badge-${badgeColor}">${product.category}</span></td>
+              <td>${formatCurrency(product.price)}</td>
+              <td class="text-center"><strong>${product.sold}</strong></td>
+              <td class="text-right text-success"><strong>${(product.revenue / 1000000).toFixed(0)} triệu</strong></td>
+            </tr>
+          `;
+
+          tableBody.append(row);
+        });
+      }
+
+      // ============================================
+      // UPDATE ALERTS
+      // ============================================
+      function updateAlerts() {
+        const alertsLoc = currentLocation === '' ? 'HN' : currentLocation;
+        const alerts = notificationsByLocation[alertsLoc] || [];
 
         // Phân loại alerts
         const warningAlerts = alerts.filter(a =>
           a.priority === 'high' || a.priority === 'medium' || a.type === 'low_stock' || a.type === 'return' || a.type === 'slow_moving'
-        ).slice(0, 5); // Hiển thị tối đa 5 cảnh báo
+        ).slice(0, 5);
 
         const dangerAlerts = alerts.filter(a =>
           a.priority === 'urgent' || a.type === 'out_stock' || a.type === 'defect'
@@ -558,55 +739,93 @@
 
         // Render warning alerts
         const warningContainer = document.getElementById('warning-alerts-container');
-        warningContainer.innerHTML = '<ul class="products-list product-list-in-card pl-2 pr-2">' +
-          warningAlerts.map(alert => `
-            <li class="item">
-              <div class="product-img">
-                <i class="bi ${alert.icon} text-${alert.color}" style="font-size: 2rem;"></i>
-              </div>
-              <div class="product-info">
-                <a href="#" class="product-title">
-                  ${alert.product}
-                  <span class="badge badge-${alert.color} float-right">${alert.title}</span>
-                </a>
-                <span class="product-description">
-                  ${alert.detail}
-                  <br>
-                  <small class="text-muted"><i class="bi bi-clock"></i> ${alert.time}</small>
-                </span>
-              </div>
-            </li>
-          `).join('') +
-          '</ul>';
+        if (warningContainer) {
+          warningContainer.innerHTML = '<ul class="products-list product-list-in-card pl-2 pr-2">' +
+            warningAlerts.map(alert => `
+              <li class="item">
+                <div class="product-img">
+                  <i class="bi ${alert.icon} text-${alert.color}" style="font-size: 2rem;"></i>
+                </div>
+                <div class="product-info">
+                  <a href="#" class="product-title">
+                    ${alert.product}
+                    <span class="badge badge-${alert.color} float-right">${alert.title}</span>
+                  </a>
+                  <span class="product-description">
+                    ${alert.detail}
+                    <br>
+                    <small class="text-muted"><i class="bi bi-clock"></i> ${alert.time}</small>
+                  </span>
+                </div>
+              </li>
+            `).join('') +
+            '</ul>';
+        }
 
         // Render danger alerts
         const dangerContainer = document.getElementById('danger-alerts-container');
-        dangerContainer.innerHTML = '<ul class="products-list product-list-in-card pl-2 pr-2">' +
-          dangerAlerts.map(alert => `
-            <li class="item">
-              <div class="product-img">
-                <i class="bi ${alert.icon} text-${alert.color}" style="font-size: 2rem;"></i>
-              </div>
-              <div class="product-info">
-                <a href="#" class="product-title">
-                  ${alert.product}
-                  <span class="badge badge-${alert.color} float-right">${alert.title}</span>
-                </a>
-                <span class="product-description">
-                  ${alert.detail}
-                  <br>
-                  <small class="text-muted"><i class="bi bi-clock"></i> ${alert.time}</small>
-                </span>
-              </div>
-            </li>
-          `).join('') +
-          '</ul>';
+        if (dangerContainer) {
+          dangerContainer.innerHTML = '<ul class="products-list product-list-in-card pl-2 pr-2">' +
+            dangerAlerts.map(alert => `
+              <li class="item">
+                <div class="product-img">
+                  <i class="bi ${alert.icon} text-${alert.color}" style="font-size: 2rem;"></i>
+                </div>
+                <div class="product-info">
+                  <a href="#" class="product-title">
+                    ${alert.product}
+                    <span class="badge badge-${alert.color} float-right">${alert.title}</span>
+                  </a>
+                  <span class="product-description">
+                    ${alert.detail}
+                    <br>
+                    <small class="text-muted"><i class="bi bi-clock"></i> ${alert.time}</small>
+                  </span>
+                </div>
+              </li>
+            `).join('') +
+            '</ul>';
+        }
+      }
+
+      // ============================================
+      // HELPER FUNCTIONS
+      // ============================================
+      function getProductIcon(category) {
+        const icons = {
+          'Điện tử': 'bi-laptop',
+          'Thời trang': 'bi-bag',
+          'Gia dụng': 'bi-house',
+          'Thực phẩm': 'bi-cup-straw',
+          'Mỹ phẩm': 'bi-heart',
+          'Sách vở': 'bi-book'
+        };
+        return icons[category] || 'bi-box';
+      }
+
+      function getCategoryBadgeColor(category) {
+        const colors = {
+          'Điện tử': 'primary',
+          'Thời trang': 'success',
+          'Gia dụng': 'info',
+          'Thực phẩm': 'warning',
+          'Mỹ phẩm': 'danger',
+          'Sách vở': 'secondary'
+        };
+        return colors[category] || 'dark';
+      }
+
+      function formatCurrency(value) {
+        return new Intl.NumberFormat('vi-VN', {
+          style: 'currency',
+          currency: 'VND'
+        }).format(value);
       }
 
       // Function to view all alerts
       function viewAllAlerts(type) {
-        const currentLocation = 'HN';
-        const alerts = notificationsByLocation[currentLocation];
+        const alertsLoc = currentLocation === '' ? 'HN' : currentLocation;
+        const alerts = notificationsByLocation[alertsLoc] || [];
 
         let filteredAlerts;
         let modalTitle;
@@ -627,9 +846,6 @@
           `${i+1}. ${a.product}\n   ${a.title}: ${a.detail}\n   Thời gian: ${a.time}`
         ).join('\n\n')}`);
       }
-
-      // Initialize alerts on page load
-      document.addEventListener('DOMContentLoaded', renderAlerts);
     </script>
   </body>
 </html>
