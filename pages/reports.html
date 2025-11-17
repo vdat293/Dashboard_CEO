@@ -51,10 +51,57 @@
       .content {
         transition: opacity 0.2s ease;
       }
+
+      /* Loading indicator */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .loading-overlay.active {
+        display: flex;
+      }
+
+      .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #007bff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* Highlight effect cho KPI cards khi update */
+      .info-box.updating {
+        animation: pulse 0.5s ease;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
     </style>
   </head>
 
   <body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+
     <div class="wrapper">
 
       <!-- Header -->
@@ -609,7 +656,7 @@
           profit = weeklyProfit[47];
           orders = weeklyOrders[47];
           customers = weeklyCustomers[47];
-          periodLabel = 'Tuần 4 - Tháng 12/2024';
+          periodLabel = 'Tuần 4 - Tháng 12/2025';
           targetRevenue = 1000; // Mục tiêu 1 tỷ/tuần
         } else if (period === 'quarterly') {
           // Quý 4 (tháng 10-12)
@@ -622,7 +669,7 @@
           profit = quarterlyProfit[3];
           orders = quarterlyOrders[3];
           customers = quarterlyCustomers[3];
-          periodLabel = 'Quý 4/2024';
+          periodLabel = 'Quý 4/2025';
           targetRevenue = 12000; // Mục tiêu 12 tỷ/quý
         } else { // monthly
           // Tháng 12
@@ -630,11 +677,23 @@
           profit = data.profit[11];
           orders = data.orders[11];
           customers = data.newCustomers[11];
-          periodLabel = 'Tháng 12/2024';
+          periodLabel = 'Tháng 12/2025';
           targetRevenue = 4000; // Mục tiêu 4 tỷ/tháng
         }
 
-        console.log('Revenue:', revenue, 'Profit:', profit, 'Orders:', orders, 'Customers:', customers); // Debug
+        console.log('Period:', period, '| Revenue:', revenue, 'Profit:', profit, 'Orders:', orders, 'Customers:', customers); // Debug
+
+        // Thêm animation cho tất cả KPI cards
+        document.querySelectorAll('.info-box').forEach(box => {
+          box.classList.add('updating');
+        });
+
+        // Remove animation sau khi hoàn thành
+        setTimeout(() => {
+          document.querySelectorAll('.info-box').forEach(box => {
+            box.classList.remove('updating');
+          });
+        }, 500);
 
         // Cập nhật tiêu đề với hiệu ứng fade
         const titleElement = document.getElementById('report-title');
@@ -673,6 +732,8 @@
       // ============================================
 
       function updateBusinessTrendChart(period) {
+        console.log('Updating chart for period:', period); // Debug
+
         const data = businessDataByMonth[2025];
         const labels = getLabelsForPeriod(period);
 
@@ -680,7 +741,11 @@
         const profitData = transformDataByPeriod(data.profit, period);
         const customersData = transformDataByPeriod(data.customers, period);
 
-        const periodText = period === 'weekly' ? '48 tuần' : period === 'quarterly' ? '4 quý' : '12 tháng';
+        console.log('Chart data - Revenue:', revenueData.slice(0, 5), '...'); // Debug first 5 values
+        console.log('Chart data - Profit:', profitData.slice(0, 5), '...'); // Debug first 5 values
+        console.log('Chart data - Customers:', customersData.slice(0, 5), '...'); // Debug first 5 values
+
+        const periodText = period === 'weekly' ? '48 tuần (2025)' : period === 'quarterly' ? '4 quý (2025)' : '12 tháng (2025)';
 
         businessTrendChart.updateOptions({
           series: [{
@@ -696,11 +761,8 @@
             type: 'line',
             data: customersData
           }],
-          labels: labels,
-          chart: {
-            height: 400,
-            type: 'line',
-            toolbar: { show: true }
+          xaxis: {
+            categories: labels
           }
         });
 
@@ -808,7 +870,17 @@
         // Xử lý click nút period
         document.querySelectorAll('.period-btn').forEach(btn => {
           btn.addEventListener('click', function(e) {
-            console.log('Period button clicked:', this.getAttribute('data-period')); // Debug
+            const newPeriod = this.getAttribute('data-period');
+
+            console.log('========================================'); // Debug
+            console.log('Period button clicked:', newPeriod); // Debug
+            console.log('Previous period:', currentPeriod); // Debug
+
+            // Kiểm tra nếu đã chọn period này rồi thì không làm gì
+            if (currentPeriod === newPeriod) {
+              console.log('Same period selected, skipping update'); // Debug
+              return;
+            }
 
             // Xóa class active từ tất cả nút
             document.querySelectorAll('.period-btn').forEach(b => {
@@ -820,19 +892,35 @@
             this.classList.remove('btn-outline-primary');
             this.classList.add('btn-primary', 'active');
 
-            // Lấy period
-            const newPeriod = this.getAttribute('data-period');
-            console.log('Switching from', currentPeriod, 'to', newPeriod); // Debug
+            // Cập nhật period hiện tại
             currentPeriod = newPeriod;
 
-            // Thêm loading indicator
-            document.querySelector('.content').style.opacity = '0.7';
+            // Hiển thị loading overlay
+            const loadingOverlay = document.getElementById('loading-overlay');
+            loadingOverlay.classList.add('active');
+
+            // Thêm loading indicator cho content
+            const contentElement = document.querySelector('.content');
+            contentElement.style.opacity = '0.7';
+            contentElement.style.pointerEvents = 'none'; // Disable clicks during update
 
             // Cập nhật KPI và biểu đồ với delay nhỏ để thấy hiệu ứng
             setTimeout(() => {
-              updateKPIs(currentPeriod);
-              updateBusinessTrendChart(currentPeriod);
-              document.querySelector('.content').style.opacity = '1';
+              try {
+                updateKPIs(currentPeriod);
+                updateBusinessTrendChart(currentPeriod);
+                console.log('Update completed successfully'); // Debug
+              } catch (error) {
+                console.error('Error updating data:', error); // Debug
+              } finally {
+                // Ẩn loading overlay
+                setTimeout(() => {
+                  loadingOverlay.classList.remove('active');
+                  contentElement.style.opacity = '1';
+                  contentElement.style.pointerEvents = 'auto'; // Re-enable clicks
+                  console.log('========================================'); // Debug
+                }, 200); // Delay nhỏ để thấy hiệu ứng
+              }
             }, 100);
           });
         });
