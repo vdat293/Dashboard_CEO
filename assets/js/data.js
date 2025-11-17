@@ -434,18 +434,43 @@ function getTopLocationsByRevenue(n = 5) {
 // Tính tổng toàn hệ thống
 function getSystemTotals() {
   const currentMonth = 10; // Tháng 11 (index 10)
+  const prevMonth = 9; // Tháng 10 (index 9)
   let totalRevenue = 0, totalProfit = 0, totalCustomers = 0, totalOrders = 0, totalEmployees = 0;
+  let prevRevenue = 0, prevProfit = 0, prevCustomers = 0, prevOrders = 0;
 
   locations.forEach(loc => {
     const data = locationData[loc.id];
+    // Tháng hiện tại
     totalRevenue += data.revenue[currentMonth];
     totalProfit += data.profit[currentMonth];
-    totalCustomers += data.customers[currentMonth];
+    totalCustomers += data.newCustomers[currentMonth]; // Khách hàng mới trong tháng
     totalOrders += data.orders[currentMonth];
     totalEmployees += data.employees;
+
+    // Tháng trước (để tính tăng trưởng)
+    prevRevenue += data.revenue[prevMonth];
+    prevProfit += data.profit[prevMonth];
+    prevCustomers += data.newCustomers[prevMonth];
+    prevOrders += data.orders[prevMonth];
   });
 
-  return { totalRevenue, totalProfit, totalCustomers, totalOrders, totalEmployees };
+  // Tính % tăng trưởng
+  const revenueGrowth = prevRevenue > 0 ? ((totalRevenue - prevRevenue) / prevRevenue * 100) : 0;
+  const profitGrowth = prevProfit > 0 ? ((totalProfit - prevProfit) / prevProfit * 100) : 0;
+  const customersGrowth = prevCustomers > 0 ? ((totalCustomers - prevCustomers) / prevCustomers * 100) : 0;
+  const ordersGrowth = prevOrders > 0 ? ((totalOrders - prevOrders) / prevOrders * 100) : 0;
+
+  return {
+    totalRevenue,
+    totalProfit,
+    totalCustomers,
+    totalOrders,
+    totalEmployees,
+    revenueGrowth: revenueGrowth.toFixed(1),
+    profitGrowth: profitGrowth.toFixed(1),
+    customersGrowth: customersGrowth.toFixed(1),
+    ordersGrowth: ordersGrowth.toFixed(1)
+  };
 }
 
 // ============================================

@@ -22,6 +22,9 @@ let currentLocationId = null; // null = tổng quan, có giá trị = chi tiết
 function initDashboard() {
   console.log('🚀 Khởi tạo Dashboard CEO...');
 
+  // Render info boxes với dữ liệu thực
+  renderInfoBoxes();
+
   // Thiết lập event listener cho dropdown chọn cơ sở
   setupLocationSelector();
 
@@ -29,6 +32,41 @@ function initDashboard() {
   renderOverviewMode();
 
   console.log('✅ Dashboard đã sẵn sàng!');
+}
+
+/**
+ * Render info boxes với dữ liệu thực
+ */
+function renderInfoBoxes() {
+  const totals = getSystemTotals();
+
+  // Lấy tất cả info boxes theo thứ tự
+  const infoBoxes = document.querySelectorAll('.content .row .info-box .info-box-number');
+
+  if (infoBoxes.length < 4) {
+    console.error('Không tìm thấy đủ info boxes');
+    return;
+  }
+
+  // Helper function để render một info box
+  function renderBox(element, value, growth, isNumber = false) {
+    const trendClass = parseFloat(growth) >= 0 ? 'trend-up' : 'trend-down';
+    const trendIcon = parseFloat(growth) >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
+    element.innerHTML = `
+      ${isNumber ? formatNumber(value) : formatRevenueValue(value)}
+      <small class="${trendClass}">
+        <i class="bi ${trendIcon}"></i> ${Math.abs(growth)}%
+      </small>
+    `;
+  }
+
+  // Cập nhật từng info box
+  renderBox(infoBoxes[0], totals.totalRevenue, totals.revenueGrowth, false);  // Doanh thu
+  renderBox(infoBoxes[1], totals.totalProfit, totals.profitGrowth, false);    // Lợi nhuận
+  renderBox(infoBoxes[2], totals.totalCustomers, totals.customersGrowth, true); // Khách hàng mới
+  renderBox(infoBoxes[3], totals.totalOrders, totals.ordersGrowth, true);     // Đơn hàng
+
+  console.log('✅ Info boxes đã được cập nhật với dữ liệu thực:', totals);
 }
 
 /**
