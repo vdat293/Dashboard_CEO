@@ -242,14 +242,14 @@
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div class="btn-group d-flex" role="group">
-                      <button type="button" class="btn btn-outline-primary flex-fill period-btn" id="btn-weekly" data-period="weekly">
+                    <div class="d-flex" role="group" style="gap: 0;">
+                      <button type="button" class="btn btn-outline-primary flex-fill period-btn" id="btn-weekly" data-period="weekly" style="border-radius: 0.25rem 0 0 0.25rem;">
                         <i class="bi bi-calendar-week"></i> Theo tuần
                       </button>
-                      <button type="button" class="btn btn-primary flex-fill period-btn active" id="btn-monthly" data-period="monthly">
+                      <button type="button" class="btn btn-primary flex-fill period-btn active" id="btn-monthly" data-period="monthly" style="border-radius: 0; margin-left: -1px;">
                         <i class="bi bi-calendar-month"></i> Theo tháng
                       </button>
-                      <button type="button" class="btn btn-outline-primary flex-fill period-btn" id="btn-quarterly" data-period="quarterly">
+                      <button type="button" class="btn btn-outline-primary flex-fill period-btn" id="btn-quarterly" data-period="quarterly" style="border-radius: 0 0.25rem 0.25rem 0; margin-left: -1px;">
                         <i class="bi bi-calendar3"></i> Theo quý
                       </button>
                     </div>
@@ -865,8 +865,16 @@
         channelChart.render();
 
         // Xử lý click nút period
-        document.querySelectorAll('.period-btn').forEach(btn => {
+        const periodButtons = document.querySelectorAll('.period-btn');
+        console.log('Found period buttons:', periodButtons.length); // Debug
+
+        periodButtons.forEach(btn => {
+          console.log('Attaching listener to button:', btn.id, btn.getAttribute('data-period')); // Debug
+
           btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
             const newPeriod = this.getAttribute('data-period');
 
             console.log('========================================'); // Debug
