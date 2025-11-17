@@ -268,7 +268,7 @@
                   <div class="card-header border-0">
                     <h3 class="card-title">
                       <i class="bi bi-bar-chart-fill mr-2"></i>
-                      <span id="report-title">Tổng quan tháng 12/2024</span>
+                      <span id="report-title">Tổng quan tháng 11/2025</span>
                     </h3>
                     <div class="card-tools">
                       <button type="button" class="btn btn-sm btn-success">
@@ -645,39 +645,39 @@
         let targetRevenue; // Mục tiêu doanh thu thay đổi theo kỳ
 
         if (period === 'weekly') {
-          // Lấy tuần hiện tại (giả sử tuần cuối tháng 12)
+          // Lấy tuần 1 của tháng 11
           const weeklyRevenue = calculateWeeklyData(data.revenue);
           const weeklyProfit = calculateWeeklyData(data.profit);
           const weeklyOrders = calculateWeeklyData(data.orders);
           const weeklyCustomers = calculateWeeklyData(data.newCustomers);
 
-          // Tuần hiện tại = tuần cuối cùng của tháng 12 (week 48)
-          revenue = weeklyRevenue[47];
-          profit = weeklyProfit[47];
-          orders = weeklyOrders[47];
-          customers = weeklyCustomers[47];
-          periodLabel = 'Tuần 4 - Tháng 12/2025';
+          // Tuần 1 của tháng 11 = tuần thứ 41 (10 tháng x 4 tuần = 40, index 40)
+          revenue = weeklyRevenue[40];
+          profit = weeklyProfit[40];
+          orders = weeklyOrders[40];
+          customers = weeklyCustomers[40];
+          periodLabel = 'Tuần 1 - Tháng 11/2025';
           targetRevenue = 1000; // Mục tiêu 1 tỷ/tuần
         } else if (period === 'quarterly') {
-          // Quý 4 (tháng 10-12)
+          // Quý 3 (tháng 7-8-9)
           const quarterlyRevenue = calculateQuarterlyData(data.revenue);
           const quarterlyProfit = calculateQuarterlyData(data.profit);
           const quarterlyOrders = calculateQuarterlyData(data.orders);
           const quarterlyCustomers = calculateQuarterlyData(data.newCustomers);
 
-          revenue = quarterlyRevenue[3]; // Quý 4
-          profit = quarterlyProfit[3];
-          orders = quarterlyOrders[3];
-          customers = quarterlyCustomers[3];
-          periodLabel = 'Quý 4/2025';
+          revenue = quarterlyRevenue[2]; // Quý 3 (index 2)
+          profit = quarterlyProfit[2];
+          orders = quarterlyOrders[2];
+          customers = quarterlyCustomers[2];
+          periodLabel = 'Quý 3/2025';
           targetRevenue = 12000; // Mục tiêu 12 tỷ/quý
         } else { // monthly
-          // Tháng 12
-          revenue = data.revenue[11];
-          profit = data.profit[11];
-          orders = data.orders[11];
-          customers = data.newCustomers[11];
-          periodLabel = 'Tháng 12/2025';
+          // Tháng 11
+          revenue = data.revenue[10]; // Tháng 11 (index 10)
+          profit = data.profit[10];
+          orders = data.orders[10];
+          customers = data.newCustomers[10];
+          periodLabel = 'Tháng 11/2025';
           targetRevenue = 4000; // Mục tiêu 4 tỷ/tháng
         }
 
