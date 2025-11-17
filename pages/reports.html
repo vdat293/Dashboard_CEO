@@ -242,7 +242,7 @@
                     </h3>
                   </div>
                   <div class="card-body">
-                    <div class="d-flex" role="group" style="gap: 0;">
+                    <div class="d-flex" style="gap: 0;">
                       <button type="button" class="btn btn-outline-primary flex-fill period-btn" id="btn-weekly" data-period="weekly" style="border-radius: 0.25rem 0 0 0.25rem;">
                         <i class="bi bi-calendar-week"></i> Theo tuần
                       </button>
@@ -634,8 +634,6 @@
       // ============================================
 
       function updateKPIs(period) {
-        console.log('Updating KPIs for period:', period); // Debug
-
         const data = businessDataByMonth[2025];
         let revenue, profit, orders, customers;
         let periodLabel;
@@ -677,8 +675,6 @@
           periodLabel = 'Tháng 11/2025';
           targetRevenue = 4000; // Mục tiêu 4 tỷ/tháng
         }
-
-        console.log('Period:', period, '| Revenue:', revenue, 'Profit:', profit, 'Orders:', orders, 'Customers:', customers); // Debug
 
         // Thêm animation cho tất cả KPI cards
         document.querySelectorAll('.info-box').forEach(box => {
@@ -729,18 +725,12 @@
       // ============================================
 
       function updateBusinessTrendChart(period) {
-        console.log('Updating chart for period:', period); // Debug
-
         const data = businessDataByMonth[2025];
         const labels = getLabelsForPeriod(period);
 
         const revenueData = transformDataByPeriod(data.revenue, period);
         const profitData = transformDataByPeriod(data.profit, period);
         const customersData = transformDataByPeriod(data.customers, period);
-
-        console.log('Chart data - Revenue:', revenueData.slice(0, 5), '...'); // Debug first 5 values
-        console.log('Chart data - Profit:', profitData.slice(0, 5), '...'); // Debug first 5 values
-        console.log('Chart data - Customers:', customersData.slice(0, 5), '...'); // Debug first 5 values
 
         const periodText = period === 'weekly' ? '48 tuần (2025)' : period === 'quarterly' ? '4 quý (2025)' : '12 tháng (2025)';
 
@@ -866,24 +856,16 @@
 
         // Xử lý click nút period
         const periodButtons = document.querySelectorAll('.period-btn');
-        console.log('Found period buttons:', periodButtons.length); // Debug
 
         periodButtons.forEach(btn => {
-          console.log('Attaching listener to button:', btn.id, btn.getAttribute('data-period')); // Debug
-
           btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
             const newPeriod = this.getAttribute('data-period');
 
-            console.log('========================================'); // Debug
-            console.log('Period button clicked:', newPeriod); // Debug
-            console.log('Previous period:', currentPeriod); // Debug
-
             // Kiểm tra nếu đã chọn period này rồi thì không làm gì
             if (currentPeriod === newPeriod) {
-              console.log('Same period selected, skipping update'); // Debug
               return;
             }
 
@@ -911,21 +893,15 @@
 
             // Cập nhật KPI và biểu đồ với delay nhỏ để thấy hiệu ứng
             setTimeout(() => {
-              try {
-                updateKPIs(currentPeriod);
-                updateBusinessTrendChart(currentPeriod);
-                console.log('Update completed successfully'); // Debug
-              } catch (error) {
-                console.error('Error updating data:', error); // Debug
-              } finally {
-                // Ẩn loading overlay
-                setTimeout(() => {
-                  loadingOverlay.classList.remove('active');
-                  contentElement.style.opacity = '1';
-                  contentElement.style.pointerEvents = 'auto'; // Re-enable clicks
-                  console.log('========================================'); // Debug
-                }, 200); // Delay nhỏ để thấy hiệu ứng
-              }
+              updateKPIs(currentPeriod);
+              updateBusinessTrendChart(currentPeriod);
+
+              // Ẩn loading overlay
+              setTimeout(() => {
+                loadingOverlay.classList.remove('active');
+                contentElement.style.opacity = '1';
+                contentElement.style.pointerEvents = 'auto'; // Re-enable clicks
+              }, 200); // Delay nhỏ để thấy hiệu ứng
             }, 100);
           });
         });
@@ -934,7 +910,6 @@
         document.getElementById('location-selector').addEventListener('change', function() {
           const location = this.value;
           // TODO: Implement location filtering logic
-          console.log('Location changed to:', location || 'Tất cả');
         });
 
         // Khởi tạo KPI ban đầu
