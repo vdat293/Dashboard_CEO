@@ -163,99 +163,91 @@
       <section class="content">
         <div class="kim-chat-container">
 
+          <!-- Chat Header -->
+          <div class="kim-chat-header">
+            <div class="kim-header-left">
+              <div class="kim-header-avatar">
+                <i class="bi bi-robot"></i>
+              </div>
+              <div class="kim-header-info">
+                <h3 class="kim-header-title">Kim</h3>
+                <p class="kim-header-status">Trợ lý ảo thông minh</p>
+              </div>
+            </div>
+            <button class="kim-clear-btn" id="clear-chat" title="Xóa lịch sử chat">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+
           <!-- Messages Area -->
           <div class="kim-messages" id="kim-messages">
             <!-- Welcome Message -->
             <div class="kim-welcome" id="kim-welcome">
               <div class="kim-welcome-icon">
-                <i class="bi bi-robot"></i>
+                <i class="bi bi-chat-dots"></i>
               </div>
-              <h2 class="kim-welcome-title">Xin chào, tôi là Kim!</h2>
-              <p class="kim-welcome-subtitle">Trợ lý ảo thông minh của bạn. Hãy chọn một câu hỏi bên dưới để bắt đầu.</p>
+              <h2 class="kim-welcome-title">Xin chào! Tôi là Kim</h2>
+              <p class="kim-welcome-subtitle">Tôi có thể giúp bạn phân tích dữ liệu kinh doanh, theo dõi hiệu suất và đưa ra insights hữu ích.</p>
+
+              <!-- Predefined Questions -->
+              <div class="kim-suggestions" id="kim-questions">
+                <div class="kim-suggestion-card" data-question="revenue">
+                  <i class="bi bi-currency-dollar"></i>
+                  <span>Doanh thu tháng này</span>
+                </div>
+
+                <div class="kim-suggestion-card" data-question="top-product">
+                  <i class="bi bi-trophy"></i>
+                  <span>Sản phẩm bán chạy nhất</span>
+                </div>
+
+                <div class="kim-suggestion-card" data-question="best-location">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>Cơ sở hiệu quả nhất</span>
+                </div>
+
+                <div class="kim-suggestion-card" data-question="customers">
+                  <i class="bi bi-people"></i>
+                  <span>Khách hàng mới</span>
+                </div>
+
+                <div class="kim-suggestion-card" data-question="profit">
+                  <i class="bi bi-graph-up-arrow"></i>
+                  <span>Lợi nhuận</span>
+                </div>
+
+                <div class="kim-suggestion-card" data-question="comparison">
+                  <i class="bi bi-bar-chart"></i>
+                  <span>So sánh cơ sở</span>
+                </div>
+
+                <div class="kim-suggestion-card" data-question="growth">
+                  <i class="bi bi-arrow-up-circle"></i>
+                  <span>Tăng trưởng</span>
+                </div>
+
+                <div class="kim-suggestion-card" data-question="employees">
+                  <i class="bi bi-person-badge"></i>
+                  <span>Nhân viên</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Predefined Questions -->
-          <div class="kim-questions-grid" id="kim-questions">
-            <div class="kim-question-card" data-question="revenue">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #007bff, #0056b3); color: white;">
-                <i class="bi bi-currency-dollar"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">Doanh thu tháng này</div>
-                <div class="kim-question-desc">Tổng doanh thu và so sánh các cơ sở</div>
-              </div>
+          <!-- Input Area -->
+          <div class="kim-input-area">
+            <div class="kim-input-container">
+              <textarea
+                id="kim-input"
+                class="kim-input"
+                placeholder="Gửi tin nhắn cho Kim..."
+                rows="1"
+              ></textarea>
+              <button id="kim-send-btn" class="kim-send-btn" disabled>
+                <i class="bi bi-send-fill"></i>
+              </button>
             </div>
-
-            <div class="kim-question-card" data-question="top-product">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #28a745, #1e7e34); color: white;">
-                <i class="bi bi-trophy"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">Sản phẩm bán đắt nhất</div>
-                <div class="kim-question-desc">Top sản phẩm theo doanh số</div>
-              </div>
-            </div>
-
-            <div class="kim-question-card" data-question="best-location">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #17a2b8, #117a8b); color: white;">
-                <i class="bi bi-geo-alt"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">Cơ sở hiệu quả nhất</div>
-                <div class="kim-question-desc">Xếp hạng các cơ sở theo hiệu quả</div>
-              </div>
-            </div>
-
-            <div class="kim-question-card" data-question="customers">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #ffc107, #d39e00); color: white;">
-                <i class="bi bi-people"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">Khách hàng mới</div>
-                <div class="kim-question-desc">Thống kê khách hàng trong tháng</div>
-              </div>
-            </div>
-
-            <div class="kim-question-card" data-question="profit">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #6f42c1, #5a32a3); color: white;">
-                <i class="bi bi-graph-up-arrow"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">Lợi nhuận</div>
-                <div class="kim-question-desc">Phân tích lợi nhuận theo cơ sở</div>
-              </div>
-            </div>
-
-            <div class="kim-question-card" data-question="comparison">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #fd7e14, #dc6502); color: white;">
-                <i class="bi bi-bar-chart"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">So sánh cơ sở</div>
-                <div class="kim-question-desc">So sánh hiệu quả giữa các cơ sở</div>
-              </div>
-            </div>
-
-            <div class="kim-question-card" data-question="growth">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #20c997, #19a974); color: white;">
-                <i class="bi bi-arrow-up-circle"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">Tăng trưởng</div>
-                <div class="kim-question-desc">Xu hướng tăng trưởng theo tháng</div>
-              </div>
-            </div>
-
-            <div class="kim-question-card" data-question="employees">
-              <div class="kim-question-icon" style="background: linear-gradient(135deg, #e83e8c, #c51162); color: white;">
-                <i class="bi bi-person-badge"></i>
-              </div>
-              <div class="kim-question-text">
-                <div class="kim-question-title">Nhân viên</div>
-                <div class="kim-question-desc">Thống kê nhân sự các cơ sở</div>
-              </div>
-            </div>
+            <p class="kim-disclaimer">Kim có thể mắc lỗi. Hãy kiểm tra thông tin quan trọng.</p>
           </div>
 
         </div>
@@ -287,7 +279,10 @@
     // Kim AI Assistant Logic
     const kimMessages = document.getElementById('kim-messages');
     const kimWelcome = document.getElementById('kim-welcome');
-    const questionCards = document.querySelectorAll('.kim-question-card');
+    const questionCards = document.querySelectorAll('.kim-suggestion-card');
+    const kimInput = document.getElementById('kim-input');
+    const kimSendBtn = document.getElementById('kim-send-btn');
+    const clearChatBtn = document.getElementById('clear-chat');
 
     // Format number
     function formatNumber(num) {
@@ -604,6 +599,95 @@
         const questionType = card.getAttribute('data-question');
         handleQuestion(questionType);
       });
+    });
+
+    // Input handling
+    kimInput.addEventListener('input', () => {
+      // Auto-resize textarea
+      kimInput.style.height = 'auto';
+      kimInput.style.height = Math.min(kimInput.scrollHeight, 200) + 'px';
+
+      // Enable/disable send button
+      kimSendBtn.disabled = kimInput.value.trim() === '';
+    });
+
+    // Send message on Enter (Shift+Enter for new line)
+    kimInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // Send button click
+    kimSendBtn.addEventListener('click', sendMessage);
+
+    // Send custom message
+    function sendMessage() {
+      const text = kimInput.value.trim();
+      if (!text) return;
+
+      // Hide welcome message
+      if (kimWelcome) {
+        kimWelcome.style.display = 'none';
+      }
+
+      // Add user message
+      addMessage(text, 'user');
+
+      // Clear input
+      kimInput.value = '';
+      kimInput.style.height = 'auto';
+      kimSendBtn.disabled = true;
+
+      // Show typing
+      showTyping();
+
+      // Simulate AI response
+      setTimeout(() => {
+        removeTyping();
+        const response = getCustomResponse(text);
+        addMessage(response, 'assistant');
+      }, 1000 + Math.random() * 1000);
+    }
+
+    // Get custom response based on input
+    function getCustomResponse(text) {
+      const lowerText = text.toLowerCase();
+
+      if (lowerText.includes('doanh thu') || lowerText.includes('revenue')) {
+        return 'Dựa trên dữ liệu hiện tại, tôi thấy doanh thu đang có xu hướng tăng trưởng tích cực. Bạn muốn tôi phân tích chi tiết theo tháng hay theo từng cơ sở?';
+      } else if (lowerText.includes('sản phẩm') || lowerText.includes('product')) {
+        return 'Tôi có thể giúp bạn phân tích hiệu suất sản phẩm. Bạn muốn xem top sản phẩm bán chạy hay phân tích theo danh mục?';
+      } else if (lowerText.includes('khách hàng') || lowerText.includes('customer')) {
+        return 'Về dữ liệu khách hàng, tôi có thể cung cấp thông tin về lượng khách mới, khách hàng trung thành, và các chỉ số liên quan. Bạn muốn xem thông tin nào?';
+      } else if (lowerText.includes('lợi nhuận') || lowerText.includes('profit')) {
+        return 'Tỷ suất lợi nhuận là một chỉ số quan trọng. Tôi có thể phân tích lợi nhuận theo cơ sở, theo sản phẩm hoặc theo thời gian. Bạn quan tâm đến khía cạnh nào?';
+      } else {
+        return 'Cảm ơn bạn đã hỏi! Tôi là trợ lý ảo được thiết kế để phân tích dữ liệu kinh doanh. Bạn có thể hỏi tôi về doanh thu, sản phẩm, khách hàng, lợi nhuận, hoặc chọn một trong các câu hỏi gợi ý để bắt đầu.';
+      }
+    }
+
+    // Clear chat
+    clearChatBtn.addEventListener('click', () => {
+      // Remove all messages except welcome
+      const messages = kimMessages.querySelectorAll('.kim-message');
+      messages.forEach(msg => msg.remove());
+
+      // Show welcome message again
+      if (kimWelcome) {
+        kimWelcome.style.display = 'block';
+      }
+
+      // Reset input
+      kimInput.value = '';
+      kimInput.style.height = 'auto';
+      kimSendBtn.disabled = true;
+    });
+
+    // Focus input on load
+    window.addEventListener('load', () => {
+      kimInput.focus();
     });
   </script>
 </body>
