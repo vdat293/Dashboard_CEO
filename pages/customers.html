@@ -541,36 +541,51 @@
 
       // Initialize all charts
       function initCharts() {
-        // Customer trend chart
+        // Customer trend chart - Combo chart (Khách hàng mới & Doanh thu)
         customerTrendChart = new ApexCharts(document.querySelector('#customer-trend-chart'), {
           series: [],
           chart: {
             height: 400,
-            type: 'area',
+            type: 'line',
             toolbar: { show: true },
             zoom: { enabled: true }
           },
-          colors: ['#17a2b8', '#6c757d'],
+          colors: ['#17a2b8', '#28a745'],
           dataLabels: { enabled: false },
-          stroke: { curve: 'smooth', width: 3 },
-          fill: {
-            type: 'gradient',
-            gradient: {
-              shadeIntensity: 1,
-              opacityFrom: 0.5,
-              opacityTo: 0.1
-            }
+          stroke: {
+            curve: 'smooth',
+            width: [3, 3]
           },
-          xaxis: { categories: monthLabelsShort },
-          yaxis: {
-            labels: {
-              formatter: val => val.toLocaleString()
-            }
+          xaxis: {
+            categories: monthLabelsShort,
+            title: { text: 'Tháng' }
           },
+          yaxis: [
+            {
+              title: { text: 'Khách hàng mới' },
+              labels: {
+                formatter: val => val.toLocaleString()
+              }
+            },
+            {
+              opposite: true,
+              title: { text: 'Doanh thu (triệu VNĐ)' },
+              labels: {
+                formatter: val => val.toLocaleString()
+              }
+            }
+          ],
           tooltip: {
-            y: {
-              formatter: val => val.toLocaleString() + ' khách hàng mới'
-            }
+            shared: true,
+            intersect: false,
+            y: [
+              {
+                formatter: val => val.toLocaleString() + ' khách hàng'
+              },
+              {
+                formatter: val => val.toLocaleString() + ' triệu VNĐ'
+              }
+            ]
           },
           legend: { position: 'top' }
         });
@@ -723,23 +738,43 @@
         $('#chart-title').text(`Xu hướng khách hàng mới (${title})`);
       }
 
-      // Update customer trend chart
+      // Update customer trend chart - Combo: Khách hàng mới & Doanh thu
       function updateCustomerTrendChart() {
         let series = [];
 
         if (currentLocation === '') {
-          // All locations - compare 2025 vs 2024 (new customers)
+          // All locations - Khách hàng mới & Doanh thu (năm 2025 only)
           series = [
-            { name: 'KH mới 2025', data: businessDataByMonth[2025].newCustomers },
-            { name: 'KH mới 2024', data: businessDataByMonth[2024].newCustomers }
+            {
+              name: 'Khách hàng mới',
+              type: 'column',
+              data: businessDataByMonth[2025].newCustomers
+            },
+            {
+              name: 'Doanh thu',
+              type: 'line',
+              data: businessDataByMonth[2025].revenue
+            }
           ];
         } else {
-          // Single location (new customers)
+          // Single location - Khách hàng mới & Doanh thu
           series = [
-            { name: 'Khách hàng mới', data: locationData[currentLocation].newCustomers }
+            {
+              name: 'Khách hàng mới',
+              type: 'column',
+              data: locationData[currentLocation].newCustomers
+            },
+            {
+              name: 'Doanh thu',
+              type: 'line',
+              data: locationData[currentLocation].revenue
+            }
           ];
         }
 
+        customerTrendChart.updateOptions({
+          chart: { type: 'line' }
+        });
         customerTrendChart.updateSeries(series);
       }
 
