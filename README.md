@@ -33,15 +33,6 @@ Dashboard CEO là một ứng dụng web hiển thị các chỉ số kinh doanh
 - ⚠️ Cảnh báo tồn kho thấp và sản phẩm hết hàng
 - 🔍 Tìm kiếm sản phẩm
 
-### Trang Báo Cáo (pages/reports.html)
-- 📅 Chọn khoảng thời gian: Ngày, Tuần, Tháng, Năm
-- 📊 KPI tổng quan với progress bars
-- 📈 Biểu đồ xu hướng kinh doanh 12 tháng (Multi-type: Column + Line)
-- 🏆 Top 5 sản phẩm đóng góp doanh thu
-- 📡 Hiệu suất theo kênh bán hàng (Website, Cửa hàng, App, Đối tác)
-- 💡 Nhận xét điểm mạnh, điểm yếu và đề xuất
-- 📥 Xuất báo cáo PDF/Excel
-
 ### Tính năng chung
 - 📱 Responsive design - tương thích với mobile, tablet, desktop
 - 🎨 Giao diện đẹp, chuyên nghiệp sử dụng AdminLTE
@@ -71,8 +62,7 @@ Dashboard_CEO/
 ├── pages/                # Thư mục chứa các trang khác
 │   ├── revenue.html      # Trang chi tiết doanh thu
 │   ├── customers.html    # Trang quản lý khách hàng
-│   ├── products.html     # Trang quản lý sản phẩm
-│   └── reports.html      # Trang báo cáo tổng hợp
+│   └── products.html     # Trang quản lý sản phẩm
 │
 └── docs/                 # Thư mục tài liệu
     ├── STRUCTURE_GUIDE.md      # Hướng dẫn chi tiết về kiến trúc
