@@ -221,8 +221,11 @@
                   <div class="card-header border-0">
                     <h3 class="card-title">
                       <i class="bi bi-graph-up mr-2"></i>
-                      <span id="chart-title">Xu hướng khách hàng mới (Tổng hợp)</span>
+                      <span id="chart-title">Phân tích xu hướng khách hàng (Tổng hợp)</span>
                     </h3>
+                    <div class="card-tools">
+                      <small class="text-muted">KH mới, tích lũy & hoạt động</small>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div id="customer-trend-chart" style="height: 400px;"></div>
@@ -541,38 +544,47 @@
 
       // Initialize all charts
       function initCharts() {
-        // Customer trend chart
+        // Customer trend chart - Combo Chart (Bar + Line)
         customerTrendChart = new ApexCharts(document.querySelector('#customer-trend-chart'), {
           series: [],
           chart: {
             height: 400,
-            type: 'area',
+            type: 'line',
             toolbar: { show: true },
             zoom: { enabled: true }
           },
-          colors: ['#17a2b8', '#6c757d'],
+          colors: ['#17a2b8', '#007bff', '#6c757d'],
           dataLabels: { enabled: false },
-          stroke: { curve: 'smooth', width: 3 },
-          fill: {
-            type: 'gradient',
-            gradient: {
-              shadeIntensity: 1,
-              opacityFrom: 0.5,
-              opacityTo: 0.1
+          stroke: {
+            curve: 'smooth',
+            width: [0, 3, 3] // 0 for bar, 3 for lines
+          },
+          plotOptions: {
+            bar: {
+              columnWidth: '50%'
             }
           },
-          xaxis: { categories: monthLabelsShort },
-          yaxis: {
+          xaxis: {
+            categories: monthLabelsShort,
+            title: { text: 'Tháng' }
+          },
+          yaxis: [{
+            title: { text: 'Khách hàng' },
             labels: {
               formatter: val => val.toLocaleString()
             }
-          },
+          }],
           tooltip: {
+            shared: true,
+            intersect: false,
             y: {
-              formatter: val => val.toLocaleString() + ' khách hàng mới'
+              formatter: val => val.toLocaleString() + ' khách hàng'
             }
           },
-          legend: { position: 'top' }
+          legend: {
+            position: 'top',
+            horizontalAlign: 'left'
+          }
         });
         customerTrendChart.render();
 
@@ -720,23 +732,50 @@
         $('#kpi-orders-per-customer').text(ordersPerCustomer.toFixed(2));
 
         // Update chart title
-        $('#chart-title').text(`Xu hướng khách hàng mới (${title})`);
+        $('#chart-title').text(`Phân tích xu hướng khách hàng (${title})`);
       }
 
-      // Update customer trend chart
+      // Update customer trend chart - Combo Chart
       function updateCustomerTrendChart() {
         let series = [];
 
         if (currentLocation === '') {
-          // All locations - compare 2025 vs 2024 (new customers)
+          // All locations - Bar: New customers, Line: Cumulative customers
           series = [
-            { name: 'KH mới 2025', data: businessDataByMonth[2025].newCustomers },
-            { name: 'KH mới 2024', data: businessDataByMonth[2024].newCustomers }
+            {
+              name: 'Khách hàng mới',
+              type: 'column',
+              data: businessDataByMonth[2025].newCustomers
+            },
+            {
+              name: 'Tổng KH tích lũy',
+              type: 'line',
+              data: businessDataByMonth[2025].cumulativeCustomers
+            },
+            {
+              name: 'KH hoạt động',
+              type: 'line',
+              data: businessDataByMonth[2025].customers
+            }
           ];
         } else {
-          // Single location (new customers)
+          // Single location - Bar: New customers, Line: Cumulative customers
           series = [
-            { name: 'Khách hàng mới', data: locationData[currentLocation].newCustomers }
+            {
+              name: 'Khách hàng mới',
+              type: 'column',
+              data: locationData[currentLocation].newCustomers
+            },
+            {
+              name: 'Tổng KH tích lũy',
+              type: 'line',
+              data: locationData[currentLocation].cumulativeCustomers
+            },
+            {
+              name: 'KH hoạt động',
+              type: 'line',
+              data: locationData[currentLocation].customers
+            }
           ];
         }
 
