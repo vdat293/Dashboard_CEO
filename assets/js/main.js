@@ -35,10 +35,45 @@ function initDashboard() {
 }
 
 /**
- * Render info boxes với dữ liệu thực
+ * Render info boxes với dữ liệu thực (dựa trên quyền user)
  */
 function renderInfoBoxes() {
-  const totals = getSystemTotals();
+  // Lấy user hiện tại
+  const user = getCurrentUser();
+  if (!user) return;
+
+  // Lấy dữ liệu đã được filter theo quyền
+  const aggregatedData = getAggregatedData(locationData);
+
+  // Tính toán growth như getSystemTotals
+  const currentMonth = 10; // Tháng 11 (index 10)
+  const prevMonth = 9; // Tháng 10 (index 9)
+
+  const totalRevenue = aggregatedData.revenue[currentMonth];
+  const totalProfit = aggregatedData.profit[currentMonth];
+  const totalCustomers = aggregatedData.newCustomers[currentMonth];
+  const totalOrders = aggregatedData.orders[currentMonth];
+
+  const prevRevenue = aggregatedData.revenue[prevMonth];
+  const prevProfit = aggregatedData.profit[prevMonth];
+  const prevCustomers = aggregatedData.newCustomers[prevMonth];
+  const prevOrders = aggregatedData.orders[prevMonth];
+
+  const revenueGrowth = prevRevenue > 0 ? ((totalRevenue - prevRevenue) / prevRevenue * 100).toFixed(1) : '0.0';
+  const profitGrowth = prevProfit > 0 ? ((totalProfit - prevProfit) / prevProfit * 100).toFixed(1) : '0.0';
+  const customersGrowth = prevCustomers > 0 ? ((totalCustomers - prevCustomers) / prevCustomers * 100).toFixed(1) : '0.0';
+  const ordersGrowth = prevOrders > 0 ? ((totalOrders - prevOrders) / prevOrders * 100).toFixed(1) : '0.0';
+
+  const totals = {
+    totalRevenue,
+    totalProfit,
+    totalCustomers,
+    totalOrders,
+    revenueGrowth,
+    profitGrowth,
+    customersGrowth,
+    ordersGrowth
+  };
 
   // Lấy tất cả info boxes theo thứ tự
   const infoBoxes = document.querySelectorAll('.content .row .info-box .info-box-number');
@@ -97,25 +132,47 @@ function setupLocationSelector() {
 function renderOverviewMode() {
   console.log('🔄 Chuyển sang chế độ Tổng quan');
 
-  // Cập nhật tiêu đề
-  document.getElementById('main-chart-title').innerHTML = '<i class="bi bi-graph-up-arrow mr-2"></i>So sánh doanh thu 7 cơ sở';
-  document.getElementById('top-table-title').textContent = 'Top 5 cơ sở doanh thu tốt nhất';
+  // Lấy user và filter locations theo quyền
+  const user = getCurrentUser();
+  const authorizedLocationIds = getAuthorizedLocations();
+  const filteredLocations = locations.filter(loc => authorizedLocationIds.includes(loc.id));
+  const filteredLocationData = filterDataByPermission(locationData);
+
+  // Cập nhật tiêu đề dựa trên số lượng cơ sở
+  const locationCount = filteredLocations.length;
+  const titleText = user.role === 'ceo'
+    ? `So sánh doanh thu ${locationCount} cơ sở`
+    : `Doanh thu cơ sở ${filteredLocations[0].name}`;
+
+  document.getElementById('main-chart-title').innerHTML = `<i class="bi bi-graph-up-arrow mr-2"></i>${titleText}`;
+  document.getElementById('top-table-title').textContent = locationCount > 1 ? 'Top cơ sở doanh thu tốt nhất' : 'Top 5 sản phẩm bán chạy';
   document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>Tổng doanh thu năm 2025';
 
   // Destroy các chart cũ nếu có
   destroyCharts();
 
-  // Render biểu đồ so sánh doanh thu các cơ sở (full width)
-  charts.revenue = initLocationComparisonChart('#revenue-chart', locations, locationData);
-
-  // Render biểu đồ cột tổng doanh thu năm các cơ sở
-  charts.product = initLocationBarChart('#location-bar-chart', locations, locationData);
-
-  // Render bảng Top 5 cơ sở
-  renderTopLocationsTable();
-
-  // Cập nhật footer
-  document.getElementById('right-panel-footer').innerHTML = '<small class="text-muted">Click vào cột để xem chi tiết cơ sở</small>';
+  // Nếu chỉ có 1 cơ sở (giám đốc/trợ lý), hiển thị như chi tiết cơ sở
+  if (locationCount === 1) {
+    const locationId = filteredLocations[0].id;
+    // Render biểu đồ sản phẩm thay vì doanh thu các cơ sở
+    charts.revenue = initLocationProductComparisonChart('#revenue-chart', locationId, productsByLocation);
+    // Render bảng sản phẩm
+    renderTopProductsTable(locationId);
+    // Render thông báo
+    document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bell mr-2" id="right-panel-icon"></i>Thông báo';
+    document.getElementById('right-panel-container').innerHTML = '';
+    renderNotificationPanel(locationId);
+    document.getElementById('right-panel-footer').innerHTML = '';
+  } else {
+    // CEO: Render biểu đồ so sánh doanh thu các cơ sở (full width)
+    charts.revenue = initLocationComparisonChart('#revenue-chart', filteredLocations, filteredLocationData);
+    // Render biểu đồ cột tổng doanh thu năm các cơ sở
+    charts.product = initLocationBarChart('#location-bar-chart', filteredLocations, filteredLocationData);
+    // Render bảng Top 5 cơ sở
+    renderTopLocationsTable();
+    // Cập nhật footer
+    document.getElementById('right-panel-footer').innerHTML = '<small class="text-muted">Click vào cột để xem chi tiết cơ sở</small>';
+  }
 }
 
 /**
@@ -156,11 +213,15 @@ function renderLocationDetailMode(locationId) {
 }
 
 /**
- * Render bảng Top 5 cơ sở doanh thu tốt nhất
+ * Render bảng Top 5 cơ sở doanh thu tốt nhất (theo quyền user)
  */
 function renderTopLocationsTable() {
+  // Filter locations theo quyền
+  const authorizedLocationIds = getAuthorizedLocations();
+  const filteredLocations = locations.filter(loc => authorizedLocationIds.includes(loc.id));
+
   // Tính tổng doanh thu từng cơ sở
-  const locationRevenues = locations.map(loc => {
+  const locationRevenues = filteredLocations.map(loc => {
     const totalRevenue = locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
     const currentMonth = 10; // Tháng 11
     const prevMonth = 9;
