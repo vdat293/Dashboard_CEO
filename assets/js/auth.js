@@ -291,15 +291,18 @@ function displayUserInfo() {
     el.src = user.avatar;
   });
 
-  // Show location filter for CEO
+  // Show location filter for CEO and reset value
+  const locationFilters = document.querySelectorAll('.location-filter');
   if (user.role === 'ceo') {
-    const locationFilters = document.querySelectorAll('.location-filter');
     locationFilters.forEach(el => {
       el.style.display = 'block';
+      // Reset location selector value to show "Tất cả cơ sở"
+      if (el.tagName === 'SELECT') {
+        el.value = '';
+      }
     });
   } else {
     // Hide location filter for directors/assistants
-    const locationFilters = document.querySelectorAll('.location-filter');
     locationFilters.forEach(el => {
       el.style.display = 'none';
     });
@@ -312,6 +315,7 @@ function displayUserInfo() {
       el.style.display = '';
     });
   } else {
+    // Ensure hidden for non-CEO (CSS already hides by default, but be explicit)
     ceoOnlyElements.forEach(el => {
       el.style.display = 'none';
     });
