@@ -317,7 +317,7 @@ function displayUserInfo() {
         'VT': 'Vũng Tàu'
       };
       const locationName = locationNames[user.locations[0]] || user.locations[0];
-      el.textContent = `Cơ sở: ${locationName}`;
+      el.textContent = locationName;
       el.style.display = 'inline-block';
     });
   }
