@@ -544,6 +544,7 @@
 
     <!-- Load Auth & Data -->
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/utils.js"></script>
     <script src="../assets/js/data.js"></script>
 
     <!-- Authentication Check -->
@@ -557,16 +558,7 @@
       // Cập nhật badge location cho user không phải CEO
       const user = getCurrentUser();
       if (user && user.role !== 'ceo') {
-        const locationNames = {
-          'HN': 'Hà Nội',
-          'HCM': 'Hồ Chí Minh',
-          'DN': 'Đà Nẵng',
-          'HP': 'Hải Phòng',
-          'CT': 'Cần Thơ',
-          'NT': 'Nha Trang',
-          'VT': 'Vũng Tàu'
-        };
-        const locationName = locationNames[user.locations[0]] || user.locations[0];
+        const locationName = getLocationName(user.locations[0]);
         const badge = document.getElementById('user-location-badge');
         if (badge) {
           badge.textContent = locationName;
@@ -622,22 +614,22 @@
           yaxis: [{
             title: { text: 'Doanh thu (triệu VNĐ)' },
             labels: {
-              formatter: val => val.toLocaleString()
+              formatter: val => formatNumber(val)
             }
           }, {
             opposite: true,
             title: { text: 'Số khách hàng mới' },
             labels: {
-              formatter: val => val.toLocaleString()
+              formatter: val => formatNumber(val)
             }
           }],
           tooltip: {
             shared: true,
             intersect: false,
             y: [{
-              formatter: val => val.toLocaleString() + ' triệu VNĐ'
+              formatter: val => formatChartValue(val)
             }, {
-              formatter: val => val.toLocaleString() + ' khách hàng'
+              formatter: val => formatNumber(val) + ' khách hàng'
             }]
           },
           legend: {
@@ -663,8 +655,8 @@
                     show: true,
                     label: 'Tổng',
                     formatter: (w) => {
-                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
-                      return total.toLocaleString();
+                      const total = sumArray(w.globals.seriesTotals);
+                      return formatNumber(total);
                     }
                   }
                 }
@@ -673,7 +665,7 @@
           },
           tooltip: {
             y: {
-              formatter: val => val.toLocaleString() + ' khách hàng'
+              formatter: val => formatNumber(val) + ' khách hàng'
             }
           }
         });
@@ -694,18 +686,18 @@
           yaxis: [{
             title: { text: 'Khách hàng' },
             labels: {
-              formatter: val => val.toLocaleString()
+              formatter: val => formatNumber(val)
             }
           }, {
             opposite: true,
             title: { text: 'Đơn hàng' },
             labels: {
-              formatter: val => val.toLocaleString()
+              formatter: val => formatNumber(val)
             }
           }],
           tooltip: {
             y: {
-              formatter: val => val.toLocaleString()
+              formatter: val => formatNumber(val)
             }
           },
           legend: { position: 'top' }
@@ -745,7 +737,7 @@
 
       // Update KPIs
       function updateKPIs() {
-        const currentMonth = 10; // November (index 10)
+        const currentMonth = getCurrentMonth();
         let data, title;
 
         if (currentLocation === '') {

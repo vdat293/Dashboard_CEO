@@ -81,7 +81,7 @@ function initLocationComparisonChart(selector, locations, locationData) {
 function initLocationBarChart(selector, locations, locationData) {
   // Tính tổng doanh thu từng cơ sở
   const totals = locations.map(loc => {
-    return locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+    return getTotalRevenue(locationData, loc.id);
   });
 
   const options = {

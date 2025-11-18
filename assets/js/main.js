@@ -45,9 +45,8 @@ function renderInfoBoxes() {
   // Lấy dữ liệu đã được filter theo quyền
   const aggregatedData = getAggregatedData(locationData);
 
-  // Tính toán growth như getSystemTotals
-  const currentMonth = 10; // Tháng 11 (index 10)
-  const prevMonth = 9; // Tháng 10 (index 9)
+  // Tính toán growth sử dụng utility functions
+  const { currentMonth, prevMonth } = getCurrentAndPreviousMonth();
 
   const totalRevenue = aggregatedData.revenue[currentMonth];
   const totalProfit = aggregatedData.profit[currentMonth];
@@ -59,10 +58,10 @@ function renderInfoBoxes() {
   const prevCustomers = aggregatedData.newCustomers[prevMonth];
   const prevOrders = aggregatedData.orders[prevMonth];
 
-  const revenueGrowth = prevRevenue > 0 ? ((totalRevenue - prevRevenue) / prevRevenue * 100).toFixed(1) : '0.0';
-  const profitGrowth = prevProfit > 0 ? ((totalProfit - prevProfit) / prevProfit * 100).toFixed(1) : '0.0';
-  const customersGrowth = prevCustomers > 0 ? ((totalCustomers - prevCustomers) / prevCustomers * 100).toFixed(1) : '0.0';
-  const ordersGrowth = prevOrders > 0 ? ((totalOrders - prevOrders) / prevOrders * 100).toFixed(1) : '0.0';
+  const revenueGrowth = calculateGrowth(totalRevenue, prevRevenue);
+  const profitGrowth = calculateGrowth(totalProfit, prevProfit);
+  const customersGrowth = calculateGrowth(totalCustomers, prevCustomers);
+  const ordersGrowth = calculateGrowth(totalOrders, prevOrders);
 
   const totals = {
     totalRevenue,
@@ -85,8 +84,8 @@ function renderInfoBoxes() {
 
   // Helper function để render một info box
   function renderBox(element, value, growth, isNumber = false) {
-    const trendClass = parseFloat(growth) >= 0 ? 'trend-up' : 'trend-down';
-    const trendIcon = parseFloat(growth) >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
+    const trendClass = getTrendClass(growth);
+    const trendIcon = getTrendIcon(growth);
     element.innerHTML = `
       ${isNumber ? formatNumber(value) : formatRevenueValue(value)}
       <small class="${trendClass}">
@@ -149,7 +148,7 @@ function renderOverviewMode() {
   document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>Tổng doanh thu năm 2025';
 
   // Destroy các chart cũ nếu có
-  destroyCharts();
+  destroyAllCharts();
 
   // Nếu chỉ có 1 cơ sở (giám đốc/trợ lý), hiển thị như chi tiết cơ sở
   if (locationCount === 1) {
@@ -196,7 +195,7 @@ function renderLocationDetailMode(locationId) {
   document.getElementById('right-panel-title').innerHTML = '<i class="bi bi-bell mr-2" id="right-panel-icon"></i>Thông báo';
 
   // Destroy các chart cũ nếu có
-  destroyCharts();
+  destroyAllCharts();
 
   // Render biểu đồ so sánh sản phẩm (full width)
   charts.revenue = initLocationProductComparisonChart('#revenue-chart', locationId, productsByLocation);
@@ -221,15 +220,16 @@ function renderTopLocationsTable() {
   const filteredLocations = locations.filter(loc => authorizedLocationIds.includes(loc.id));
 
   // Tính tổng doanh thu từng cơ sở
+  const { currentMonth, prevMonth } = getCurrentAndPreviousMonth();
   const locationRevenues = filteredLocations.map(loc => {
-    const totalRevenue = locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
-    const currentMonth = 10; // Tháng 11
-    const prevMonth = 9;
-    const growth = ((locationData[loc.id].revenue[currentMonth] - locationData[loc.id].revenue[prevMonth]) / locationData[loc.id].revenue[prevMonth] * 100).toFixed(1);
+    const totalRevenue = getTotalRevenue(locationData, loc.id);
+    const currentRevenue = locationData[loc.id].revenue[currentMonth];
+    const prevRevenue = locationData[loc.id].revenue[prevMonth];
+    const growth = calculateGrowth(currentRevenue, prevRevenue);
     return {
       ...loc,
       totalRevenue,
-      currentRevenue: locationData[loc.id].revenue[currentMonth],
+      currentRevenue,
       growth
     };
   }).sort((a, b) => b.totalRevenue - a.totalRevenue).slice(0, 5);
@@ -254,10 +254,10 @@ function renderTopLocationsTable() {
               ${loc.isHQ ? '<span class="badge badge-info ml-1">HQ</span>' : ''}
             </td>
             <td>${formatRevenueValue(loc.currentRevenue)}</td>
-            <td>${(loc.totalRevenue / 1000).toFixed(2)} tỷ</td>
+            <td>${formatChartAxisValue(loc.totalRevenue)}</td>
             <td>
-              <span class="badge ${loc.growth >= 0 ? 'badge-success' : 'badge-danger'}">
-                ${loc.growth >= 0 ? '+' : ''}${loc.growth}%
+              <span class="badge ${getGrowthBadgeClass(loc.growth)}">
+                ${formatGrowthPercent(loc.growth)}
               </span>
             </td>
             <td>
@@ -319,7 +319,7 @@ function renderTopProductsTable(locationId) {
               <td>
                 <span class="badge ${product.sold > 100 ? 'badge-success' : 'badge-warning'}">${product.sold} cái</span>
               </td>
-              <td>${(product.revenue / 1000000).toFixed(0)} triệu</td>
+              <td>${formatRevenueValue(product.revenue / 1000)}</td>
             </tr>
           `;
         }).join('')}
@@ -335,12 +335,12 @@ function renderTopProductsTable(locationId) {
  */
 function renderLocationPerformancePanel() {
   // Tính tổng doanh thu từng cơ sở (tháng hiện tại)
-  const currentMonth = 10; // Tháng 11
-  const prevMonth = 9;
+  const { currentMonth, prevMonth } = getCurrentAndPreviousMonth();
 
   const locationPerformances = locations.map(loc => {
     const currentRevenue = locationData[loc.id].revenue[currentMonth];
-    const growth = ((locationData[loc.id].revenue[currentMonth] - locationData[loc.id].revenue[prevMonth]) / locationData[loc.id].revenue[prevMonth] * 100).toFixed(1);
+    const prevRevenue = locationData[loc.id].revenue[prevMonth];
+    const growth = calculateGrowth(currentRevenue, prevRevenue);
     return {
       ...loc,
       currentRevenue,
@@ -366,8 +366,8 @@ function renderLocationPerformancePanel() {
             </td>
             <td class="text-right">${formatRevenueValue(loc.currentRevenue)}</td>
             <td class="text-right">
-              <span class="badge ${loc.growth >= 0 ? 'badge-success' : 'badge-danger'}">
-                ${loc.growth >= 0 ? '+' : ''}${loc.growth}%
+              <span class="badge ${getGrowthBadgeClass(loc.growth)}">
+                ${formatGrowthPercent(loc.growth)}
               </span>
             </td>
           </tr>
@@ -535,8 +535,8 @@ function showLocationDetail(locationId) {
     return;
   }
 
-  // Lấy dữ liệu tháng hiện tại (tháng 11 - index 10)
-  const currentMonth = 10;
+  // Lấy dữ liệu tháng hiện tại
+  const { currentMonth } = getCurrentAndPreviousMonth();
   const currentRevenue = data.revenue[currentMonth];
   const currentProfit = data.profit[currentMonth];
   const currentOrders = data.orders[currentMonth];
@@ -563,9 +563,8 @@ function showLocationDetail(locationId) {
  */
 function showLocationRevenueChart(location, data) {
   // Xóa biểu đồ cũ nếu có
-  if (charts.modalRevenue) {
-    charts.modalRevenue.destroy();
-  }
+  destroyChart(charts.modalRevenue);
+  charts.modalRevenue = null;
 
   const options = {
     series: [{
@@ -596,17 +595,14 @@ function showLocationRevenueChart(location, data) {
     yaxis: {
       labels: {
         formatter: function(value) {
-          if (value >= 1000) {
-            return (value / 1000).toFixed(1) + ' tỷ';
-          }
-          return value.toFixed(0) + ' triệu';
+          return formatRevenueValue(value);
         }
       }
     },
     tooltip: {
       y: {
         formatter: function(value) {
-          return value.toFixed(0) + ' triệu VNĐ';
+          return formatChartValue(value);
         }
       }
     },
@@ -625,64 +621,16 @@ function showLocationRevenueChart(location, data) {
 /**
  * Destroy tất cả các charts hiện tại
  */
-function destroyCharts() {
-  if (charts.revenue) {
-    charts.revenue.destroy();
-    charts.revenue = null;
-  }
-  if (charts.product) {
-    charts.product.destroy();
-    charts.product = null;
-  }
-  charts.sparklines.forEach(chart => {
-    if (chart && chart.destroy) {
-      chart.destroy();
-    }
-  });
-  charts.sparklines = [];
-}
-
-/**
- * Hàm format số thành định dạng tiền tệ VNĐ
- * @param {number} amount - Số tiền
- * @returns {string} - Chuỗi đã format
- */
-function formatCurrency(amount) {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND'
-  }).format(amount);
-}
-
-/**
- * Hàm format số với dấu phẩy ngăn cách
- * @param {number} num - Số cần format
- * @returns {string} - Chuỗi đã format
- */
-function formatNumber(num) {
-  return new Intl.NumberFormat('vi-VN').format(num);
-}
-
-/**
- * Format giá trị doanh thu
- * @param {number} value - Giá trị doanh thu (triệu)
- * @returns {string} - Chuỗi đã format
- */
-function formatRevenueValue(value) {
-  if (value >= 1000) {
-    return (value / 1000).toFixed(2) + ' tỷ';
-  }
-  return value.toFixed(0) + ' triệu';
+function destroyAllCharts() {
+  destroyChartObject(charts);
 }
 
 /**
  * Cleanup function - dọn dẹp khi rời khỏi trang
  */
 function cleanup() {
-  destroyCharts();
-  if (charts.modalRevenue) {
-    charts.modalRevenue.destroy();
-  }
+  destroyAllCharts();
+  destroyChart(charts.modalRevenue);
   console.log('🧹 Đã dọn dẹp resources');
 }
 
@@ -699,9 +647,6 @@ window.addEventListener('beforeunload', cleanup);
 // Export các hàm để có thể sử dụng ở nơi khác (nếu cần)
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    initDashboard,
-    formatCurrency,
-    formatNumber,
-    formatRevenueValue
+    initDashboard
   };
 }
