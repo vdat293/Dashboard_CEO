@@ -273,16 +273,18 @@ function displayUserInfo() {
   const user = getCurrentUser();
   if (!user) return;
 
-  // Update user name
+  // Update user name and show after loading
   const userNameElements = document.querySelectorAll('.user-name, .username');
   userNameElements.forEach(el => {
     el.textContent = user.fullName;
+    el.classList.add('loaded'); // Hiển thị với opacity: 1
   });
 
-  // Update user title
+  // Update user title and show after loading
   const userTitleElements = document.querySelectorAll('.user-title');
   userTitleElements.forEach(el => {
     el.textContent = user.title;
+    el.classList.add('loaded'); // Hiển thị với opacity: 1
   });
 
   // Update user avatar

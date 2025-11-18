@@ -687,3 +687,19 @@
 .location-filter {
   display: none;
 }
+
+/* Ẩn user name và title mặc định để tránh flash of content
+   JavaScript sẽ hiển thị sau khi đã update nội dung */
+.user-name,
+.username,
+.user-title {
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+
+/* Class để hiển thị user info sau khi JavaScript đã update */
+.user-name.loaded,
+.username.loaded,
+.user-title.loaded {
+  opacity: 1;
+}
