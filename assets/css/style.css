@@ -671,3 +671,19 @@
     max-width: calc(100% - 44px);
   }
 }
+
+/* ==============================================
+   ROLE-BASED VISIBILITY - Hiển thị theo quyền
+   ============================================== */
+/* Ẩn các element chỉ dành cho CEO mặc định
+   JavaScript sẽ hiển thị chúng nếu user là CEO
+   Tránh hiệu ứng "flash of content" khi trang load */
+.ceo-only {
+  display: none;
+}
+
+/* Ẩn location filter mặc định
+   JavaScript sẽ hiển thị cho CEO */
+.location-filter {
+  display: none;
+}
