@@ -142,7 +142,7 @@ function login(username, password) {
 function logout() {
   localStorage.removeItem('currentUser');
   localStorage.removeItem('isLoggedIn');
-  window.location.href = 'login.html';
+  window.location.href = 'index.html';
 }
 
 /**
@@ -258,8 +258,8 @@ function getAggregatedData(locationData) {
 function requireAuth() {
   if (!isLoggedIn()) {
     // Nếu không phải trang login thì chuyển về login
-    if (!window.location.pathname.includes('login.html')) {
-      window.location.href = 'login.html';
+    if (!window.location.pathname.includes('index.html')) {
+      window.location.href = 'index.html';
     }
     return false;
   }

@@ -1,482 +1,177 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <!--begin::Head-->
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Dashboard CEO | Tổng Quan Kinh Doanh</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập | Dashboard CEO</title>
 
-    <!--begin::Accessibility Meta Tags-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
-    <!--end::Accessibility Meta Tags-->
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <!-- AdminLTE -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
-    <!--begin::Fonts-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
-      integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
-      crossorigin="anonymous"
-    />
-    <!--end::Fonts-->
+  <style>
+    .login-page {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .login-box {
+      width: 400px;
+    }
+    .login-card-body {
+      border-radius: 10px;
+    }
+    .login-logo a {
+      color: #fff;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+    .quick-login-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #dee2e6;
+    }
+    .quick-login-btn {
+      margin: 5px;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <!-- Logo -->
+  <div class="login-logo">
+    <a href="#"><b>Dashboard</b> CEO</a>
+  </div>
+  <!-- /.login-logo -->
 
-    <!--begin::Third Party Plugin(OverlayScrollbars)-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
-      crossorigin="anonymous"
-    />
-    <!--end::Third Party Plugin(OverlayScrollbars)-->
+  <!-- Login Card -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Đăng nhập để bắt đầu phiên làm việc</p>
 
-    <!--begin::Third Party Plugin(Bootstrap Icons)-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-      crossorigin="anonymous"
-    />
-    <!--end::Third Party Plugin(Bootstrap Icons)-->
-
-    <!--begin::AdminLTE CSS from CDN-->
-    <link 
-      rel="stylesheet" 
-      href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
-    />
-    <!--end::AdminLTE CSS-->
-
-    <!-- ApexCharts -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
-      integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
-      crossorigin="anonymous"
-    />
-
-    <!--begin::Custom Styles-->
-    <link rel="stylesheet" href="assets/css/variables.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <!--end::Custom Styles-->
-  </head>
-  <!--end::Head-->
-
-  <!--begin::Body-->
-  <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-
-      <!--begin::Header-->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-              <i class="bi bi-list"></i>
-            </a>
-          </li>
-        </ul>
-
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-          <!-- Location Badge (for non-CEO users) -->
-          <li class="nav-item current-location-badge" style="display: none;">
-            <span class="nav-link">
-              <span class="badge badge-info" id="user-location-badge"></span>
-            </span>
-          </li>
-
-          <!-- User Menu -->
-          <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="bi bi-person-circle"></i>
-              <span class="d-none d-md-inline ml-1 user-name">Người dùng</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <div class="dropdown-item-text">
-                <div class="d-flex align-items-center">
-                  <div>
-                    <strong class="user-name">Người dùng</strong><br>
-                    <small class="text-muted user-title">Chức vụ</small>
-                  </div>
-                </div>
-              </div>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="bi bi-person mr-2"></i> Hồ sơ
-              </a>
-              <a href="#" class="dropdown-item">
-                <i class="bi bi-gear mr-2"></i> Cài đặt
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item" onclick="logout(); return false;">
-                <i class="bi bi-box-arrow-right mr-2"></i> Đăng xuất
-              </a>
-            </div>
-          </li>
-        </ul>
-      </nav>
-      <!--end::Header-->
-
-      <!--begin::Sidebar-->
-      <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="#" class="brand-link">
-          <i class="bi bi-graph-up-arrow brand-image" style="font-size: 2rem; margin-left: 0.5rem;"></i>
-          <span class="brand-text font-weight-light">CEO Dashboard</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-          <!-- Sidebar user panel -->
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <i class="bi bi-person-circle" style="font-size: 2.1rem; color: #fff;"></i>
-            </div>
-            <div class="info">
-              <a href="#" class="d-block user-name">Người dùng</a>
-              <small class="text-muted user-title">Chức vụ</small>
+      <form id="loginForm">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="bi bi-person"></span>
             </div>
           </div>
-
-          <!-- Sidebar Menu -->
-          <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-              <li class="nav-item">
-                <a href="index.html" class="nav-link active">
-                  <i class="nav-icon bi bi-speedometer2"></i>
-                  <p>Tổng quan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/revenue.html" class="nav-link">
-                  <i class="nav-icon bi bi-graph-up"></i>
-                  <p>Doanh thu</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/customers.html" class="nav-link">
-                  <i class="nav-icon bi bi-people"></i>
-                  <p>Khách hàng</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/products.html" class="nav-link">
-                  <i class="nav-icon bi bi-box-seam"></i>
-                  <p>Sản phẩm</p>
-                </a>
-              </li>
-              <li class="nav-item ceo-only">
-                <a href="pages/kim-assistant.html" class="nav-link">
-                  <i class="nav-icon bi bi-robot"></i>
-                  <p>Kim - Trợ lý ảo</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-gear"></i>
-                  <p>Cài đặt</p>
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <!-- /.sidebar-menu -->
         </div>
-        <!-- /.sidebar -->
-      </aside>
-      <!--end::Sidebar-->
-
-      <!--begin::Content Wrapper-->
-      <div class="content-wrapper">
-        <!-- Content Header -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">Dashboard CEO</h1>
-              </div>
-              <div class="col-sm-6">
-                <div class="float-sm-right">
-                  <select id="location-selector" class="form-control location-filter" style="width: auto; display: inline-block; min-width: 200px;">
-                    <option value="">Tất cả cơ sở (Tổng quan)</option>
-                    <option value="HN">Hà Nội</option>
-                    <option value="HCM">TP. Hồ Chí Minh</option>
-                    <option value="DN">Đà Nẵng</option>
-                    <option value="HP">Hải Phòng</option>
-                    <option value="CT">Cần Thơ</option>
-                    <option value="NT">Nha Trang</option>
-                    <option value="VT">Vũng Tàu</option>
-                  </select>
-                </div>
-              </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Mật khẩu" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="bi bi-lock"></span>
             </div>
           </div>
         </div>
 
-        <!-- Main content -->
-        <section class="content">
-          <div class="container-fluid">
-            
-            <!-- Info boxes - Chỉ số KPI -->
-            <div class="row">
-              <!-- Doanh thu -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon bg-gradient-primary elevation-1">
-                    <i class="bi bi-currency-dollar"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Doanh thu tháng</span>
-                    <span class="info-box-number">
-                      3.68 tỷ
-                      <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> 7.6%
-                      </small>
-                    </span>
-                  </div>
-                </div>
-              </div>
+        <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
 
-              <!-- Lợi nhuận -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon bg-gradient-success elevation-1">
-                    <i class="bi bi-graph-up"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Lợi nhuận</span>
-                    <span class="info-box-number">
-                      1.29 tỷ
-                      <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> 7.7%
-                      </small>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Khách hàng -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon bg-gradient-info elevation-1">
-                    <i class="bi bi-people"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Khách hàng mới</span>
-                    <span class="info-box-number">
-                      1,456
-                      <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> 6.7%
-                      </small>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Đơn hàng -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon bg-gradient-warning elevation-1">
-                    <i class="bi bi-cart"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Đơn hàng</span>
-                    <span class="info-box-number">
-                      4,892
-                      <small class="trend-up">
-                        <i class="bi bi-arrow-up"></i> 8.2%
-                      </small>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Charts Row -->
-            <div class="row">
-              <!-- Biểu đồ doanh thu / So sánh sản phẩm - Full width -->
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header border-0">
-                    <div class="d-flex justify-content-between">
-                      <h3 class="card-title" id="main-chart-title">
-                        <i class="bi bi-graph-up-arrow mr-2"></i>
-                        So sánh doanh thu 7 cơ sở
-                      </h3>
-                      <a href="pages/revenue.html" class="btn btn-sm btn-primary">Xem chi tiết</a>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div id="revenue-chart" style="height: 400px;"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Table và Activity Row -->
-            <div class="row">
-              <!-- Bảng Top 5: Cơ sở hoặc Sản phẩm -->
-              <div class="col-lg-8">
-                <div class="card">
-                  <div class="card-header border-0">
-                    <h3 class="card-title" id="top-table-title">Top 5 cơ sở doanh thu tốt nhất</h3>
-                  </div>
-                  <div class="card-body table-responsive p-0" id="top-table-container">
-                    <!-- Nội dung sẽ được thay đổi bởi JavaScript -->
-                  </div>
-                </div>
-              </div>
-
-              <!-- Biểu đồ cột / Thông báo -->
-              <div class="col-lg-4">
-                <div class="card">
-                  <div class="card-header border-0">
-                    <h3 class="card-title" id="right-panel-title">
-                      <i class="bi bi-bar-chart-fill mr-2" id="right-panel-icon"></i>
-                      Tổng doanh thu năm 2025
-                    </h3>
-                  </div>
-                  <div class="card-body" id="right-panel-container">
-                    <!-- Nội dung sẽ được thay đổi bởi JavaScript -->
-                    <div id="location-bar-chart" style="height: 350px;"></div>
-                  </div>
-                  <div class="card-footer text-center" id="right-panel-footer">
-                    <small class="text-muted">Click vào cột để xem chi tiết cơ sở</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
           </div>
-        </section>
-        <!--end::Main content-->
-      </div>
-      <!--end::Content Wrapper-->
-
-      <!--begin::Footer-->
-      <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="#">Công ty của bạn</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-          <b>Version</b> 1.0.0
         </div>
-      </footer>
-      <!--end::Footer-->
-    </div>
-    <!-- ./wrapper -->
+      </form>
 
-    <!-- Modal hiển thị chi tiết doanh thu cơ sở -->
-    <div class="modal fade" id="locationDetailModal" tabindex="-1" role="dialog" aria-labelledby="locationDetailModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="locationDetailModalLabel">
-              <i class="bi bi-building mr-2"></i>
-              <span id="modal-location-name">Chi tiết cơ sở</span>
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <div class="info-box bg-gradient-primary">
-                  <span class="info-box-icon">
-                    <i class="bi bi-currency-dollar"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Doanh thu tháng</span>
-                    <span class="info-box-number" id="modal-revenue">0</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="info-box bg-gradient-success">
-                  <span class="info-box-icon">
-                    <i class="bi bi-graph-up"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Lợi nhuận tháng</span>
-                    <span class="info-box-number" id="modal-profit">0</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="info-box bg-gradient-info">
-                  <span class="info-box-icon">
-                    <i class="bi bi-cart"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Đơn hàng</span>
-                    <span class="info-box-number" id="modal-orders">0</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <h6 class="mb-3">Doanh thu theo tháng (2024)</h6>
-                <div id="modal-revenue-chart" style="height: 300px;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-          </div>
+      <!-- Quick Login Section -->
+      <div class="quick-login-section">
+        <p class="text-center text-muted mb-2"><small>Đăng nhập nhanh (Demo)</small></p>
+        <div class="text-center">
+          <button class="btn btn-sm btn-outline-primary quick-login-btn" onclick="quickLogin('ceo')">
+            <i class="bi bi-star-fill"></i> Chủ tịch
+          </button>
+        </div>
+        <div class="text-center mt-2">
+          <button class="btn btn-sm btn-outline-secondary quick-login-btn" onclick="quickLogin('gd_hn')">HN</button>
+          <button class="btn btn-sm btn-outline-secondary quick-login-btn" onclick="quickLogin('gd_hcm')">HCM</button>
+          <button class="btn btn-sm btn-outline-secondary quick-login-btn" onclick="quickLogin('gd_dn')">ĐN</button>
+          <button class="btn btn-sm btn-outline-secondary quick-login-btn" onclick="quickLogin('gd_hp')">HP</button>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-sm btn-outline-secondary quick-login-btn" onclick="quickLogin('gd_ct')">CT</button>
+          <button class="btn btn-sm btn-outline-secondary quick-login-btn" onclick="quickLogin('gd_nt')">NT</button>
+          <button class="btn btn-sm btn-outline-secondary quick-login-btn" onclick="quickLogin('gd_vt')">VT</button>
+          <button class="btn btn-sm btn-outline-info quick-login-btn" onclick="quickLogin('kim')">
+            <i class="bi bi-person-badge"></i> Kim
+          </button>
         </div>
       </div>
+
+      <div class="mt-3">
+        <p class="text-center text-muted"><small>Tài khoản demo - Mật khẩu: 123456</small></p>
+      </div>
     </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
 
-    <!--begin::Scripts-->
-    
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- Bootstrap 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- AdminLTE App -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<!-- Auth Script -->
+<script src="assets/js/auth.js"></script>
 
-    <!-- ApexCharts -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-      integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
-      crossorigin="anonymous"
-    ></script>
+<script>
+  // Form submit handler
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-    <!--begin::Dashboard Scripts-->
-    <script src="assets/js/auth.js"></script>
-    <script src="assets/js/data.js"></script>
-    <script src="assets/js/charts.js"></script>
-    <script src="assets/js/main.js"></script>
-    <!--end::Dashboard Scripts-->
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    <!-- Authentication Check -->
-    <script>
-      // Kiểm tra đăng nhập khi load trang
-      requireAuth();
+    if (login(username, password)) {
+      window.location.href = 'dashboard.html';
+    } else {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = 'Tên đăng nhập hoặc mật khẩu không đúng!';
+      errorDiv.style.display = 'block';
 
-      // Hiển thị thông tin user
-      displayUserInfo();
+      setTimeout(() => {
+        errorDiv.style.display = 'none';
+      }, 3000);
+    }
+  });
 
-      // Cập nhật badge location cho user không phải CEO
-      const user = getCurrentUser();
-      if (user && user.role !== 'ceo') {
-        const locationNames = {
-          'HN': 'Hà Nội',
-          'HCM': 'Hồ Chí Minh',
-          'DN': 'Đà Nẵng',
-          'HP': 'Hải Phòng',
-          'CT': 'Cần Thơ',
-          'NT': 'Nha Trang',
-          'VT': 'Vũng Tàu'
-        };
-        const locationName = locationNames[user.locations[0]] || user.locations[0];
-        const badge = document.getElementById('user-location-badge');
-        if (badge) {
-          badge.textContent = locationName;
-        }
-      }
-    </script>
-    <!--end::Scripts-->
-  </body>
+  // Quick login function
+  function quickLogin(userType) {
+    const userMap = {
+      'ceo': 'ceo',
+      'gd_hn': 'gd_hn',
+      'gd_hcm': 'gd_hcm',
+      'gd_dn': 'gd_dn',
+      'gd_hp': 'gd_hp',
+      'gd_ct': 'gd_ct',
+      'gd_nt': 'gd_nt',
+      'gd_vt': 'gd_vt',
+      'kim': 'kim'
+    };
+
+    const username = userMap[userType];
+    if (login(username, '123456')) {
+      window.location.href = 'dashboard.html';
+    }
+  }
+
+  // Check if already logged in
+  if (isLoggedIn()) {
+    window.location.href = 'dashboard.html';
+  }
+</script>
+</body>
 </html>
