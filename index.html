@@ -473,7 +473,7 @@
         const locationName = locationNames[user.locations[0]] || user.locations[0];
         const badge = document.getElementById('user-location-badge');
         if (badge) {
-          badge.textContent = `Cơ sở: ${locationName}`;
+          badge.textContent = locationName;
         }
       }
     </script>

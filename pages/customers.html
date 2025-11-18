@@ -45,18 +45,40 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="bi bi-bell-fill"></i>
-              <span class="badge badge-warning navbar-badge">5</span>
-            </a>
+          <!-- Location Badge (for non-CEO users) -->
+          <li class="nav-item current-location-badge" style="display: none;">
+            <span class="nav-link">
+              <span class="badge badge-info" id="user-location-badge"></span>
+            </span>
           </li>
 
+          <!-- User Menu -->
           <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
               <i class="bi bi-person-circle"></i>
-              <span class="d-none d-md-inline ml-1">CEO Nguyễn Văn A</span>
+              <span class="d-none d-md-inline ml-1 user-name">Người dùng</span>
             </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-item-text">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <strong class="user-name">Người dùng</strong><br>
+                    <small class="text-muted user-title">Chức vụ</small>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="bi bi-person mr-2"></i> Hồ sơ
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="bi bi-gear mr-2"></i> Cài đặt
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" onclick="logout(); return false;">
+                <i class="bi bi-box-arrow-right mr-2"></i> Đăng xuất
+              </a>
+            </div>
           </li>
         </ul>
       </nav>
@@ -74,8 +96,8 @@
               <i class="bi bi-person-circle" style="font-size: 2.1rem; color: #fff;"></i>
             </div>
             <div class="info">
-              <a href="#" class="d-block">Nguyễn Văn A</a>
-              <small class="text-muted">Giám đốc điều hành</small>
+              <a href="#" class="d-block user-name">Người dùng</a>
+              <small class="text-muted user-title">Chức vụ</small>
             </div>
           </div>
 
@@ -132,7 +154,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="float-sm-right">
-                  <select id="location-selector" class="form-control" style="width: auto; display: inline-block; min-width: 200px;">
+                  <select id="location-selector" class="form-control location-filter" style="width: auto; display: inline-block; min-width: 200px;">
                     <option value="">Tất cả cơ sở (Tổng hợp)</option>
                     <option value="HN">Hà Nội</option>
                     <option value="HCM">TP. Hồ Chí Minh</option>
@@ -520,8 +542,37 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
 
-    <!-- Load Data -->
+    <!-- Load Auth & Data -->
+    <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/data.js"></script>
+
+    <!-- Authentication Check -->
+    <script>
+      // Kiểm tra đăng nhập khi load trang
+      requireAuth();
+
+      // Hiển thị thông tin user
+      displayUserInfo();
+
+      // Cập nhật badge location cho user không phải CEO
+      const user = getCurrentUser();
+      if (user && user.role !== 'ceo') {
+        const locationNames = {
+          'HN': 'Hà Nội',
+          'HCM': 'Hồ Chí Minh',
+          'DN': 'Đà Nẵng',
+          'HP': 'Hải Phòng',
+          'CT': 'Cần Thơ',
+          'NT': 'Nha Trang',
+          'VT': 'Vũng Tàu'
+        };
+        const locationName = locationNames[user.locations[0]] || user.locations[0];
+        const badge = document.getElementById('user-location-badge');
+        if (badge) {
+          badge.textContent = locationName;
+        }
+      }
+    </script>
 
     <script>
       // State management
