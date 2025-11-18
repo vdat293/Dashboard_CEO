@@ -303,22 +303,17 @@ function displayUserInfo() {
     locationFilters.forEach(el => {
       el.style.display = 'none';
     });
+  }
 
-    // Show current location badge
-    const locationBadges = document.querySelectorAll('.current-location-badge');
-    locationBadges.forEach(el => {
-      const locationNames = {
-        'HN': 'Hà Nội',
-        'HCM': 'Hồ Chí Minh',
-        'DN': 'Đà Nẵng',
-        'HP': 'Hải Phòng',
-        'CT': 'Cần Thơ',
-        'NT': 'Nha Trang',
-        'VT': 'Vũng Tàu'
-      };
-      const locationName = locationNames[user.locations[0]] || user.locations[0];
-      el.textContent = locationName;
-      el.style.display = 'inline-block';
+  // Show CEO-only menu items only for CEO
+  const ceoOnlyElements = document.querySelectorAll('.ceo-only');
+  if (user.role === 'ceo') {
+    ceoOnlyElements.forEach(el => {
+      el.style.display = '';
+    });
+  } else {
+    ceoOnlyElements.forEach(el => {
+      el.style.display = 'none';
     });
   }
 }
