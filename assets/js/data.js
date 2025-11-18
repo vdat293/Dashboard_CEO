@@ -417,7 +417,7 @@ const productsByLocation = {
 function getTotalRevenueByLocation() {
   const result = {};
   locations.forEach(loc => {
-    result[loc.id] = locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+    result[loc.id] = getTotalRevenue(locationData, loc.id);
   });
   return result;
 }
@@ -433,8 +433,7 @@ function getTopLocationsByRevenue(n = 5) {
 
 // Tính tổng toàn hệ thống
 function getSystemTotals() {
-  const currentMonth = 10; // Tháng 11 (index 10)
-  const prevMonth = 9; // Tháng 10 (index 9)
+  const { currentMonth, prevMonth } = getCurrentAndPreviousMonth();
   let totalRevenue = 0, totalProfit = 0, totalCustomers = 0, totalOrders = 0, totalEmployees = 0;
   let prevRevenue = 0, prevProfit = 0, prevCustomers = 0, prevOrders = 0;
 
@@ -455,10 +454,10 @@ function getSystemTotals() {
   });
 
   // Tính % tăng trưởng
-  const revenueGrowth = prevRevenue > 0 ? ((totalRevenue - prevRevenue) / prevRevenue * 100) : 0;
-  const profitGrowth = prevProfit > 0 ? ((totalProfit - prevProfit) / prevProfit * 100) : 0;
-  const customersGrowth = prevCustomers > 0 ? ((totalCustomers - prevCustomers) / prevCustomers * 100) : 0;
-  const ordersGrowth = prevOrders > 0 ? ((totalOrders - prevOrders) / prevOrders * 100) : 0;
+  const revenueGrowth = calculateGrowth(totalRevenue, prevRevenue, 0);
+  const profitGrowth = calculateGrowth(totalProfit, prevProfit, 0);
+  const customersGrowth = calculateGrowth(totalCustomers, prevCustomers, 0);
+  const ordersGrowth = calculateGrowth(totalOrders, prevOrders, 0);
 
   return {
     totalRevenue,

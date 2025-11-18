@@ -272,6 +272,7 @@
   <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
   <!-- Load Data -->
+  <script src="../assets/js/utils.js"></script>
   <script src="../assets/js/data.js"></script>
 
   <!-- Kim AI Assistant Script -->
@@ -283,19 +284,6 @@
     const kimInput = document.getElementById('kim-input');
     const kimSendBtn = document.getElementById('kim-send-btn');
     const clearChatBtn = document.getElementById('clear-chat');
-
-    // Format number
-    function formatNumber(num) {
-      return new Intl.NumberFormat('vi-VN').format(num);
-    }
-
-    // Format currency
-    function formatCurrency(num) {
-      if (num >= 1000) {
-        return (num / 1000).toFixed(2) + ' tỷ';
-      }
-      return num + ' triệu';
-    }
 
     // Get current time
     function getCurrentTime() {
@@ -375,7 +363,7 @@
       switch(questionType) {
         case 'revenue':
           questionText = 'Doanh thu tháng này là bao nhiêu?';
-          const currentMonth = 10; // Tháng 11
+          const { currentMonth } = getCurrentAndPreviousMonth();
           let totalRevenue = 0;
           let revenueByLocation = [];
 
@@ -388,11 +376,11 @@
           revenueByLocation.sort((a, b) => b.revenue - a.revenue);
 
           response = `<strong>Doanh thu tháng 11/2024:</strong><br><br>`;
-          response += `💰 <strong>Tổng doanh thu:</strong> ${formatCurrency(totalRevenue)}<br><br>`;
+          response += `💰 <strong>Tổng doanh thu:</strong> ${formatRevenueValue(totalRevenue)}<br><br>`;
           response += `<strong>Theo từng cơ sở:</strong><br>`;
           revenueByLocation.forEach((loc, index) => {
             const emoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '📍';
-            response += `${emoji} <strong>${loc.name}:</strong> ${formatCurrency(loc.revenue)}<br>`;
+            response += `${emoji} <strong>${loc.name}:</strong> ${formatRevenueValue(loc.revenue)}<br>`;
           });
           break;
 
@@ -420,7 +408,7 @@
             response += `${emoji} <strong>${product.name}</strong><br>`;
             response += `💵 Giá: ${formatNumber(product.price)} VNĐ<br>`;
             response += `📦 Đã bán: ${formatNumber(product.sold)} sản phẩm<br>`;
-            response += `💰 Doanh thu: ${formatCurrency(Math.round(product.revenue / 1000000))} triệu<br><br>`;
+            response += `💰 Doanh thu: ${formatRevenueValue(Math.round(product.revenue / 1000000))} triệu<br><br>`;
           });
           break;
 
@@ -428,8 +416,8 @@
           questionText = 'Cơ sở nào hiệu quả nhất?';
           const locationRanking = locations.map(loc => {
             const data = locationData[loc.id];
-            const totalRev = data.revenue.reduce((a, b) => a + b, 0);
-            const totalProfit = data.profit.reduce((a, b) => a + b, 0);
+            const totalRev = sumArray(data.revenue);
+            const totalProfit = sumArray(data.profit);
             const profitMargin = ((totalProfit / totalRev) * 100).toFixed(1);
 
             return {
@@ -447,8 +435,8 @@
           locationRanking.forEach((loc, index) => {
             const emoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
             response += `${emoji} <strong>${loc.name}</strong><br>`;
-            response += `💰 Doanh thu: ${formatCurrency(loc.revenue)}<br>`;
-            response += `📈 Lợi nhuận: ${formatCurrency(loc.profit)} (${loc.margin}%)<br>`;
+            response += `💰 Doanh thu: ${formatRevenueValue(loc.revenue)}<br>`;
+            response += `📈 Lợi nhuận: ${formatRevenueValue(loc.profit)} (${loc.margin}%)<br>`;
             response += `👥 Nhân viên: ${loc.employees} người<br><br>`;
           });
           break;
@@ -479,8 +467,8 @@
           questionText = 'Lợi nhuận của các cơ sở như thế nào?';
           const profitData = locations.map(loc => {
             const data = locationData[loc.id];
-            const totalRev = data.revenue.reduce((a, b) => a + b, 0);
-            const totalProf = data.profit.reduce((a, b) => a + b, 0);
+            const totalRev = sumArray(data.revenue);
+            const totalProf = sumArray(data.profit);
             const margin = ((totalProf / totalRev) * 100).toFixed(1);
 
             return {
@@ -498,7 +486,7 @@
             const emoji = index === 0 ? '🌟' : '⭐';
             const status = loc.margin >= 32 ? '✅ Tốt' : loc.margin >= 28 ? '⚠️ Trung bình' : '❌ Cần cải thiện';
             response += `${emoji} <strong>${loc.name}</strong><br>`;
-            response += `💰 Lợi nhuận: ${formatCurrency(loc.profit)}<br>`;
+            response += `💰 Lợi nhuận: ${formatRevenueValue(loc.profit)}<br>`;
             response += `📊 Tỷ suất: ${loc.margin}% ${status}<br><br>`;
           });
           break;
@@ -511,8 +499,8 @@
             const data = locationData[loc.id];
             return {
               name: loc.name,
-              revenue: data.revenue.reduce((a, b) => a + b, 0),
-              orders: data.orders.reduce((a, b) => a + b, 0),
+              revenue: sumArray(data.revenue),
+              orders: sumArray(data.orders),
               employees: data.employees
             };
           });
@@ -522,25 +510,25 @@
           comparison.forEach((loc, index) => {
             const avgPerEmployee = (loc.revenue / loc.employees).toFixed(1);
             response += `${index + 1}. <strong>${loc.name}</strong><br>`;
-            response += `💰 DT: ${formatCurrency(loc.revenue)} | 📦 ${formatNumber(loc.orders)} đơn<br>`;
+            response += `💰 DT: ${formatRevenueValue(loc.revenue)} | 📦 ${formatNumber(loc.orders)} đơn<br>`;
             response += `👤 ${loc.employees} NV | ⚡ ${avgPerEmployee} triệu/người<br><br>`;
           });
           break;
 
         case 'growth':
           questionText = 'Xu hướng tăng trưởng như thế nào?';
-          const growth2023 = businessDataByMonth[2023].revenue.reduce((a, b) => a + b, 0);
-          const growth2024 = businessDataByMonth[2024].revenue.reduce((a, b) => a + b, 0);
-          const growth2025 = businessDataByMonth[2025].revenue.reduce((a, b) => a + b, 0);
+          const growth2023 = sumArray(businessDataByMonth[2023].revenue);
+          const growth2024 = sumArray(businessDataByMonth[2024].revenue);
+          const growth2025 = sumArray(businessDataByMonth[2025].revenue);
 
-          const growth2324 = (((growth2024 - growth2023) / growth2023) * 100).toFixed(1);
-          const growth2425 = (((growth2025 - growth2024) / growth2024) * 100).toFixed(1);
+          const growth2324 = calculateGrowth(growth2024, growth2023);
+          const growth2425 = calculateGrowth(growth2025, growth2024);
 
           response = `<strong>📈 Phân tích tăng trưởng:</strong><br><br>`;
           response += `<strong>Doanh thu theo năm:</strong><br>`;
-          response += `2023: ${formatCurrency(growth2023)}<br>`;
-          response += `2024: ${formatCurrency(growth2024)} (+${growth2324}%)<br>`;
-          response += `2025: ${formatCurrency(growth2025)} (+${growth2425}%)<br><br>`;
+          response += `2023: ${formatRevenueValue(growth2023)}<br>`;
+          response += `2024: ${formatRevenueValue(growth2024)} (+${growth2324}%)<br>`;
+          response += `2025: ${formatRevenueValue(growth2025)} (+${growth2425}%)<br><br>`;
           response += `<strong>Nhận xét:</strong><br>`;
 
           if (parseFloat(growth2425) > parseFloat(growth2324)) {
@@ -560,7 +548,7 @@
 
           locations.forEach(loc => {
             const emp = locationData[loc.id].employees;
-            const rev = locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+            const rev = sumArray(locationData[loc.id].revenue);
             const avgRev = (rev / emp).toFixed(1);
 
             totalEmp += emp;

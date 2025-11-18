@@ -367,6 +367,7 @@
 
     <!-- Load Auth & Data -->
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/utils.js"></script>
     <script src="../assets/js/data.js"></script>
 
     <!-- Authentication Check -->
@@ -380,16 +381,7 @@
       // Cập nhật badge location cho user không phải CEO
       const user = getCurrentUser();
       if (user && user.role !== 'ceo') {
-        const locationNames = {
-          'HN': 'Hà Nội',
-          'HCM': 'Hồ Chí Minh',
-          'DN': 'Đà Nẵng',
-          'HP': 'Hải Phòng',
-          'CT': 'Cần Thơ',
-          'NT': 'Nha Trang',
-          'VT': 'Vũng Tàu'
-        };
-        const locationName = locationNames[user.locations[0]] || user.locations[0];
+        const locationName = getLocationName(user.locations[0]);
         const badge = document.getElementById('user-location-badge');
         if (badge) {
           badge.textContent = locationName;
@@ -477,7 +469,7 @@
           },
           dataLabels: {
             enabled: true,
-            formatter: val => (val / 1000).toFixed(1) + 'tỷ',
+            formatter: val => formatChartAxisValue(val),
             offsetY: -20,
             style: {
               fontSize: '10px',
@@ -500,7 +492,7 @@
           },
           yaxis: {
             labels: {
-              formatter: val => (val / 1000).toFixed(1) + ' tỷ',
+              formatter: val => formatChartAxisValue(val),
               style: {
                 fontSize: '11px'
               }
@@ -513,7 +505,7 @@
             shared: true,
             intersect: false,
             y: {
-              formatter: val => val.toLocaleString() + ' triệu VNĐ'
+              formatter: val => formatChartValue(val)
             }
           },
           legend: {
@@ -585,7 +577,7 @@
                   value: {
                     fontSize: '20px',
                     fontWeight: 700,
-                    formatter: val => (val / 1000).toFixed(1) + ' tỷ'
+                    formatter: val => formatChartAxisValue(val)
                   },
                   total: {
                     show: true,
@@ -593,8 +585,8 @@
                     fontSize: '14px',
                     fontWeight: 600,
                     formatter: (w) => {
-                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
-                      return (total / 1000).toFixed(2) + ' tỷ';
+                      const total = sumArray(w.globals.seriesTotals);
+                      return formatChartAxisValue(total, 2);
                     }
                   }
                 }
@@ -603,7 +595,7 @@
           },
           tooltip: {
             y: {
-              formatter: val => (val / 1000).toFixed(2) + ' tỷ VNĐ'
+              formatter: val => formatChartAxisValue(val, 2) + ' VNĐ'
             }
           },
           responsive: [{
@@ -645,7 +637,7 @@
           },
           dataLabels: {
             enabled: true,
-            formatter: val => (val / 1000).toFixed(1) + 'tỷ',
+            formatter: val => formatChartAxisValue(val),
             offsetY: -20,
             style: {
               fontSize: '10px',
@@ -664,7 +656,7 @@
           },
           yaxis: {
             labels: {
-              formatter: val => (val / 1000).toFixed(1) + ' tỷ',
+              formatter: val => formatChartAxisValue(val),
               style: {
                 fontSize: '11px'
               }
@@ -675,7 +667,7 @@
             shared: true,
             intersect: false,
             y: {
-              formatter: val => val.toLocaleString() + ' triệu VNĐ'
+              formatter: val => formatChartValue(val)
             }
           },
           legend: {
@@ -806,7 +798,7 @@
 
       // Update KPI boxes
       function updateKPIs() {
-        const currentMonth = 10; // November (index 10)
+        const currentMonth = getCurrentMonth();
         let data, title;
 
         if (currentLocation === '') {
@@ -822,7 +814,7 @@
 
         // Calculate totals
         const monthlyRevenue = data.revenue[currentMonth];
-        const yearlyRevenue = data.revenue.reduce((a, b) => a + b, 0);
+        const yearlyRevenue = sumArray(data.revenue);
         const avgRevenue = yearlyRevenue / 12;
 
         // YoY growth
@@ -837,13 +829,13 @@
 
         // Update KPIs
         $('#kpi-revenue').html(`
-          ${(monthlyRevenue / 1000).toFixed(2)} tỷ
+          ${formatChartAxisValue(monthlyRevenue, 2)}
           <small class="${yoyGrowth >= 0 ? 'trend-up' : 'trend-down'}">
             <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${Math.abs(yoyGrowth).toFixed(1)}%
           </small>
         `);
-        $('#kpi-yearly').text((yearlyRevenue / 1000).toFixed(2) + ' tỷ');
-        $('#kpi-average').text((avgRevenue / 1000).toFixed(2) + ' tỷ');
+        $('#kpi-yearly').text(formatChartAxisValue(yearlyRevenue, 2));
+        $('#kpi-average').text(formatChartAxisValue(avgRevenue, 2));
         $('#kpi-yoy').html(`
           <small class="${yoyGrowth >= 0 ? 'trend-up' : 'trend-down'}">
             <i class="bi bi-arrow-${yoyGrowth >= 0 ? 'up' : 'down'}"></i> ${yoyGrowth >= 0 ? '+' : ''}${yoyGrowth.toFixed(1)}%
@@ -887,7 +879,7 @@
         if (currentLocation === '') {
           // Show all locations distribution (yearly total)
           const locationTotals = locations.map(loc => {
-            return locationData[loc.id].revenue.reduce((a, b) => a + b, 0);
+            return getTotalRevenue(locationData, loc.id);
           });
           const labels = locations.map(loc => loc.name);
 
@@ -915,7 +907,7 @@
                     value: {
                       fontSize: '20px',
                       fontWeight: 700,
-                      formatter: val => (val / 1000).toFixed(1) + ' tỷ'
+                      formatter: val => formatChartAxisValue(val)
                     },
                     total: {
                       show: true,
@@ -923,8 +915,8 @@
                       fontSize: '14px',
                       fontWeight: 600,
                       formatter: (w) => {
-                        const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
-                        return (total / 1000).toFixed(2) + ' tỷ';
+                        const total = sumArray(w.globals.seriesTotals);
+                        return formatChartAxisValue(total, 2);
                       }
                     }
                   }
@@ -962,7 +954,7 @@
             },
             dataLabels: {
               enabled: true,
-              formatter: val => (val / 1000).toFixed(1) + 'tỷ',
+              formatter: val => formatChartAxisValue(val),
               offsetY: -20,
               style: {
                 fontSize: '10px',
@@ -980,7 +972,7 @@
             },
             yaxis: {
               labels: {
-                formatter: val => (val / 1000).toFixed(1) + ' tỷ',
+                formatter: val => formatChartAxisValue(val),
                 style: {
                   fontSize: '11px'
                 }
@@ -1084,9 +1076,9 @@
           const row = `
             <tr>
               <td><strong>Tháng ${i + 1}/2025</strong></td>
-              <td class="text-right"><strong>${(revenue / 1000).toFixed(2)} tỷ</strong></td>
-              <td class="text-right">${(expenses / 1000).toFixed(2)} tỷ</td>
-              <td class="text-right ${profitClass}"><strong>${profit >= 0 ? (profit / 1000).toFixed(2) + ' tỷ' : '(' + (Math.abs(profit) / 1000).toFixed(2) + ' tỷ)'}</strong></td>
+              <td class="text-right"><strong>${formatChartAxisValue(revenue, 2)}</strong></td>
+              <td class="text-right">${formatChartAxisValue(expenses, 2)}</td>
+              <td class="text-right ${profitClass}"><strong>${profit >= 0 ? formatChartAxisValue(profit, 2) : '(' + formatChartAxisValue(Math.abs(profit), 2) + ')'}</strong></td>
               <td class="text-center"><span class="badge badge-${profit >= 0 ? 'success' : 'danger'}">${profitMargin.toFixed(1)}%</span></td>
               <td class="text-center"><span class="badge badge-${badgeClass}">${growthSign}${yoyGrowth.toFixed(1)}%</span></td>
               <td class="text-center"><span class="badge badge-${statusClass}">${status}</span></td>

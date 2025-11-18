@@ -372,6 +372,7 @@
 
     <!-- Load Auth & Data -->
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/utils.js"></script>
     <script src="../assets/js/data.js"></script>
 
     <!-- Authentication Check -->
@@ -385,16 +386,7 @@
       // Cập nhật badge location cho user không phải CEO
       const user = getCurrentUser();
       if (user && user.role !== 'ceo') {
-        const locationNames = {
-          'HN': 'Hà Nội',
-          'HCM': 'Hồ Chí Minh',
-          'DN': 'Đà Nẵng',
-          'HP': 'Hải Phòng',
-          'CT': 'Cần Thơ',
-          'NT': 'Nha Trang',
-          'VT': 'Vũng Tàu'
-        };
-        const locationName = locationNames[user.locations[0]] || user.locations[0];
+        const locationName = getLocationName(user.locations[0]);
         const badge = document.getElementById('user-location-badge');
         if (badge) {
           badge.textContent = locationName;
@@ -546,7 +538,7 @@
                     fontSize: '14px',
                     fontWeight: 600,
                     formatter: (w) => {
-                      const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                      const total = sumArray(w.globals.seriesTotals);
                       return total.toFixed(0) + ' tr';
                     }
                   }
@@ -623,7 +615,7 @@
         }
 
         // Calculate KPIs
-        const totalSales = productData.sales.reduce((a, b) => a + b, 0);
+        const totalSales = sumArray(productData.sales);
         const bestSeller = productData.topProducts[0];
         const topCategory = productData.categories[productData.sales.indexOf(Math.max(...productData.sales))];
 
@@ -764,7 +756,7 @@
               <td><span class="badge badge-${badgeColor}">${product.category}</span></td>
               <td>${formatCurrency(product.price)}</td>
               <td class="text-center"><strong>${product.sold}</strong></td>
-              <td class="text-right text-success"><strong>${(product.revenue / 1000000).toFixed(0)} triệu</strong></td>
+              <td class="text-right text-success"><strong>${formatRevenueValue(product.revenue / 1000)}</strong></td>
             </tr>
           `;
 
@@ -864,13 +856,6 @@
           'Sách vở': 'secondary'
         };
         return colors[category] || 'dark';
-      }
-
-      function formatCurrency(value) {
-        return new Intl.NumberFormat('vi-VN', {
-          style: 'currency',
-          currency: 'VND'
-        }).format(value);
       }
 
       // Function to view all alerts

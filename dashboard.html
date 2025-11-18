@@ -445,6 +445,7 @@
 
     <!--begin::Dashboard Scripts-->
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/utils.js"></script>
     <script src="assets/js/data.js"></script>
     <script src="assets/js/charts.js"></script>
     <script src="assets/js/main.js"></script>
@@ -461,16 +462,7 @@
       // Cập nhật badge location cho user không phải CEO
       const user = getCurrentUser();
       if (user && user.role !== 'ceo') {
-        const locationNames = {
-          'HN': 'Hà Nội',
-          'HCM': 'Hồ Chí Minh',
-          'DN': 'Đà Nẵng',
-          'HP': 'Hải Phòng',
-          'CT': 'Cần Thơ',
-          'NT': 'Nha Trang',
-          'VT': 'Vũng Tàu'
-        };
-        const locationName = locationNames[user.locations[0]] || user.locations[0];
+        const locationName = getLocationName(user.locations[0]);
         const badge = document.getElementById('user-location-badge');
         if (badge) {
           badge.textContent = locationName;
