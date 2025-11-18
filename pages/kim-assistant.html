@@ -52,13 +52,22 @@
             </a>
           </div>
         </li>
-        <!-- User -->
+        <!-- User Menu -->
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="bi bi-person-circle"></i>
-            <span>CEO Nguyễn Văn A</span>
+            <span class="d-none d-md-inline ml-1 user-name">Người dùng</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-item-text">
+              <div class="d-flex align-items-center">
+                <div>
+                  <strong class="user-name">Người dùng</strong><br>
+                  <small class="text-muted user-title">Chức vụ</small>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
               <i class="bi bi-person mr-2"></i> Hồ sơ
             </a>
@@ -66,7 +75,7 @@
               <i class="bi bi-gear mr-2"></i> Cài đặt
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
+            <a href="#" class="dropdown-item" onclick="logout(); return false;">
               <i class="bi bi-box-arrow-right mr-2"></i> Đăng xuất
             </a>
           </div>
@@ -88,10 +97,11 @@
         <!-- User Panel -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <i class="bi bi-person-circle" style="font-size: 2rem; color: #fff;"></i>
+            <i class="bi bi-person-circle" style="font-size: 2.1rem; color: #fff;"></i>
           </div>
           <div class="info">
-            <a href="#" class="d-block">CEO Nguyễn Văn A</a>
+            <a href="#" class="d-block user-name">Người dùng</a>
+            <small class="text-muted user-title">Chức vụ</small>
           </div>
         </div>
 
@@ -271,9 +281,19 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
-  <!-- Load Data -->
+  <!-- Load Auth & Data -->
+  <script src="../assets/js/auth.js"></script>
   <script src="../assets/js/utils.js"></script>
   <script src="../assets/js/data.js"></script>
+
+  <!-- Authentication Check -->
+  <script>
+    // Kiểm tra đăng nhập khi load trang
+    requireAuth();
+
+    // Hiển thị thông tin user
+    displayUserInfo();
+  </script>
 
   <!-- Kim AI Assistant Script -->
   <script>
