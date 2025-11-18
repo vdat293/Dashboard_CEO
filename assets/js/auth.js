@@ -142,7 +142,16 @@ function login(username, password) {
 function logout() {
   localStorage.removeItem('currentUser');
   localStorage.removeItem('isLoggedIn');
-  window.location.href = 'index.html';
+
+  // Tính toán đúng path về index.html
+  // Nếu đang ở trong thư mục pages/, cần dùng ../index.html
+  // Nếu đang ở root, dùng index.html
+  const currentPath = window.location.pathname;
+  if (currentPath.includes('/pages/')) {
+    window.location.href = '../index.html';
+  } else {
+    window.location.href = 'index.html';
+  }
 }
 
 /**
