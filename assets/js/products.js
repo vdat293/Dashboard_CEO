@@ -17,6 +17,9 @@ let productsState = {
  * Được gọi khi route products được load
  */
 function initProductsPage() {
+  // Populate location selector dựa trên quyền user
+  populateLocationSelector('location-selector');
+
   // Khởi tạo charts
   initProductCharts();
 
@@ -199,20 +202,23 @@ function updateProductsKPIs() {
   let productData, title;
 
   if (productsState.currentLocation === '') {
-    // Aggregate all locations
+    // Aggregate locations based on user permission
+    const authorizedLocations = getAuthorizedLocations();
+    const filteredLocations = locations.filter(loc => authorizedLocations.includes(loc.id));
+
     productData = {
       categories: productsByLocation.HN.categories,
       sales: productsByLocation.HN.categories.map((cat, idx) => {
-        return locations.reduce((sum, loc) => {
+        return filteredLocations.reduce((sum, loc) => {
           return sum + (productsByLocation[loc.id].sales[idx] || 0);
         }, 0);
       }),
       topProducts: []
     };
 
-    // Aggregate top products from all locations
+    // Aggregate top products from filtered locations
     const allProducts = {};
-    locations.forEach(loc => {
+    filteredLocations.forEach(loc => {
       productsByLocation[loc.id].topProducts.forEach(p => {
         if (!allProducts[p.name]) {
           allProducts[p.name] = { ...p };
@@ -223,11 +229,17 @@ function updateProductsKPIs() {
       });
     });
     productData.topProducts = Object.values(allProducts).sort((a, b) => b.revenue - a.revenue);
-    title = 'Tổng hợp';
+
+    // Determine title based on filtered locations
+    if (filteredLocations.length === 1) {
+      title = filteredLocations[0].name;
+    } else {
+      title = 'Tổng hợp';
+    }
   } else {
     productData = productsByLocation[productsState.currentLocation];
     const loc = locations.find(l => l.id === productsState.currentLocation);
-    title = loc.name;
+    title = loc ? loc.name : productsState.currentLocation;
   }
 
   // Calculate KPIs
@@ -282,11 +294,14 @@ function updateSalesTrendChart() {
   let series = [];
 
   if (productsState.currentLocation === '') {
-    // Show all categories trend (aggregate from all locations)
+    // Show categories trend (aggregate from filtered locations based on permission)
+    const authorizedLocations = getAuthorizedLocations();
+    const filteredLocations = locations.filter(loc => authorizedLocations.includes(loc.id));
+
     const categories = productsByLocation.HN.categories;
     series = categories.map(cat => {
       // Generate mock monthly data for each category
-      const baseSales = locations.reduce((sum, loc) => {
+      const baseSales = filteredLocations.reduce((sum, loc) => {
         const idx = productsByLocation[loc.id].categories.indexOf(cat);
         return sum + (productsByLocation[loc.id].sales[idx] || 0);
       }, 0);
@@ -328,11 +343,14 @@ function updateCategorySalesChart() {
   let productData;
 
   if (productsState.currentLocation === '') {
-    // Aggregate all locations
+    // Aggregate filtered locations based on permission
+    const authorizedLocations = getAuthorizedLocations();
+    const filteredLocations = locations.filter(loc => authorizedLocations.includes(loc.id));
+
     productData = {
       categories: productsByLocation.HN.categories,
       sales: productsByLocation.HN.categories.map((cat, idx) => {
-        return locations.reduce((sum, loc) => {
+        return filteredLocations.reduce((sum, loc) => {
           return sum + (productsByLocation[loc.id].sales[idx] || 0);
         }, 0);
       })
@@ -359,9 +377,12 @@ function updateProductsTable() {
   let products;
 
   if (productsState.currentLocation === '') {
-    // Aggregate top products from all locations
+    // Aggregate top products from filtered locations based on permission
+    const authorizedLocations = getAuthorizedLocations();
+    const filteredLocations = locations.filter(loc => authorizedLocations.includes(loc.id));
+
     const allProducts = {};
-    locations.forEach(loc => {
+    filteredLocations.forEach(loc => {
       productsByLocation[loc.id].topProducts.forEach(p => {
         if (!allProducts[p.name]) {
           allProducts[p.name] = { ...p };

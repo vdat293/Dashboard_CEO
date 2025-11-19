@@ -287,6 +287,38 @@ function getLocationName(locationId) {
   return locationNames[locationId] || locationId;
 }
 
+/**
+ * Populate location selector dựa trên quyền user
+ * @param {string} selectorId - ID của select element (default: 'location-selector')
+ */
+function populateLocationSelector(selectorId = 'location-selector') {
+  const selector = document.getElementById(selectorId);
+  if (!selector) return;
+
+  // Lấy danh sách locations user có quyền xem
+  const authorizedLocations = getAuthorizedLocations();
+  const filteredLocations = locations.filter(loc => authorizedLocations.includes(loc.id));
+
+  // Clear existing options
+  selector.innerHTML = '';
+
+  // Thêm option "Tất cả cơ sở" nếu có nhiều hơn 1 cơ sở
+  if (filteredLocations.length > 1) {
+    const allOption = document.createElement('option');
+    allOption.value = '';
+    allOption.textContent = 'Tất cả cơ sở (Tổng hợp)';
+    selector.appendChild(allOption);
+  }
+
+  // Thêm các options cho từng cơ sở
+  filteredLocations.forEach(loc => {
+    const option = document.createElement('option');
+    option.value = loc.id;
+    option.textContent = loc.name;
+    selector.appendChild(option);
+  });
+}
+
 // ============================================
 // EXPORT NOTE
 // ============================================

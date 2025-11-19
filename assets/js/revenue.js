@@ -20,6 +20,9 @@ let revenueState = {
  * Được gọi khi route revenue được load
  */
 function initRevenuePage() {
+  // Populate location selector dựa trên quyền user
+  populateLocationSelector('location-selector');
+
   // Khởi tạo charts
   initRevenueCharts();
 
@@ -441,14 +444,23 @@ function updateRevenueKPIs() {
   let data, title;
 
   if (revenueState.currentLocation === '') {
-    // All locations
-    data = businessDataByMonth[2025];
-    title = 'Tất cả cơ sở';
+    // All locations - use aggregated data filtered by permission
+    data = getAggregatedData(locationData);
+
+    // Get user to determine title
+    const user = getCurrentUser();
+    const authorizedLocations = getAuthorizedLocations();
+    if (authorizedLocations.length === 1) {
+      const loc = locations.find(l => l.id === authorizedLocations[0]);
+      title = loc ? loc.name : 'Tất cả cơ sở';
+    } else {
+      title = 'Tất cả cơ sở';
+    }
   } else {
     // Single location
     data = locationData[revenueState.currentLocation];
     const loc = locations.find(l => l.id === revenueState.currentLocation);
-    title = loc.name;
+    title = loc ? loc.name : revenueState.currentLocation;
   }
 
   // Calculate totals
@@ -510,23 +522,28 @@ function updateRevenueTrendChart() {
   let series = [];
 
   if (revenueState.currentLocation === '') {
-    // All locations - show comparison with previous years
+    // All locations - use aggregated data filtered by permission
+    const aggregatedData = getAggregatedData(locationData);
+
+    // Show comparison with previous years
     if (revenueState.showYearComparison) {
       series = [
-        { name: '2025', data: businessDataByMonth[2025].revenue },
+        { name: '2025', data: aggregatedData.revenue },
         { name: '2024', data: businessDataByMonth[2024].revenue },
         { name: '2023', data: businessDataByMonth[2023].revenue }
       ];
     } else {
       series = [
-        { name: '2025', data: businessDataByMonth[2025].revenue },
+        { name: '2025', data: aggregatedData.revenue },
         { name: '2024', data: businessDataByMonth[2024].revenue }
       ];
     }
   } else {
     // Single location
+    const loc = locations.find(l => l.id === revenueState.currentLocation);
+    const locationName = loc ? loc.name : revenueState.currentLocation;
     series = [
-      { name: revenueState.currentLocation, data: locationData[revenueState.currentLocation].revenue }
+      { name: locationName, data: locationData[revenueState.currentLocation].revenue }
     ];
   }
 
@@ -538,11 +555,14 @@ function updateRevenueTrendChart() {
  */
 function updateRevenueDistributionChart() {
   if (revenueState.currentLocation === '') {
-    // Show all locations distribution (yearly total)
-    const locationTotals = locations.map(loc => {
+    // Show filtered locations distribution (yearly total) based on permission
+    const authorizedLocations = getAuthorizedLocations();
+    const filteredLocations = locations.filter(loc => authorizedLocations.includes(loc.id));
+
+    const locationTotals = filteredLocations.map(loc => {
       return getTotalRevenue(locationData, loc.id);
     });
-    const labels = locations.map(loc => loc.name);
+    const labels = filteredLocations.map(loc => loc.name);
 
     revenueState.charts.distribution.updateOptions({
       chart: {
@@ -650,7 +670,8 @@ function updateRevenueExpenseProfitChart() {
   let data;
 
   if (revenueState.currentLocation === '') {
-    data = businessDataByMonth[2025];
+    // Use aggregated data filtered by permission
+    data = getAggregatedData(locationData);
   } else {
     data = locationData[revenueState.currentLocation];
   }
@@ -671,7 +692,8 @@ function updateProfitMarginChart() {
   let data;
 
   if (revenueState.currentLocation === '') {
-    data = businessDataByMonth[2025];
+    // Use aggregated data filtered by permission
+    data = getAggregatedData(locationData);
   } else {
     data = locationData[revenueState.currentLocation];
   }
@@ -699,7 +721,8 @@ function updateRevenueTable() {
   let data2025, data2024;
 
   if (revenueState.currentLocation === '') {
-    data2025 = businessDataByMonth[2025];
+    // Use aggregated data filtered by permission
+    data2025 = getAggregatedData(locationData);
     data2024 = businessDataByMonth[2024];
   } else {
     data2025 = locationData[revenueState.currentLocation];
