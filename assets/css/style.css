@@ -53,7 +53,7 @@
 .info-box .info-box-number {
   display: block;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: var(--text-primary);
 }
 
@@ -702,4 +702,43 @@
 .username.loaded,
 .user-title.loaded {
   opacity: 1;
+}
+
+/* ==============================================
+   USER AVATAR - Avatar người dùng trong header
+   ============================================== */
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e9ecef;
+  transition: all 0.2s;
+}
+
+.user-avatar:hover {
+  border-color: #007bff;
+  transform: scale(1.05);
+}
+
+/* Dropdown header với thông tin user */
+.dropdown-header.user-info {
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 4px 4px 0 0;
+  margin: -4px -4px 8px -4px;
+}
+
+.dropdown-header.user-info .user-fullname {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  display: block;
+}
+
+.dropdown-header.user-info .user-role {
+  font-size: 12px;
+  opacity: 0.9;
+  display: block;
 }

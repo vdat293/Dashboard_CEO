@@ -302,6 +302,24 @@ function displayUserInfo() {
     el.src = user.avatar;
   });
 
+  // Update user fullname in dropdown
+  const userFullnameElement = document.getElementById('user-fullname');
+  if (userFullnameElement) {
+    userFullnameElement.textContent = user.fullName;
+  }
+
+  // Update user role/title in dropdown
+  const userRoleElement = document.getElementById('user-role');
+  if (userRoleElement) {
+    userRoleElement.textContent = user.title;
+  }
+
+  // Update user avatar in header
+  const userAvatarElement = document.getElementById('user-avatar');
+  if (userAvatarElement) {
+    userAvatarElement.src = user.avatar;
+  }
+
   // Show location filter for CEO and reset value
   const locationFilters = document.querySelectorAll('.location-filter');
   if (user.role === 'ceo') {

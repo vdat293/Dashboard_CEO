@@ -40,9 +40,6 @@
               <i class="bi bi-list"></i>
             </a>
           </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="../dashboard.html" class="nav-link">Trang chủ</a>
-          </li>
         </ul>
 
         <ul class="navbar-nav ms-auto">
@@ -55,10 +52,14 @@
 
           <!-- User Menu -->
           <li class="nav-item dropdown">
-            <a class="nav-link" data-bs-toggle="dropdown" href="#">
-              <i class="bi bi-person-circle"></i>
+            <a class="nav-link" data-bs-toggle="dropdown" href="#" style="padding: 4px 8px;">
+              <img id="user-avatar" class="user-avatar" src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff" alt="User Avatar">
             </a>
-            <div class="dropdown-menu dropdown-menu-end">
+            <div class="dropdown-menu dropdown-menu-end" style="min-width: 250px;">
+              <div class="dropdown-header user-info">
+                <span class="user-fullname" id="user-fullname">Đang tải...</span>
+                <span class="user-role" id="user-role">Đang tải...</span>
+              </div>
               <a href="#" class="dropdown-item">
                 <i class="bi bi-person me-2"></i> Hồ sơ
               </a>
