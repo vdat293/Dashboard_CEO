@@ -32,92 +32,6 @@
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-      <!-- Header -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul class="navbar-nav ms-auto">
-          <!-- Location Badge (for non-CEO users) -->
-          <li class="nav-item current-location-badge" style="display: none;">
-            <span class="nav-link">
-              <span class="badge badge-info" id="user-location-badge"></span>
-            </span>
-          </li>
-
-          <!-- User Menu -->
-          <li class="nav-item dropdown">
-            <a class="nav-link" data-bs-toggle="dropdown" href="#" style="padding: 4px 8px;">
-              <img id="user-avatar" class="user-avatar" src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff" alt="User Avatar">
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" style="min-width: 250px;">
-              <div class="dropdown-header user-info">
-                <span class="user-fullname" id="user-fullname">Đang tải...</span>
-                <span class="user-role" id="user-role">Đang tải...</span>
-              </div>
-              <a href="#" class="dropdown-item">
-                <i class="bi bi-person me-2"></i> Hồ sơ
-              </a>
-              <a href="#" class="dropdown-item">
-                <i class="bi bi-gear me-2"></i> Cài đặt
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item" onclick="logout(); return false;">
-                <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
-              </a>
-            </div>
-          </li>
-        </ul>
-      </nav>
-
-      <!-- Sidebar -->
-      <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="../dashboard.html" class="brand-link">
-          <i class="bi bi-graph-up-arrow brand-image" style="font-size: 2rem; margin-left: 0.5rem;"></i>
-          <span class="brand-text font-weight-light">CEO Dashboard</span>
-        </a>
-
-        <div class="sidebar">
-          <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-              <li class="nav-item">
-                <a href="../dashboard.html" class="nav-link">
-                  <i class="nav-icon bi bi-speedometer2"></i>
-                  <p>Tổng quan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="revenue.html" class="nav-link active">
-                  <i class="nav-icon bi bi-graph-up"></i>
-                  <p>Doanh thu</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="customers.html" class="nav-link">
-                  <i class="nav-icon bi bi-people"></i>
-                  <p>Khách hàng</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="products.html" class="nav-link">
-                  <i class="nav-icon bi bi-box-seam"></i>
-                  <p>Sản phẩm</p>
-                </a>
-              </li>
-              <li class="nav-item ceo-only">
-                <a href="kim-assistant.html" class="nav-link">
-                  <i class="nav-icon bi bi-robot"></i>
-                  <p>Kim - Trợ lý ảo</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-gear"></i>
-                  <p>Cài đặt</p>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </aside>
-
       <!-- Content Wrapper -->
       <div class="content-wrapper">
         <div class="content-header">
@@ -321,15 +235,6 @@
           </div>
         </section>
       </div>
-
-      <!-- Footer -->
-      <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="#">Công ty của bạn</a>.</strong>
-        All rights reserved.
-        <div class="float-end d-none d-sm-inline-block">
-          <b>Version</b> 1.0.0
-        </div>
-      </footer>
     </div>
 
     <!-- Scripts -->
