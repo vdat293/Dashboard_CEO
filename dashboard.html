@@ -123,37 +123,37 @@
           <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
               <li class="nav-item">
-                <a href="dashboard.html" class="nav-link active">
+                <a href="#/" data-route="/" class="nav-link active">
                   <i class="nav-icon bi bi-speedometer2"></i>
                   <p>Tổng quan</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/revenue.html" class="nav-link">
+                <a href="#/revenue" data-route="/revenue" class="nav-link">
                   <i class="nav-icon bi bi-graph-up"></i>
                   <p>Doanh thu</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/customers.html" class="nav-link">
+                <a href="#/customers" data-route="/customers" class="nav-link">
                   <i class="nav-icon bi bi-people"></i>
                   <p>Khách hàng</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/products.html" class="nav-link">
+                <a href="#/products" data-route="/products" class="nav-link">
                   <i class="nav-icon bi bi-box-seam"></i>
                   <p>Sản phẩm</p>
                 </a>
               </li>
               <li class="nav-item ceo-only">
-                <a href="pages/kim-assistant.html" class="nav-link">
+                <a href="#/kim" data-route="/kim" class="nav-link">
                   <i class="nav-icon bi bi-robot"></i>
                   <p>Kim - Trợ lý ảo</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#/settings" data-route="/settings" class="nav-link">
                   <i class="nav-icon bi bi-gear"></i>
                   <p>Cài đặt</p>
                 </a>
@@ -427,7 +427,11 @@
     <script src="assets/js/data.js"></script>
     <script src="assets/js/charts.js"></script>
     <script src="assets/js/main.js"></script>
-    <!--end::Dashboard Scripts-->
+
+    <!--begin::SPA Router Scripts-->
+    <script src="assets/js/router.js"></script>
+    <script src="assets/js/pages.js"></script>
+    <!--end::SPA Router Scripts-->
 
     <!-- Authentication Check -->
     <script>
@@ -446,6 +450,59 @@
           badge.textContent = locationName;
         }
       }
+    </script>
+
+    <!-- SPA Routes Configuration -->
+    <script>
+      // Đăng ký tất cả routes
+      router.register('/', {
+        title: 'Dashboard CEO | Tổng Quan Kinh Doanh',
+        render: Pages.dashboard.render,
+        afterEnter: Pages.dashboard.init
+      });
+
+      router.register('/revenue', {
+        title: 'Doanh Thu Chi Tiết',
+        render: Pages.revenue.render,
+        afterEnter: Pages.revenue.init
+      });
+
+      router.register('/customers', {
+        title: 'Quản Lý Khách Hàng',
+        render: Pages.customers.render,
+        afterEnter: Pages.customers.init
+      });
+
+      router.register('/products', {
+        title: 'Quản Lý Sản Phẩm',
+        render: Pages.products.render,
+        afterEnter: Pages.products.init
+      });
+
+      router.register('/kim', {
+        title: 'Kim - Trợ lý ảo',
+        render: Pages.kim.render,
+        afterEnter: Pages.kim.init,
+        beforeEnter: () => {
+          // Chỉ CEO mới được vào
+          const user = getCurrentUser();
+          if (user && user.role !== 'ceo') {
+            alert('Bạn không có quyền truy cập trang này.');
+            router.navigate('/', true);
+            return false;
+          }
+          return true;
+        }
+      });
+
+      router.register('/settings', {
+        title: 'Cài Đặt',
+        render: Pages.settings.render,
+        afterEnter: Pages.settings.init
+      });
+
+      // Khởi động router - sẽ tự động load route hiện tại
+      // Router đã tự init trong constructor
     </script>
     <!--end::Scripts-->
   </body>
