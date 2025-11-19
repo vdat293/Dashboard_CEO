@@ -500,7 +500,8 @@ function showAllNotifications(locationId) {
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 
   // Hiển thị modal
-  $('#allNotificationsModal').modal('show');
+  const allNotificationsModal = new bootstrap.Modal(document.getElementById('allNotificationsModal'));
+  allNotificationsModal.show();
 }
 
 /**
@@ -553,7 +554,8 @@ function showLocationDetail(locationId) {
   showLocationRevenueChart(location, data);
 
   // Hiển thị modal
-  $('#locationDetailModal').modal('show');
+  const locationDetailModal = new bootstrap.Modal(document.getElementById('locationDetailModal'));
+  locationDetailModal.show();
 }
 
 /**
