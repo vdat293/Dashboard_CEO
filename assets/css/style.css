@@ -721,6 +721,21 @@
   transform: scale(1.05);
 }
 
+/* Đảm bảo avatar luôn nằm ở góc phải */
+.navbar-nav.ms-auto {
+  margin-left: auto !important;
+}
+
+/* Vô hiệu hóa pushmenu - sidebar luôn hiển thị */
+body.sidebar-mini:not(.sidebar-collapse) .main-sidebar {
+  transform: translateX(0) !important;
+}
+
+/* Ẩn overlay khi không có pushmenu */
+body.layout-fixed.sidebar-open::before {
+  display: none !important;
+}
+
 /* Dropdown header với thông tin user */
 .dropdown-header.user-info {
   padding: 12px 16px;
