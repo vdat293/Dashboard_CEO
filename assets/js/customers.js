@@ -19,6 +19,9 @@ let customersState = {
  * Được gọi khi route customers được load
  */
 function initCustomersPage() {
+  // Populate location selector dựa trên quyền user
+  populateLocationSelector('location-selector');
+
   // Khởi tạo charts
   initCustomerCharts();
 
@@ -197,14 +200,23 @@ function updateCustomerKPIs() {
   let data, title;
 
   if (customersState.currentLocation === '') {
-    // All locations
-    data = businessDataByMonth[2025];
-    title = 'Tất cả cơ sở';
+    // All locations - use aggregated data filtered by permission
+    data = getAggregatedData(locationData);
+
+    // Get user to determine title
+    const user = getCurrentUser();
+    const authorizedLocations = getAuthorizedLocations();
+    if (authorizedLocations.length === 1) {
+      const loc = locations.find(l => l.id === authorizedLocations[0]);
+      title = loc ? loc.name : 'Tất cả cơ sở';
+    } else {
+      title = 'Tất cả cơ sở';
+    }
   } else {
     // Single location
     data = locationData[customersState.currentLocation];
     const loc = locations.find(l => l.id === customersState.currentLocation);
-    title = loc.name;
+    title = loc ? loc.name : customersState.currentLocation;
   }
 
   // Calculate totals
@@ -267,21 +279,23 @@ function updateCustomerTrendChart() {
   let series = [];
 
   if (customersState.currentLocation === '') {
-    // All locations - Column: Revenue, Line: New customers
+    // All locations - use aggregated data filtered by permission
+    const aggregatedData = getAggregatedData(locationData);
+
     series = [
       {
         name: 'Doanh thu',
         type: 'column',
-        data: businessDataByMonth[2025].revenue
+        data: aggregatedData.revenue
       },
       {
         name: 'Khách hàng mới',
         type: 'line',
-        data: businessDataByMonth[2025].newCustomers
+        data: aggregatedData.newCustomers
       }
     ];
   } else {
-    // Single location - Column: Revenue, Line: New customers
+    // Single location
     series = [
       {
         name: 'Doanh thu',
