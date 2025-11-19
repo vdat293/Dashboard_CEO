@@ -207,7 +207,7 @@ const Pages = {
         </section>
       `;
     },
-    init() {}
+    init() { }
   },
 
   customers: {
@@ -232,7 +232,7 @@ const Pages = {
         </section>
       `;
     },
-    init() {}
+    init() { }
   },
 
   products: {
@@ -257,7 +257,7 @@ const Pages = {
         </section>
       `;
     },
-    init() {}
+    init() { }
   },
 
   kim: {
@@ -282,7 +282,7 @@ const Pages = {
         </section>
       `;
     },
-    init() {}
+    init() { }
   },
 
   settings: {
@@ -307,6 +307,15 @@ const Pages = {
         </section>
       `;
     },
-    init() {}
+    init() { }
+  }
+};
+
+Pages.myNewPage = {
+  render() {
+    return `<div>Your HTML here</div>`;
+  },
+  init() {
+    // Initialize charts, events, etc.
   }
 };
