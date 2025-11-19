@@ -194,20 +194,209 @@ const Pages = {
               <div class="col-sm-6">
                 <h1 class="m-0">Doanh Thu Chi Tiết</h1>
               </div>
+              <div class="col-sm-6">
+                <div class="float-sm-end">
+                  <select id="location-selector" class="form-control location-filter" style="width: auto; display: inline-block; min-width: 200px;">
+                    <option value="">Tất cả cơ sở (Tổng hợp)</option>
+                    <option value="HN">Hà Nội</option>
+                    <option value="HCM">TP. Hồ Chí Minh</option>
+                    <option value="DN">Đà Nẵng</option>
+                    <option value="HP">Hải Phòng</option>
+                    <option value="CT">Cần Thơ</option>
+                    <option value="NT">Nha Trang</option>
+                    <option value="VT">Vũng Tàu</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <div class="alert alert-info">
-              <i class="bi bi-info-circle me-2"></i>
-              Trang Doanh thu đang được phát triển. Vui lòng quay lại sau.
+
+            <!-- Tổng quan doanh thu -->
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-primary elevation-1">
+                    <i class="bi bi-currency-dollar"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh thu tháng này</span>
+                    <span class="info-box-number" id="kpi-revenue">
+                      14.22 tỷ
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> <span id="kpi-revenue-growth">14.1%</span>
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-success elevation-1">
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh thu năm nay</span>
+                    <span class="info-box-number" id="kpi-yearly">
+                      167.48 tỷ
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-info elevation-1">
+                    <i class="bi bi-bar-chart"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Trung bình/tháng</span>
+                    <span class="info-box-number" id="kpi-average">
+                      13.96 tỷ
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-warning elevation-1">
+                    <i class="bi bi-arrow-up-circle"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Tăng trưởng YoY</span>
+                    <span class="info-box-number" id="kpi-yoy">
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> +13.6%
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- Biểu đồ doanh thu -->
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                      <h3 class="card-title mb-2 mb-md-0">
+                        <i class="bi bi-graph-up mr-2"></i>
+                        <span id="chart-title">Doanh thu theo tháng (Tổng hợp)</span>
+                      </h3>
+                      <div class="btn-group-sm">
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="btn-compare-years">
+                          <i class="bi bi-calendar3-range"></i>
+                          <span class="d-none d-sm-inline"> So sánh năm</span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary ml-1">
+                          <i class="bi bi-download"></i>
+                          <span class="d-none d-sm-inline"> Xuất dữ liệu</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div id="revenue-trend-chart" style="height: 400px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-pie-chart mr-2"></i>
+                      Phân bố doanh thu
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="revenue-distribution-chart" style="height: 400px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phân tích chi tiết -->
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-bar-chart-line mr-2"></i>
+                      So sánh Doanh thu - Chi phí - Lợi nhuận
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="revenue-expense-profit-chart" style="height: 350px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-percent mr-2"></i>
+                      Biên lợi nhuận theo tháng
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="profit-margin-chart" style="height: 350px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bảng chi tiết -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-table mr-2"></i>
+                      Chi tiết doanh thu theo tháng
+                    </h3>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-hover table-striped">
+                      <thead class="bg-light">
+                        <tr>
+                          <th>Tháng</th>
+                          <th class="text-right">Doanh thu</th>
+                          <th class="text-right">Chi phí</th>
+                          <th class="text-right">Lợi nhuận</th>
+                          <th class="text-center">Biên LN</th>
+                          <th class="text-center">So với năm trước</th>
+                          <th class="text-center">Trạng thái</th>
+                        </tr>
+                      </thead>
+                      <tbody id="revenue-table-body">
+                        <!-- Will be populated by JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
       `;
     },
-    init() { }
+
+    init() {
+      // Khởi tạo revenue page khi được load
+      if (typeof initRevenuePage === 'function') {
+        initRevenuePage();
+      }
+    }
   },
 
   customers: {
@@ -611,20 +800,218 @@ const Pages = {
               <div class="col-sm-6">
                 <h1 class="m-0">Quản Lý Sản Phẩm</h1>
               </div>
+              <div class="col-sm-6">
+                <div class="float-sm-right">
+                  <select id="location-selector" class="form-control location-filter" style="width: auto; display: inline-block; min-width: 200px;">
+                    <option value="">Tất cả cơ sở (Tổng hợp)</option>
+                    <option value="HN">Hà Nội</option>
+                    <option value="HCM">TP. Hồ Chí Minh</option>
+                    <option value="DN">Đà Nẵng</option>
+                    <option value="HP">Hải Phòng</option>
+                    <option value="CT">Cần Thơ</option>
+                    <option value="NT">Nha Trang</option>
+                    <option value="VT">Vũng Tàu</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <div class="alert alert-info">
-              <i class="bi bi-info-circle me-2"></i>
-              Trang Sản phẩm đang được phát triển. Vui lòng quay lại sau.
+
+            <!-- Thống kê sản phẩm -->
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-primary elevation-1">
+                    <i class="bi bi-box-seam"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Doanh số sản phẩm</span>
+                    <span class="info-box-number" id="kpi-total-sales">
+                      2.55 tỷ
+                      <small class="trend-up">
+                        <i class="bi bi-arrow-up"></i> <span id="kpi-sales-growth">12.3%</span>
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-success elevation-1">
+                    <i class="bi bi-check-circle"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Sản phẩm bán chạy</span>
+                    <span class="info-box-number" id="kpi-best-seller">
+                      iPhone 15 Pro Max
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-info elevation-1">
+                    <i class="bi bi-bar-chart"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Danh mục hàng đầu</span>
+                    <span class="info-box-number" id="kpi-top-category">
+                      Điện tử
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-6">
+                <div class="info-box">
+                  <span class="info-box-icon bg-gradient-warning elevation-1">
+                    <i class="bi bi-exclamation-triangle"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Cảnh báo tồn kho</span>
+                    <span class="info-box-number" id="kpi-alerts">
+                      <small class="text-warning">
+                        <span id="alert-count">12</span> sản phẩm
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- Biểu đồ -->
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-graph-up mr-2"></i>
+                      <span id="sales-trend-title">Xu hướng doanh số sản phẩm (Tổng hợp)</span>
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="sales-trend-chart" style="height: 350px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h3 class="card-title">
+                      <i class="bi bi-pie-chart mr-2"></i>
+                      Doanh số theo danh mục
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="category-sales-chart" style="height: 350px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Danh sách sản phẩm -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Danh sách sản phẩm bán chạy</h3>
+                    <div class="card-tools">
+                      <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." />
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-default">
+                            <i class="bi bi-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-hover table-striped">
+                      <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>Tên sản phẩm</th>
+                          <th>Danh mục</th>
+                          <th>Giá bán</th>
+                          <th class="text-center">Đã bán</th>
+                          <th class="text-right">Doanh thu</th>
+                        </tr>
+                      </thead>
+                      <tbody id="products-table-body">
+                        <!-- Sẽ được populate bằng JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-footer clearfix">
+                    <button type="button" class="btn btn-sm btn-primary float-end">
+                      <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cảnh báo tồn kho -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-exclamation-triangle mr-1"></i>
+                      Cảnh báo quan trọng
+                    </h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-sm btn-warning" onclick="viewAllAlerts('warning')">
+                        <i class="bi bi-eye"></i> Xem đầy đủ
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body p-0" id="warning-alerts-container" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Sẽ được populate bằng JavaScript -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card card-danger">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="bi bi-x-circle mr-1"></i>
+                      Cảnh báo khẩn cấp
+                    </h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-sm btn-danger" onclick="viewAllAlerts('danger')">
+                        <i class="bi bi-eye"></i> Xem đầy đủ
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body p-0" id="danger-alerts-container" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Sẽ được populate bằng JavaScript -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
       `;
     },
-    init() { }
+
+    init() {
+      // Khởi tạo products page khi được load
+      if (typeof initProductsPage === 'function') {
+        initProductsPage();
+      }
+    }
   },
 
   kim: {
